@@ -1,7 +1,7 @@
 import { useRef, useState, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
 import { TrendingUp, Megaphone, Zap } from "lucide-react";
-import mohamedPhoto from "@/assets/mohamed-waheed.png";
+import mohamedPhoto from "@/assets/mohamed-waheed.webp";
 
 const WhoIAmSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
