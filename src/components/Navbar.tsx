@@ -47,6 +47,15 @@ const Navbar = () => {
         scrolled ? "glass-panel" : "bg-transparent"
       }`}
     >
+      {/* Branded top bar */}
+      <div
+        className="flex items-center justify-center gap-3 h-8 text-[11px] tracking-[0.15em] uppercase select-none"
+        style={{ background: "hsl(var(--background))", borderBottom: "1px solid hsl(var(--outline-variant) / 0.08)" }}
+      >
+        <span className="font-headline font-bold text-primary">MW</span>
+        <span className="text-muted-foreground font-label">AI-Powered Growth Systems</span>
+      </div>
+
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between h-16">
         <Link to="/">
           <motion.span

@@ -156,3 +156,23 @@
     display: none;
   }
 }
+
+/* Block any externally-injected Lovable / GPT-Engineer badges */
+[data-lovable],
+[class*="lovable"],
+[id*="lovable"],
+[data-gptengineer],
+[class*="gptengineer"],
+[id*="gptengineer"],
+iframe[src*="lovable"],
+iframe[src*="gptengineer"],
+a[href*="lovable.dev"],
+a[href*="gptengineer.app"] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  position: absolute !important;
+}
