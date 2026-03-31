@@ -1,6 +1,7 @@
 import { useRef, useState, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
 import { TrendingUp, Megaphone, Zap } from "lucide-react";
+import mohamedPhoto from "@/assets/mohamed-waheed.png";
 
 const WhoIAmSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -62,21 +63,11 @@ const WhoIAmSection = () => {
                 transition: tilt.x === 0 ? "transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)" : "transform 0.1s ease",
               }}
             >
-              {/* Placeholder — replace with <img> when photo is added */}
-              <div
-                className="w-full h-full min-h-[400px] rounded-2xl flex items-center justify-center"
-                style={{
-                  background: "linear-gradient(135deg, hsl(var(--primary)/0.1), hsl(var(--secondary)/0.05))",
-                  border: "1px solid hsl(var(--outline-variant)/0.15)",
-                }}
-              >
-                <div className="text-center">
-                  <div className="w-20 h-20 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-3">
-                    <span className="font-headline text-2xl font-bold text-primary">MW</span>
-                  </div>
-                  <span className="label-tech text-xs text-muted-foreground">Photo coming soon</span>
-                </div>
-              </div>
+              <img
+                src={mohamedPhoto}
+                alt="Mohamed Waheed"
+                className="w-full h-full object-cover object-top rounded-2xl"
+              />
 
               {/* Dynamic glow */}
               <div
