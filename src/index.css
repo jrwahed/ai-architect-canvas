@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 7% 6%;
+    --foreground: 0 0% 100%;
+
+    --card: 260 5% 10%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 260 5% 10%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 184 100% 68%;
+    --primary-foreground: 184 100% 13%;
+
+    --secondary: 270 100% 75%;
+    --secondary-foreground: 270 100% 95%;
+
+    --muted: 240 4% 12%;
+    --muted-foreground: 30 2% 67%;
+
+    --accent: 270 100% 41%;
+    --accent-foreground: 270 100% 95%;
+
+    --destructive: 4 100% 71%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 2% 28%;
+    --input: 240 2% 28%;
+    --ring: 184 100% 68%;
+
+    --radius: 0.125rem;
+
+    /* Custom design tokens */
+    --surface: 240 7% 6%;
+    --surface-container: 270 4% 10%;
+    --surface-container-low: 240 4% 7%;
+    --surface-container-high: 270 3% 13%;
+    --surface-bright: 0 0% 17%;
+    --outline-variant: 0 0% 28%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(270, 100%, 48%), hsl(184, 100%, 68%));
+    --gradient-glow: linear-gradient(135deg, hsl(270, 100%, 60%), hsl(184, 100%, 75%));
+    --shadow-neon: 0 0 30px -5px hsl(184 100% 68% / 0.3);
+    --shadow-purple: 0 0 40px -10px hsl(270 100% 50% / 0.3);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.3);
+    color: hsl(var(--foreground));
+  }
+}
+
+@layer components {
+  .glass-panel {
+    background: hsl(var(--surface-container) / 0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid hsl(var(--outline-variant) / 0.15);
+  }
+
+  .ghost-border {
+    border: 1px solid hsl(var(--outline-variant) / 0.15);
+  }
+
+  .text-glow-primary {
+    text-shadow: 0 0 20px hsl(var(--primary) / 0.5), 0 0 60px hsl(var(--primary) / 0.2);
+  }
+
+  .text-glow-secondary {
+    text-shadow: 0 0 20px hsl(var(--secondary) / 0.5), 0 0 60px hsl(var(--secondary) / 0.2);
+  }
+
+  .neon-line {
+    background: linear-gradient(90deg, transparent, hsl(var(--primary)), transparent);
+  }
+
+  .gradient-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hover-glow {
+    transition: box-shadow 0.4s ease;
+  }
+  .hover-glow:hover {
+    box-shadow: 0 0 25px -5px hsl(var(--primary) / 0.4);
+  }
+
+  .label-tech {
+    @apply font-label text-xs uppercase tracking-[0.15em] text-muted-foreground;
+  }
+
+  .section-gap {
+    @apply py-24 md:py-36;
+  }
+
+  .status-dot {
+    @apply w-2 h-2 rounded-full bg-primary;
+    box-shadow: 0 0 8px hsl(var(--primary) / 0.6);
+    animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 1; box-shadow: 0 0 8px hsl(var(--primary) / 0.6); }
+    50% { opacity: 0.6; box-shadow: 0 0 16px hsl(var(--primary) / 0.8); }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  /* Grid overlay for HUD effect */
+  .hud-grid {
+    background-image: 
+      linear-gradient(hsl(var(--outline-variant) / 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--outline-variant) / 0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
