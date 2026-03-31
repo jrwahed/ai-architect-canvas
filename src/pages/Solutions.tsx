@@ -954,6 +954,11 @@ const Solutions = () => {
   const resultsInView = useInView(resultsRef, { once: true, margin: "-50px" });
   const { t, isAr } = useLanguage();
 
+  useEffect(() => {
+    document.title = "Solutions — Mohamed Waheed | AI Growth Systems";
+    return () => { document.title = "Mohamed Waheed | AI-Powered Growth Systems Builder"; };
+  }, []);
+
   // Sticky bar visibility — show after scrolling past selector
   const selectorEndRef = useRef<HTMLDivElement>(null);
   const pastSelector = useInView(selectorEndRef, { once: false, margin: "0px" });

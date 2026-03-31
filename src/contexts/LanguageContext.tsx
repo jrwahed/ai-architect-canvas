@@ -95,6 +95,7 @@ const translations: Record<string, Record<Lang, string>> = {
   "services.solution": { en: "The Solution", ar: "الحل" },
   "services.delivers": { en: "What you get", ar: "اللي بيتسلم" },
   "services.duration": { en: "Timeline", ar: "المدة" },
+  "services.bookCall": { en: "Book a Call →", ar: "احجز مكالمة ←" },
   
 
   "services.s1.title": { en: "AI-Powered Lead Generation", ar: "نظام توليد ومتابعة العملاء" },

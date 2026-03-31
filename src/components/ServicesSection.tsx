@@ -43,7 +43,7 @@ const ServicesSection = () => {
 
   return (
     <section id="services" className="section-gap relative" ref={ref}>
-      <div className="max-w-7xl mx-auto px-4 md:px-12">
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
         <motion.span
           initial={{ opacity: 0, x: -20 }}
           animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -168,7 +168,7 @@ const ServicesSection = () => {
                     rel="noopener noreferrer"
                     className="text-xs text-muted-foreground hover:text-primary transition-colors hover-glow rounded-lg px-3 py-1.5"
                   >
-                    Book a Call →
+                    {t("services.bookCall")}
                   </a>
                 </div>
               </motion.article>

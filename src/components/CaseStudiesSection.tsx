@@ -120,12 +120,12 @@ const CaseStudiesSection = () => {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ delay: 0.3 }}
-          className="text-muted-foreground max-w-xl mb-20 text-base leading-relaxed"
+          className="text-muted-foreground max-w-xl mb-12 md:mb-16 text-base leading-relaxed"
         >
           {t("cases.subtitle")}
         </motion.p>
 
-        <div className="space-y-32">
+        <div className="space-y-20 md:space-y-28">
           {cases.map((cs, i) => (
             <CaseStudyItem key={cs.tag} cs={cs} index={i} />
           ))}

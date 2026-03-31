@@ -202,9 +202,7 @@ const ExperienceCard = ({ exp, index }: { exp: typeof experiences[0]; index: num
         initial={{ opacity: 0, y: 30 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ delay: index * 0.15, duration: 0.5 }}
-        className="glass-panel rounded-2xl p-5 md:p-6 mb-6 flex-1 group hover:border-l-[3px] hover:border-l-primary/50 transition-all duration-300"
-        style={{ borderRadius: "16px" }}
-      >
+        className="glass-panel rounded-2xl p-5 md:p-6 mb-6 flex-1 group hover:border-l-[3px] hover:border-l-primary/50 transition-all duration-300"      >
         <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
           <div>
             <h3 className="font-headline text-sm md:text-base font-semibold text-foreground">
@@ -285,6 +283,11 @@ const CV = () => {
   const statsRef = useRef<HTMLDivElement>(null);
   const statsInView = useInView(statsRef, { once: true, margin: "-80px" });
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    document.title = "CV — Mohamed Waheed | AI Systems Architect";
+    return () => { document.title = "Mohamed Waheed | AI-Powered Growth Systems Builder"; };
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -550,9 +553,7 @@ const CV = () => {
                       borderColor: "hsl(184 100% 68% / 0.3)",
                       color: "hsl(184 100% 68%)",
                     }}
-                    className="glass-panel px-4 py-2 font-label text-sm text-foreground/80 cursor-default transition-all duration-200"
-                    style={{ borderRadius: "10px" }}
-                  >
+                    className="glass-panel px-4 py-2 font-label text-sm text-foreground/80 cursor-default transition-all duration-200"                  >
                     {tool}
                   </motion.span>
                 ))}

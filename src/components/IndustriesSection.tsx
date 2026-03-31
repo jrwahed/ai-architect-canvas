@@ -10,7 +10,6 @@ import {
   ShoppingCart,
   Code2,
   Zap,
-  TrendingUp,
   Clock,
   CheckCircle2,
 } from "lucide-react";
@@ -160,7 +159,7 @@ const IndustriesSection = () => {
         }}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-12">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
         <motion.span
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
@@ -173,7 +172,7 @@ const IndustriesSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
-          className="font-headline text-3xl md:text-5xl font-bold tracking-tight mb-3"
+          className="font-headline text-4xl md:text-6xl font-bold tracking-tight mb-3"
         >
           {t("industries.title")}{" "}
           <span className="gradient-text">{t("industries.titleHighlight")}</span>

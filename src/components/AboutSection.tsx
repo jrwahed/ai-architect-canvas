@@ -100,7 +100,7 @@ const AboutSection = () => {
                     animate={isInView ? { opacity: 1, scale: 1 } : {}}
                     transition={{ duration: 0.6, delay: 0.5 + i * 0.1 }}
                   >
-                    <div className="font-headline text-3xl md:text-4xl font-bold text-foreground">
+                    <div className="font-headline text-3xl md:text-4xl font-bold gradient-text">
                       {stat.value}
                     </div>
                     <div className="label-tech mt-2 text-primary/80">{stat.label}</div>
