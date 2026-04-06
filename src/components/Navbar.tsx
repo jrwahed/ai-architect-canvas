@@ -95,6 +95,18 @@ const Navbar = () => {
             <span>{lang === "en" ? "AR" : "EN"}</span>
           </motion.button>
 
+          {/* DriveLead link */}
+          <Link
+            to="/drivelead"
+            className={`hidden md:inline-flex px-4 py-2 text-xs font-label uppercase tracking-[0.15em] font-semibold ghost-border transition-all duration-300 ${
+              location.pathname === "/drivelead"
+                ? "text-primary border-primary/30"
+                : "text-muted-foreground hover:text-foreground hover:border-[hsl(var(--outline-variant)/0.4)]"
+            }`}
+          >
+            DriveLead
+          </Link>
+
           {/* Solutions — secondary CTA */}
           <Link
             to="/solutions"
@@ -149,6 +161,15 @@ const Navbar = () => {
           animate={{ opacity: 1, y: 0 }}
           className="md:hidden glass-panel px-6 py-6 space-y-4"
         >
+          <Link
+            to="/drivelead"
+            onClick={() => setMobileOpen(false)}
+            className={`block w-full text-left font-label text-sm uppercase tracking-[0.1em] transition-colors ${
+              location.pathname === "/drivelead" ? "text-primary" : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            DriveLead
+          </Link>
           <Link
             to="/solutions"
             onClick={() => setMobileOpen(false)}
