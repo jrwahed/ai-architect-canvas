@@ -95,6 +95,18 @@ const Navbar = () => {
             <span>{lang === "en" ? "AR" : "EN"}</span>
           </motion.button>
 
+          {/* FlowOS link */}
+          <Link
+            to="/flowos"
+            className={`hidden md:inline-flex px-4 py-2 text-xs font-label uppercase tracking-[0.15em] font-semibold ghost-border transition-all duration-300 ${
+              location.pathname === "/flowos"
+                ? "text-primary border-primary/30"
+                : "text-muted-foreground hover:text-foreground hover:border-[hsl(var(--outline-variant)/0.4)]"
+            }`}
+          >
+            FlowOS
+          </Link>
+
           {/* DriveLead link */}
           <Link
             to="/drivelead"
@@ -161,6 +173,15 @@ const Navbar = () => {
           animate={{ opacity: 1, y: 0 }}
           className="md:hidden glass-panel px-6 py-6 space-y-4"
         >
+          <Link
+            to="/flowos"
+            onClick={() => setMobileOpen(false)}
+            className={`block w-full text-left font-label text-sm uppercase tracking-[0.1em] transition-colors ${
+              location.pathname === "/flowos" ? "text-primary" : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            FlowOS
+          </Link>
           <Link
             to="/drivelead"
             onClick={() => setMobileOpen(false)}

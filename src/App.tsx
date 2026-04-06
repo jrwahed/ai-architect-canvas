@@ -8,6 +8,7 @@ import Index from "./pages/Index.tsx";
 import Solutions from "./pages/Solutions.tsx";
 import CV from "./pages/CV.tsx";
 import DriveLead from "./pages/DriveLead.tsx";
+import FlowOS from "./pages/FlowOS.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
             <Route path="/solutions" element={<Solutions />} />
             <Route path="/cv" element={<CV />} />
             <Route path="/drivelead" element={<DriveLead />} />
+            <Route path="/flowos" element={<FlowOS />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
