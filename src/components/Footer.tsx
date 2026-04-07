@@ -21,12 +21,13 @@ const Footer = () => {
               { label: "LinkedIn", href: "https://www.linkedin.com/in/moohamedwaheed/" },
               { label: "WhatsApp", href: "https://wa.me/201148627137" },
               { label: "Email", href: "mailto:moohamedwahed@gmail.com" },
+              { label: "DriveLead", href: "/drivelead" },
             ].map((link) => (
               <motion.a
                 key={link.label}
                 href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
+                target={link.href.startsWith("/") ? undefined : "_blank"}
+                rel={link.href.startsWith("/") ? undefined : "noopener noreferrer"}
                 whileHover={{ color: "hsl(184, 100%, 68%)" }}
                 className="label-tech text-[10px] text-muted-foreground transition-colors"
               >

@@ -3,15 +3,15 @@ type Lang = "en" | "ar";
 const fl: Record<string, Record<Lang, string>> = {
   // ─── Hero ───
   "hero.badge": {
-    en: "Limited Launch — 10 Spots Left This Month",
-    ar: "إطلاق محدود — ١٠ أماكن فاضلة الشهر ده",
+    en: "AI CRM & Automation Platform",
+    ar: "منصة AI للـ CRM والأتمتة",
   },
   "hero.line1": { en: "Your business is bleeding", ar: "شركتك بتخسر ليدز،" },
   "hero.line2": { en: "leads, time, and money.", ar: "وقت، وفلوس." },
   "hero.line3": { en: "FlowOS stops it — automatically.", ar: "FlowOS بيوقف ده — تلقائياً." },
   "hero.subtitle": {
-    en: "One AI-powered platform that captures every lead, runs your CRM, automates your follow-ups, and gives you a live dashboard to see everything — built for Real Estate, Car Dealerships, and Marketing Agencies in Egypt & Gulf.",
-    ar: "منصة AI واحدة بتستقبل كل الليدز، بتدير الـ CRM، بتعمل المتابعة تلقائي، وبتديك داشبورد لايف تشوف فيه كل حاجة — متصممة للعقارات، معارض السيارات، ووكالات التسويق في مصر والخليج.",
+    en: "One AI-powered platform that captures every lead, runs your CRM, automates your follow-ups, and gives you a live dashboard to see everything — built for any company with an active sales and marketing team in Egypt & Gulf.",
+    ar: "منصة AI واحدة بتستقبل كل الليدز، بتدير الـ CRM، بتعمل المتابعة تلقائي، وبتديك داشبورد لايف تشوف فيه كل حاجة — متصممة لأي شركة عندها حركة في المبيعات والتسويق في مصر والخليج.",
   },
   "hero.cta1": { en: "See Pricing & Demo →", ar: "شوف السعر والتجربة ←" },
   "hero.cta2": { en: "Who Built This? →", ar: "مين عمل ده؟ ←" },
@@ -188,8 +188,12 @@ const fl: Record<string, Record<Lang, string>> = {
   "report.6.freq": { en: "Weekly AI-generated", ar: "أسبوعي من الـ AI" },
 
   // ─── Industries ───
-  "ind.label": { en: "// Industries", ar: "// القطاعات" },
-  "ind.title": { en: "One platform. Customized for your industry.", ar: "منصة واحدة. متخصصة لصناعتك." },
+  "ind.label": { en: "// Examples", ar: "// أمثلة" },
+  "ind.title": { en: "Works for any industry. Here's where we've proven it.", ar: "بيشتغل مع أي صناعة. وده أين أثبتنا ده." },
+  "ind.subtitle": {
+    en: "These are examples of industries where FlowOS is already running — but the platform adapts to any business that has leads, a sales team, and needs visibility.",
+    ar: "دي أمثلة لصناعات FlowOS شغّال فيها فعلاً — بس المنصة بتتكيّف مع أي شركة عندها ليدز، فريق مبيعات، ومحتاجة رؤية.",
+  },
   "ind.re.title": { en: "Real Estate", ar: "العقارات" },
   "ind.re.sub": { en: "Built and proven in the Egyptian real estate market", ar: "مبني ومثبت في السوق العقاري المصري" },
   "ind.re.f1": { en: "Facebook & Google lead auto-capture", ar: "استقطاب ليدز فيسبوك وجوجل تلقائي" },
@@ -278,14 +282,35 @@ const fl: Record<string, Record<Lang, string>> = {
   // ─── Final CTA ───
   "cta.title": { en: "Your competitors are already using AI.", ar: "منافسيك بيستخدموا الـ AI دلوقتي." },
   "cta.subtitle": {
-    en: "Every day without a system is a day of lost leads, burned budget, and missed deals. Let's fix that.",
-    ar: "كل يوم من غير سيستم ده يوم ليدز ضايعة، ميزانية محترقة، وصفقات فاتت. خلينا نصلح ده.",
+    en: "Whether you're in real estate, automotive, services, or any field — every day without a system is leads lost, budget burned, and deals missed.",
+    ar: "سواء في العقارات، السيارات، الخدمات، أو أي مجال — كل يوم من غير سيستم ده ليدز ضايعة، ميزانية محترقة، وصفقات فاتت.",
   },
   "cta.btn1": { en: "See Pricing & Book a Demo →", ar: "شوف السعر واحجز عرض ←" },
   "cta.btn2": { en: "About Mohamed Waheed & His Services →", ar: "تعرف على محمد وحيد وخدماته ←" },
   "cta.trust1": { en: "No commitment", ar: "من غير التزام" },
   "cta.trust2": { en: "30-min free call", ar: "مكالمة ٣٠ دقيقة مجانية" },
   "cta.trust3": { en: "Results in 30 days", ar: "نتايج في ٣٠ يوم" },
+
+  // ─── New CTA Section (replaces pricing) ───
+  "newcta.urgency": {
+    en: "Limited spots — 10 companies this month",
+    ar: "أماكن محدودة — ١٠ شركات الشهر ده",
+  },
+  "newcta.headline1": { en: "Stop guessing.", ar: "خلاص متخمنش." },
+  "newcta.headline2": { en: "Start closing deals.", ar: "ابدأ تقفل Deals." },
+  "newcta.sub": {
+    en: "Book a free 30-minute call. We'll analyze your current situation and show you exactly how FlowOS will change your results.",
+    ar: "احجز مكالمة مجانية ٣٠ دقيقة. هنحلل وضعك الحالي ونوريك بالظبط إزاي FlowOS هيغير نتايجك.",
+  },
+  "newcta.referral": {
+    en: "🤝 Refer a company → You get 20% off, they get 10% off",
+    ar: "🤝 جيب شركة ← أنت بتاخد ٢٠٪ خصم، وهما ١٠٪",
+  },
+  "newcta.btn1": { en: "See Pricing & Book a Demo →", ar: "شوف السعر واحجز عرض ←" },
+  "newcta.btn2": { en: "About Mohamed Waheed & Services →", ar: "تعرف على محمد وحيد وخدماته ←" },
+  "newcta.trust1": { en: "No commitment", ar: "من غير أي التزام" },
+  "newcta.trust2": { en: "30 min free call", ar: "٣٠ دقيقة مجانية" },
+  "newcta.trust3": { en: "Results in 30 days", ar: "نتايج في ٣٠ يوم" },
 };
 
 export default fl;

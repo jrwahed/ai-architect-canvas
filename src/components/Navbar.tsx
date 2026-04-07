@@ -107,18 +107,6 @@ const Navbar = () => {
             FlowOS
           </Link>
 
-          {/* DriveLead link */}
-          <Link
-            to="/drivelead"
-            className={`hidden md:inline-flex px-4 py-2 text-xs font-label uppercase tracking-[0.15em] font-semibold ghost-border transition-all duration-300 ${
-              location.pathname === "/drivelead"
-                ? "text-primary border-primary/30"
-                : "text-muted-foreground hover:text-foreground hover:border-[hsl(var(--outline-variant)/0.4)]"
-            }`}
-          >
-            DriveLead
-          </Link>
-
           {/* Solutions — secondary CTA */}
           <Link
             to="/solutions"
@@ -186,7 +174,7 @@ const Navbar = () => {
             to="/drivelead"
             onClick={() => setMobileOpen(false)}
             className={`block w-full text-left font-label text-sm uppercase tracking-[0.1em] transition-colors ${
-              location.pathname === "/drivelead" ? "text-primary" : "text-muted-foreground hover:text-foreground"
+              location.pathname === "/drivelead" ? "text-primary" : "text-muted-foreground/60 hover:text-muted-foreground"
             }`}
           >
             DriveLead

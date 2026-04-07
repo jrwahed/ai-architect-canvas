@@ -4,7 +4,7 @@ import {
   Bot, BarChart3, Users, TrendingUp, TrendingDown,
   Clock, Database, Building2, Megaphone, Zap, Layers,
   CheckCircle2, DollarSign, MessageCircle, Inbox,
-  Car, ArrowRight, RefreshCw, Check, ChevronRight,
+  Car, ArrowRight, RefreshCw, Check, ChevronRight, User,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -89,7 +89,7 @@ const FlowOS = () => {
       <FlowMindSection t={t} isAr={isAr} />
       <ReportsSection t={t} isAr={isAr} />
       <IndustriesSection t={t} isAr={isAr} />
-      <PricingSection t={t} isAr={isAr} />
+      <ReadyCTASection t={t} isAr={isAr} />
       <FinalCTASection t={t} isAr={isAr} />
       <Footer />
     </motion.div>
@@ -889,6 +889,7 @@ const IndustriesSection = ({ t }: SP) => {
     <S id="industries" className="py-24 md:py-32 max-w-7xl mx-auto px-6 md:px-12">
       <p className="label-tech text-primary text-[11px] mb-4">{t("ind.label")}</p>
       <h2 className="font-headline text-3xl md:text-5xl font-bold max-w-3xl">{t("ind.title")}</h2>
+      <p className="text-muted-foreground text-lg mt-4 max-w-2xl">{t("ind.subtitle")}</p>
 
       <div className="space-y-6 mt-12">
         {industries.map((ind, i) => (
@@ -936,90 +937,70 @@ const IndustriesSection = ({ t }: SP) => {
 };
 
 /* ════════════════════════════════════════
-   SECTION 11 — PRICING + REFERRAL
+   SECTION 11 — READY CTA
    ════════════════════════════════════════ */
-const PricingSection = ({ t }: SP) => {
-  const plans = [
-    { k: "starter", features: ["f1", "f2", "f3", "f4", "f5"], highlight: false },
-    { k: "pro", features: ["f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9"], highlight: true },
-    { k: "ent", features: ["f1", "f2", "f3", "f4", "f5", "f6"], highlight: false },
-  ];
+const ReadyCTASection = ({ t }: SP) => (
+  <S id="ready" className="py-24 md:py-32 relative overflow-hidden">
+    <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at center, hsl(184 100% 68% / 0.06), transparent 70%)" }} />
 
-  return (
-    <S id="pricing" className="py-24 md:py-32 max-w-7xl mx-auto px-6 md:px-12">
-      <p className="label-tech text-primary text-[11px] mb-4">{t("price.label")}</p>
-      <h2 className="font-headline text-3xl md:text-5xl font-bold text-center">{t("price.title")}</h2>
-
-      {/* Urgency banner */}
-      <div className="rounded-2xl p-4 mt-8 mb-8 flex items-center justify-between flex-wrap gap-3"
+    <div className="max-w-3xl mx-auto px-6 md:px-12 text-center relative z-10">
+      {/* Urgency badge */}
+      <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+        className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8"
         style={{ background: "hsl(45 100% 60% / 0.08)", border: "1px solid hsl(45 100% 60% / 0.25)" }}>
-        <div className="flex items-center gap-3">
-          <span className="text-xl">⚡</span>
-          <div>
-            <div className="font-semibold text-foreground text-sm">{t("price.urgency.title")}</div>
-            <div className="label-tech text-[10px] text-muted-foreground">{t("price.urgency.sub")}</div>
-          </div>
-        </div>
-        <div className="flex items-center gap-2 px-4 py-2 rounded-xl" style={{ background: "hsl(45 100% 60% / 0.15)" }}>
-          <span className="font-headline font-bold text-amber-400 text-lg">7</span>
-          <span className="label-tech text-[10px] text-amber-400/80">{t("price.spotsLeft")}</span>
-        </div>
+        <span className="status-dot bg-amber-400" />
+        <span className="label-tech text-[10px] text-amber-400">{t("newcta.urgency")}</span>
+      </motion.div>
+
+      <h2 className="font-headline text-3xl md:text-5xl font-bold">
+        {t("newcta.headline1")} <span className="gradient-text">{t("newcta.headline2")}</span>
+      </h2>
+      <p className="text-muted-foreground text-lg mt-4 max-w-xl mx-auto">{t("newcta.sub")}</p>
+
+      {/* Referral nudge */}
+      <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+        className="mt-8 inline-flex items-center gap-2 px-5 py-3 rounded-2xl"
+        style={{ background: "hsl(var(--primary) / 0.05)", border: "1px solid hsl(var(--primary) / 0.15)" }}>
+        <User size={16} className="text-primary" />
+        <span className="text-sm text-muted-foreground">{t("newcta.referral")}</span>
+      </motion.div>
+
+      {/* CTA buttons */}
+      <div className="flex flex-wrap justify-center gap-4 mt-8">
+        <motion.a
+          href="https://wa.me/201148627137?text=%D8%B9%D8%A7%D9%88%D8%B2%20%D8%A3%D8%B4%D9%88%D9%81%20FlowOS%20%D9%88%D8%A3%D8%B9%D8%B1%D9%81%20%D8%A7%D9%84%D8%B3%D8%B9%D8%B1"
+          target="_blank" rel="noopener noreferrer"
+          whileHover={{ scale: 1.02, boxShadow: "0 0 30px -5px hsl(184 100% 68% / 0.5)" }}
+          whileTap={{ scale: 0.97 }}
+          className="px-8 py-4 font-label text-xs uppercase tracking-[0.15em] font-semibold bg-primary text-primary-foreground inline-flex items-center gap-2 hover-glow"
+        >
+          <MessageCircle size={16} />
+          {t("newcta.btn1")}
+        </motion.a>
+
+        <motion.a
+          href="https://wa.me/201148627137?text=%D8%B9%D8%A7%D9%88%D8%B2%20%D8%A3%D8%B4%D9%88%D9%81%20FlowOS%20demo"
+          target="_blank" rel="noopener noreferrer"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.97 }}
+          className="px-8 py-4 font-label text-xs uppercase tracking-[0.15em] font-semibold ghost-border text-foreground hover:border-primary/30 inline-flex items-center gap-2"
+        >
+          {t("newcta.btn2")}
+        </motion.a>
       </div>
 
-      {/* Pricing cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {plans.map((plan, i) => (
-          <motion.div key={plan.k} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-            className={`rounded-2xl p-6 md:p-8 flex flex-col relative ${plan.highlight ? "scale-[1.02]" : ""}`}
-            style={{
-              background: plan.highlight ? "linear-gradient(135deg, hsl(var(--surface-container) / 0.8), hsl(var(--primary) / 0.05))" : "hsl(var(--surface-container) / 0.5)",
-              border: plan.highlight ? "2px solid hsl(var(--primary) / 0.5)" : "1px solid hsl(var(--outline-variant) / 0.15)",
-              boxShadow: plan.highlight ? "0 0 30px -10px hsl(var(--primary) / 0.3)" : "none",
-            }}>
-            {plan.highlight && (
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary text-primary-foreground label-tech text-[10px] rounded-full">{t("price.popular")}</div>
-            )}
-            <h3 className="font-headline text-xl font-bold mt-2">{t(`price.${plan.k}.name`)}</h3>
-            <div className="font-headline text-2xl md:text-3xl font-bold gradient-text mt-2">{t(`price.${plan.k}.price`)}</div>
-            <p className="text-sm text-muted-foreground mt-2">{t(`price.${plan.k}.desc`)}</p>
-
-            <ul className="space-y-2.5 mt-6 text-start flex-1">
-              {plan.features.map((f) => (
-                <li key={f} className="flex items-start gap-2 text-sm text-muted-foreground">
-                  <Check size={14} className="text-primary shrink-0 mt-0.5" />
-                  {t(`price.${plan.k}.${f}`)}
-                </li>
-              ))}
-            </ul>
-
-            <motion.a href="https://wa.me/201148627137" target="_blank" rel="noopener noreferrer"
-              whileHover={{ scale: 1.02, boxShadow: plan.highlight ? "0 0 25px -5px hsl(184 100% 68% / 0.4)" : "none" }}
-              whileTap={{ scale: 0.97 }}
-              className={`mt-6 py-3 font-label text-xs uppercase tracking-[0.15em] font-semibold text-center block ${
-                plan.highlight ? "bg-primary text-primary-foreground" : "ghost-border text-foreground hover:border-primary/30"
-              }`}>
-              {t(`price.${plan.k}.cta`)}
-            </motion.a>
-          </motion.div>
+      {/* Trust row */}
+      <div className="flex flex-wrap justify-center gap-6 mt-10">
+        {["trust1", "trust2", "trust3"].map((k) => (
+          <div key={k} className="flex items-center gap-2">
+            <CheckCircle2 size={14} className="text-primary" />
+            <span className="text-sm text-muted-foreground">{t(`newcta.${k}`)}</span>
+          </div>
         ))}
       </div>
-
-      {/* Referral */}
-      <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-        className="mt-12 rounded-2xl p-8 text-center" style={{ background: "hsl(var(--primary) / 0.05)", border: "1px solid hsl(var(--primary) / 0.15)" }}>
-        <div className="text-3xl mb-4">🤝</div>
-        <h3 className="font-headline text-2xl font-bold mb-2">{t("price.referral.title")}</h3>
-        <p className="text-muted-foreground max-w-lg mx-auto mb-6">{t("price.referral.desc")}</p>
-        <motion.a href="https://wa.me/201148627137?text=%D8%B9%D9%86%D8%AF%D9%8A%20%D8%A7%D8%AD%D8%A7%D9%84%D8%A9" target="_blank" rel="noopener noreferrer"
-          whileHover={{ scale: 1.02, boxShadow: "0 0 25px -5px hsl(184 100% 68% / 0.4)" }}
-          whileTap={{ scale: 0.97 }}
-          className="inline-block px-8 py-4 bg-primary text-primary-foreground font-label text-xs uppercase tracking-[0.15em] font-semibold hover-glow">
-          {t("price.referral.cta")}
-        </motion.a>
-      </motion.div>
-    </S>
-  );
-};
+    </div>
+  </S>
+);
 
 /* ════════════════════════════════════════
    SECTION 12 — FINAL CTA

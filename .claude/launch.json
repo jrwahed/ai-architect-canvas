@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "dev",
-      "runtimeExecutable": "/usr/local/bin/npx",
-      "runtimeArgs": ["vite", "--port", "8080"],
+      "runtimeExecutable": "/usr/local/bin/node",
+      "runtimeArgs": ["node_modules/.bin/vite", "--port", "8080"],
       "port": 8080
     }
   ]
