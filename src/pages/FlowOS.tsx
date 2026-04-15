@@ -5,6 +5,7 @@ import {
   Clock, Database, Building2, Megaphone, Zap, Layers,
   CheckCircle2, DollarSign, MessageCircle, Inbox,
   Car, ArrowRight, RefreshCw, Check, ChevronRight, User,
+  Brain, Eye,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -88,6 +89,7 @@ const FlowOS = () => {
       <ScoringSection t={t} isAr={isAr} />
       <FlowMindSection t={t} isAr={isAr} />
       <ReportsSection t={t} isAr={isAr} />
+      <MoreCapabilitiesSection t={t} isAr={isAr} />
       <IndustriesSection t={t} isAr={isAr} />
       <ReadyCTASection t={t} isAr={isAr} />
       <FinalCTASection t={t} isAr={isAr} />
@@ -876,7 +878,248 @@ const ReportsSection = ({ t }: SP) => {
 };
 
 /* ════════════════════════════════════════
-   SECTION 10 — INDUSTRIES
+   SECTION 10 — MORE CAPABILITIES
+   ════════════════════════════════════════ */
+const MoreCapabilitiesSection = ({ t, isAr }: SP) => {
+  const taskMembers = [
+    { name: "Sara Ahmed", tasks: 5, done: 5, score: 98, label: "On Fire 🔥" },
+    { name: "Ahmed Khaled", tasks: 7, done: 4, score: 71, label: "On Track" },
+    { name: "Omar Hassan", tasks: 8, done: 2, score: 38, label: "Overloaded ⚠️" },
+  ];
+
+  const competitors = [
+    { name: "Competitor A", threat: "High", change: "Launched new offer — 20% discount", score: 85 },
+    { name: "Competitor B", threat: "Medium", change: "Increased ad spend on Facebook", score: 60 },
+    { name: "Competitor C", threat: "Low", change: "No significant changes this week", score: 25 },
+  ];
+
+  const hoverStyle = { y: -6, boxShadow: "0 20px 60px -20px hsl(var(--primary) / 0.2)" };
+  const cardTransition = { duration: 0.4, ease: "easeOut" };
+
+  return (
+    <S id="capabilities" className="py-24 md:py-32 max-w-7xl mx-auto px-6 md:px-12">
+      <p className="label-tech text-primary text-[11px] mb-4">{t("feat2.label")}</p>
+      <h2 className="font-headline text-3xl md:text-5xl font-bold max-w-3xl">
+        <span className="text-muted-foreground">{t("feat2.headline1")}</span><br />
+        <span className="gradient-text">{t("feat2.headline2")}</span>
+      </h2>
+      <p className="text-muted-foreground text-lg mt-4 max-w-2xl">{t("feat2.subtitle")}</p>
+
+      {/* ── CARD 1 — Task Intelligence ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        whileHover={hoverStyle}
+        className="glass-panel rounded-2xl mt-14 overflow-hidden"
+        style={{ border: "1px solid hsl(var(--outline-variant) / 0.12)", borderLeft: "4px solid hsl(var(--primary) / 0.5)", minHeight: "500px", transition: "all 0.4s ease" }}
+      >
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-0">
+          {/* Text side */}
+          <div className="md:col-span-5 p-6 md:p-8 flex flex-col justify-center">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg glass-panel w-fit mb-5" style={{ background: "hsl(var(--primary) / 0.1)" }}>
+              <Brain size={14} className="text-primary" />
+              <span className="label-tech text-[10px] text-primary">{t("feat2.task.tag")}</span>
+            </div>
+
+            <h3 className="font-headline text-xl md:text-2xl font-bold leading-tight mb-4">
+              {t("feat2.task.h1")}<br />{t("feat2.task.h2")}
+            </h3>
+
+            <p className="text-sm text-muted-foreground leading-relaxed mb-6 whitespace-pre-line">{t("feat2.task.desc")}</p>
+
+            <div className="space-y-2.5">
+              {["b1", "b2", "b3", "b4"].map((b) => (
+                <div key={b} className="flex items-center gap-2">
+                  <CheckCircle2 size={14} className="text-primary shrink-0" />
+                  <span className="text-sm text-muted-foreground">{t(`feat2.task.${b}`)}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Visual mockup side */}
+          <div className="md:col-span-7 p-5 md:p-6">
+            <div className="glass-panel rounded-2xl p-5 h-full" style={{ border: "1px solid hsl(var(--primary)/0.15)" }}>
+              {/* Header */}
+              <div className="flex items-center justify-between mb-5">
+                <div>
+                  <h4 className="font-headline font-bold text-foreground text-sm">Team Intelligence</h4>
+                  <span className="label-tech text-[10px] text-muted-foreground">Today • April 9</span>
+                </div>
+                <div className="flex items-center gap-1.5 px-3 py-1 rounded-lg" style={{ background: "hsl(var(--primary)/0.1)", border: "1px solid hsl(var(--primary)/0.2)" }}>
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                  <span className="label-tech text-[9px] text-primary">LIVE</span>
+                </div>
+              </div>
+
+              {/* Morning check-in */}
+              <div className="mb-4 p-3 rounded-xl" style={{ background: "hsl(var(--surface-container-low)/0.5)" }}>
+                <span className="label-tech text-[9px] text-muted-foreground block mb-2">🌅 Morning Check-in — 9:02 AM</span>
+                <div className="text-xs text-foreground/80 italic">
+                  "اليوم: هخلص proposal لـ Client A، هرد على 3 leads من أمس، هحضر اجتماع الساعة 3"
+                </div>
+                <div className="mt-2 flex items-center gap-1.5">
+                  <span className="label-tech text-[9px] text-primary">✓ AI received • Tasks entered • Priorities set</span>
+                </div>
+              </div>
+
+              {/* Team members */}
+              <div className="space-y-2.5 mb-4">
+                {taskMembers.map((member) => (
+                  <div key={member.name} className="flex items-center gap-3 p-3 rounded-xl glass-panel">
+                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center font-headline font-bold text-primary text-xs shrink-0">
+                      {member.name.split(" ").map((n) => n[0]).join("")}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs font-semibold text-foreground truncate">{member.name}</span>
+                        <span className="label-tech text-[9px] text-muted-foreground shrink-0">{member.done}/{member.tasks} tasks</span>
+                      </div>
+                      <div className="w-full h-1.5 rounded-full" style={{ background: "hsl(var(--outline-variant)/0.2)" }}>
+                        <motion.div
+                          className="h-full rounded-full"
+                          style={{ background: member.score > 80 ? "hsl(184 100% 68%)" : member.score > 50 ? "hsl(45 100% 60%)" : "hsl(var(--destructive))" }}
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${member.score}%` }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 1, delay: 0.3 }}
+                        />
+                      </div>
+                    </div>
+                    <div className="shrink-0">
+                      <span className="font-headline font-bold text-sm" style={{ color: member.score > 80 ? "hsl(184 100% 68%)" : member.score > 50 ? "hsl(45 100% 60%)" : "hsl(var(--destructive))" }}>
+                        {member.score}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* AI Insight */}
+              <div className="p-3 rounded-xl" style={{ background: "hsl(var(--primary)/0.06)", border: "1px solid hsl(var(--primary)/0.15)" }}>
+                <div className="flex items-start gap-2">
+                  <Bot size={14} className="text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <span className="label-tech text-[9px] text-primary block mb-1">AI Insight</span>
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      Omar is overloaded — 2 tasks auto-reassigned to Sara. Recommend check-in call today.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* ── CARD 2 — Competitor Intelligence ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+        whileHover={hoverStyle}
+        className="glass-panel rounded-2xl mt-8 overflow-hidden"
+        style={{ border: "1px solid hsl(var(--outline-variant) / 0.12)", borderLeft: "4px solid hsl(270 60% 60% / 0.5)", minHeight: "500px", transition: "all 0.4s ease" }}
+      >
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-0">
+          {/* Visual mockup side (LEFT on desktop, below on mobile) */}
+          <div className="md:col-span-7 p-5 md:p-6 order-2 md:order-1">
+            <div className="glass-panel rounded-2xl p-5 h-full" style={{ border: "1px solid hsl(270 60% 60% / 0.15)" }}>
+              {/* Header */}
+              <div className="flex items-center justify-between mb-5">
+                <div>
+                  <h4 className="font-headline font-bold text-foreground text-sm">Competitor Radar</h4>
+                  <span className="label-tech text-[10px] text-muted-foreground">Last scan: 2 hours ago</span>
+                </div>
+                <div className="flex items-center gap-1.5 px-3 py-1 rounded-lg" style={{ background: "hsl(270 60% 60% / 0.1)", border: "1px solid hsl(270 60% 60% / 0.2)" }}>
+                  <Eye size={10} className="text-purple-400" />
+                  <span className="label-tech text-[9px] text-purple-400">MONITORING</span>
+                </div>
+              </div>
+
+              {/* Competitor cards */}
+              <div className="space-y-2 mb-4">
+                {competitors.map((comp) => (
+                  <div key={comp.name} className="p-3 rounded-xl glass-panel">
+                    <div className="flex items-start justify-between gap-2 mb-2">
+                      <div className="flex items-center gap-2">
+                        <div className="w-7 h-7 rounded-lg glass-panel flex items-center justify-center font-headline font-bold text-muted-foreground text-[10px] shrink-0">
+                          {comp.name.split(" ").pop()?.[0]}
+                        </div>
+                        <span className="text-xs font-semibold text-foreground">{comp.name}</span>
+                      </div>
+                      <span
+                        className="label-tech text-[9px] shrink-0 px-2 py-0.5 rounded-md"
+                        style={{
+                          background: comp.threat === "High" ? "hsl(var(--destructive)/0.1)" : comp.threat === "Medium" ? "hsl(45 100% 60% / 0.1)" : "hsl(var(--primary)/0.1)",
+                          color: comp.threat === "High" ? "hsl(var(--destructive))" : comp.threat === "Medium" ? "hsl(45 100% 60%)" : "hsl(var(--primary))",
+                        }}
+                      >
+                        {comp.threat} Threat
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-muted-foreground leading-relaxed">🔍 {comp.change}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* AI Opportunity */}
+              <div className="p-3 rounded-xl mb-3" style={{ background: "hsl(270 60% 60% / 0.06)", border: "1px solid hsl(270 60% 60% / 0.15)" }}>
+                <div className="flex items-start gap-2">
+                  <Zap size={14} className="text-purple-400 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="label-tech text-[9px] text-purple-400 block mb-1">AI Opportunity Detected</span>
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      Competitor A's discount targets budget segment. Your premium positioning is untouched — push quality messaging this week.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Weekly report badge */}
+              <div className="flex items-center justify-between p-3 rounded-xl glass-panel">
+                <div className="flex items-center gap-2">
+                  <BarChart3 size={14} className="text-purple-400" />
+                  <span className="text-xs text-foreground font-semibold">Weekly Intel Report</span>
+                </div>
+                <span className="label-tech text-[9px] text-purple-400">Auto-generated ✓</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Text side (RIGHT on desktop, top on mobile) */}
+          <div className="md:col-span-5 p-6 md:p-8 flex flex-col justify-center order-1 md:order-2">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg glass-panel w-fit mb-5" style={{ background: "hsl(270 60% 60% / 0.1)" }}>
+              <Eye size={14} className="text-purple-400" />
+              <span className="label-tech text-[10px] text-purple-400">{t("feat2.comp.tag")}</span>
+            </div>
+
+            <h3 className="font-headline text-xl md:text-2xl font-bold leading-tight mb-4">
+              {t("feat2.comp.h1")}<br />{t("feat2.comp.h2")}
+            </h3>
+
+            <p className="text-sm text-muted-foreground leading-relaxed mb-6 whitespace-pre-line">{t("feat2.comp.desc")}</p>
+
+            <div className="space-y-2.5">
+              {["b1", "b2", "b3", "b4"].map((b) => (
+                <div key={b} className="flex items-center gap-2">
+                  <CheckCircle2 size={14} className="text-purple-400 shrink-0" />
+                  <span className="text-sm text-muted-foreground">{t(`feat2.comp.${b}`)}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </S>
+  );
+};
+
+/* ════════════════════════════════════════
+   SECTION 11 — INDUSTRIES
    ════════════════════════════════════════ */
 const IndustriesSection = ({ t }: SP) => {
   const industries = [

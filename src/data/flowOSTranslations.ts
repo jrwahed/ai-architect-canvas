@@ -311,6 +311,41 @@ const fl: Record<string, Record<Lang, string>> = {
   "newcta.trust1": { en: "No commitment", ar: "من غير أي التزام" },
   "newcta.trust2": { en: "30 min free call", ar: "٣٠ دقيقة مجانية" },
   "newcta.trust3": { en: "Results in 30 days", ar: "نتايج في ٣٠ يوم" },
+
+  // ─── More Capabilities (Task Intelligence + Competitor Intelligence) ───
+  "feat2.label": { en: "// More Capabilities", ar: "// قدرات إضافية" },
+  "feat2.headline1": { en: "FlowOS doesn't stop at leads.", ar: "FlowOS مش بيوقف عند الليدز." },
+  "feat2.headline2": { en: "It runs your entire operation.", ar: "بيدير عمليات شركتك كلها." },
+  "feat2.subtitle": {
+    en: "Two modules that change how your team works and how you see your competition — every single day.",
+    ar: "موديلان بيغيروا طريقة شغل فريقك وطريقة شوفتك للمنافسين — كل يوم.",
+  },
+
+  // Card 1 — Task Intelligence
+  "feat2.task.tag": { en: "Team Operating System", ar: "نظام تشغيل الفريق" },
+  "feat2.task.h1": { en: "Your team. Fully visible.", ar: "فريقك. واضح بالكامل." },
+  "feat2.task.h2": { en: "Every day. No meetings needed.", ar: "كل يوم. من غير اجتماعات." },
+  "feat2.task.desc": {
+    en: "Every morning, each team member opens FlowOS and logs their tasks for the day. n8n automation receives the input, enters it into the system, and the AI assigns priorities and distributes overloaded tasks automatically.\n\nEvery evening, they log what they actually did. The AI analyzes the gap, scores their productivity, and surfaces insights — who needs support, who's overloaded, what's blocking progress.\n\nThe manager wakes up to a full team intelligence report. No chasing. No guessing.",
+    ar: "كل صبح، كل عضو في الفريق بيفتح FlowOS وبيسجل مهامه للنهارده. الـ n8n automation بيستلم الإدخال، بيدخله السيستم، والـ AI بيحدد الأولويات ويوزع المهام الزايدة تلقائياً.\n\nكل مساء، بيسجلوا إيه اللي عملوه فعلاً. الـ AI بيحلل الفرق، بيدي كل عضو تقييم أداء، وبيطلع insights — مين محتاج دعم، مين مضغوط، إيه اللي بيعيق التقدم.\n\nالمدير بيصحى على تقرير ذكاء كامل عن الفريق. من غير متابعة. من غير تخمين.",
+  },
+  "feat2.task.b1": { en: "Morning task log via n8n automation", ar: "تسجيل مهام الصبح عبر n8n automation" },
+  "feat2.task.b2": { en: "AI auto-assigns & redistributes overloaded tasks", ar: "الـ AI بيوزع ويعيد توزيع المهام الزايدة تلقائياً" },
+  "feat2.task.b3": { en: "Evening AI performance scoring per member", ar: "تقييم أداء مسائي بالـ AI لكل عضو" },
+  "feat2.task.b4": { en: "Manager dashboard: full team visibility daily", ar: "داشبورد المدير: رؤية كاملة للفريق يومياً" },
+
+  // Card 2 — Competitor Intelligence
+  "feat2.comp.tag": { en: "Competitor Intelligence", ar: "استخبارات المنافسين" },
+  "feat2.comp.h1": { en: "Know your competition", ar: "اعرف منافسيك" },
+  "feat2.comp.h2": { en: "before they make their move.", ar: "قبل ما يتحركوا." },
+  "feat2.comp.desc": {
+    en: "FlowOS automation runs 24/7 collecting competitor data — their ads, content, offers, pricing, and market positioning. The AI analyzes every change, maps the competitive landscape visually, and delivers a weekly intelligence report with one clear answer: where is your opportunity to win?\n\nNo manual research. No guessing. Pure data-driven competitive advantage.",
+    ar: "أتمتة FlowOS بتشتغل ٢٤/٧ وبتجمع بيانات المنافسين — إعلاناتهم، محتواهم، عروضهم، أسعارهم، وتموضعهم في السوق. الـ AI بيحلل كل تغيير، بيرسم خريطة بصرية للمنافسة، وبيسلم تقرير استخباراتي أسبوعي بإجابة واحدة واضحة: فين فرصتك تكسب؟\n\nمفيش بحث يدوي. مفيش تخمين. ميزة تنافسية مبنية على بيانات حقيقية.",
+  },
+  "feat2.comp.b1": { en: "Automated daily competitor data collection", ar: "جمع بيانات المنافسين يومياً بالأتمتة" },
+  "feat2.comp.b2": { en: "AI-powered competitive landscape mapping", ar: "رسم خريطة المنافسة بالـ AI" },
+  "feat2.comp.b3": { en: "Weekly intelligence report with attack opportunities", ar: "تقرير استخباراتي أسبوعي بفرص الهجوم" },
+  "feat2.comp.b4": { en: "Real-time alerts when competitors change strategy", ar: "تنبيهات فورية لما المنافس يغير استراتيجيته" },
 };
 
 export default fl;
