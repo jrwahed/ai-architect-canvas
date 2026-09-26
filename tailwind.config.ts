@@ -14,10 +14,11 @@ export default {
     },
     extend: {
       fontFamily: {
-        headline: ["Space Grotesk", "sans-serif"],
-        body: ["Inter", "sans-serif"],
-        label: ["Manrope", "sans-serif"],
-        arabic: ["IBM Plex Sans Arabic", "sans-serif"],
+        headline: ["Readex Pro", "IBM Plex Sans Arabic", "system-ui", "sans-serif"],
+        body: ["IBM Plex Sans Arabic", "system-ui", "sans-serif"],
+        label: ["IBM Plex Sans Arabic", "system-ui", "sans-serif"],
+        arabic: ["IBM Plex Sans Arabic", "system-ui", "sans-serif"],
+        mono: ["IBM Plex Mono", "ui-monospace", "monospace"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -53,6 +54,16 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        cream: {
+          DEFAULT: "hsl(var(--cream))",
+          2: "hsl(var(--cream-2))",
+        },
+        ink: {
+          DEFAULT: "hsl(var(--ink))",
+          muted: "hsl(var(--ink-muted))",
+        },
+        leak: "hsl(var(--leak))",
+        gain: "hsl(var(--gain))",
         surface: {
           DEFAULT: "hsl(var(--surface))",
           container: "hsl(var(--surface-container))",
@@ -72,9 +83,9 @@ export default {
         },
       },
       borderRadius: {
-        lg: "0.25rem",
-        md: "0.125rem",
-        sm: "0.0625rem",
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 4px)",
+        sm: "calc(var(--radius) - 6px)",
       },
       keyframes: {
         "accordion-down": {
@@ -89,6 +100,10 @@ export default {
           "0%": { opacity: "0", transform: "translateY(30px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-100%)" },
+        },
         "scan-line": {
           "0%": { transform: "translateY(-100%)" },
           "100%": { transform: "translateY(100vh)" },
@@ -99,6 +114,7 @@ export default {
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-up": "fade-up 0.8s ease-out forwards",
         "scan-line": "scan-line 8s linear infinite",
+        marquee: "marquee 40s linear infinite",
       },
     },
   },

@@ -1,177 +1,113 @@
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { Target, Workflow, Link2, BarChart3, AlertTriangle, CheckCircle2, Clock } from "lucide-react";
+import { Target, Workflow, Network, LayoutDashboard, Check, Clock, ArrowUpRight, ArrowUpLeft } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { whatsappWithText } from "@/lib/contact";
+import SectionHeader from "@/components/home/SectionHeader";
+import Reveal from "@/components/home/Reveal";
+import TiltCard from "@/components/motion/TiltCard";
 
-const serviceIcons = [Target, Workflow, Link2, BarChart3];
+// Bento layout: each card gets its own surface so the grid reads as four distinct systems.
+const SERVICES = [
+  {
+    key: "s1",
+    icon: Target,
+    span: "md:col-span-7",
+    card: "bg-ink text-cream",
+    muted: "text-cream/65",
+    chip: "border-cream/20 text-cream/80",
+    iconBox: "bg-primary text-primary-foreground",
+    link: "bg-cream text-ink",
+    glow: "255 106 31 / 0.18",
+  },
+  {
+    key: "s2",
+    icon: Workflow,
+    span: "md:col-span-5",
+    card: "bg-primary text-primary-foreground",
+    muted: "text-primary-foreground/70",
+    chip: "border-primary-foreground/25 text-primary-foreground/85",
+    iconBox: "bg-primary-foreground text-primary",
+    link: "bg-primary-foreground text-primary",
+    glow: "255 255 255 / 0.22",
+  },
+  {
+    key: "s3",
+    icon: Network,
+    span: "md:col-span-5",
+    card: "bg-white text-ink border border-ink/10",
+    muted: "text-ink-muted",
+    chip: "border-ink/15 text-ink/70",
+    iconBox: "bg-ink text-cream",
+    link: "bg-ink text-cream",
+    glow: "255 106 31 / 0.10",
+  },
+  {
+    key: "s4",
+    icon: LayoutDashboard,
+    span: "md:col-span-7",
+    card: "bg-background text-foreground bg-[radial-gradient(80%_120%_at_100%_0%,hsl(216_100%_62%/0.35),transparent_60%)]",
+    muted: "text-foreground/65",
+    chip: "border-white/15 text-foreground/80",
+    iconBox: "bg-secondary text-secondary-foreground",
+    link: "bg-foreground text-background",
+    glow: "80 150 255 / 0.2",
+  },
+];
 
 const ServicesSection = () => {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const { t } = useLanguage();
-
-  const services = [
-    {
-      id: "01", icon: serviceIcons[0],
-      title: t("services.s1.title"), titleEn: t("services.s1.titleEn"),
-      problem: t("services.s1.problem"), solution: t("services.s1.solution"),
-      deliverables: [t("services.s1.d1"), t("services.s1.d2"), t("services.s1.d3"), t("services.s1.d4"), t("services.s1.d5")],
-      duration: t("services.s1.duration"),
-    },
-    {
-      id: "02", icon: serviceIcons[1],
-      title: t("services.s2.title"), titleEn: t("services.s2.titleEn"),
-      problem: t("services.s2.problem"), solution: t("services.s2.solution"),
-      deliverables: [t("services.s2.d1"), t("services.s2.d2"), t("services.s2.d3"), t("services.s2.d4"), t("services.s2.d5")],
-      duration: t("services.s2.duration"),
-    },
-    {
-      id: "03", icon: serviceIcons[2],
-      title: t("services.s3.title"), titleEn: t("services.s3.titleEn"),
-      problem: t("services.s3.problem"), solution: t("services.s3.solution"),
-      deliverables: [t("services.s3.d1"), t("services.s3.d2"), t("services.s3.d3"), t("services.s3.d4"), t("services.s3.d5")],
-      duration: t("services.s3.duration"),
-    },
-    {
-      id: "04", icon: serviceIcons[3],
-      title: t("services.s4.title"), titleEn: t("services.s4.titleEn"),
-      problem: t("services.s4.problem"), solution: t("services.s4.solution"),
-      deliverables: [t("services.s4.d1"), t("services.s4.d2"), t("services.s4.d3"), t("services.s4.d4"), t("services.s4.d5")],
-      duration: t("services.s4.duration"),
-    },
-  ];
+  const { t, isAr } = useLanguage();
+  const Arrow = isAr ? ArrowUpLeft : ArrowUpRight;
 
   return (
-    <section id="services" className="section-gap relative" ref={ref}>
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <motion.span
-          initial={{ opacity: 0, x: -20 }}
-          animate={isInView ? { opacity: 1, x: 0 } : {}}
-          className="label-tech text-primary block mb-4"
-        >
-          {t("services.label")}
-        </motion.span>
+    <section id="services" className="bg-cream text-ink pb-20 md:pb-32">
+      <div className="mx-auto max-w-6xl px-5 md:px-8">
+        <SectionHeader tone="light" label={t("services.label")} title={`${t("services.title1")} ${t("services.title2")}`} />
 
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 40 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="font-headline text-4xl md:text-6xl font-bold tracking-tight leading-[0.95]"
-          >
-            {t("services.title1")}
-            <br />
-            <span className="gradient-text">{t("services.title2")}</span>
-          </motion.h2>
-          <motion.span
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.4 }}
-            className="label-tech text-muted-foreground max-w-xs"
-          >
-            {t("services.subtitle")}
-          </motion.span>
-        </div>
-
-        <div className="max-w-4xl mx-auto space-y-6">
-          {services.map((service, i) => {
-            const Icon = service.icon;
+        <div className="grid md:grid-cols-12 gap-4">
+          {SERVICES.map((s, i) => {
+            const title = t(`services.${s.key}.title`);
+            const deliverables = [1, 2, 3].map((n) => t(`services.${s.key}.d${n}`));
             return (
-              <motion.article
-                key={service.id}
-                initial={{ opacity: 0, y: 40 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.2 + i * 0.15 }}
-                className="group glass-panel rounded-2xl p-5 md:p-8 transition-all duration-300 hover:border-l-[3px] hover:border-l-primary/50"
-                style={{ borderLeft: "3px solid transparent" }}
-              >
-                {/* Header */}
-                <div className="flex items-start gap-3 md:gap-4 mb-6">
-                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
-                    <Icon size={20} className="text-primary" />
-                  </div>
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="label-tech text-muted-foreground/50 text-[10px]">{service.id}</span>
+              <Reveal key={s.key} delay={(i % 2) * 0.08} className={s.span}>
+                <TiltCard max={4} glow={s.glow} className={`h-full overflow-hidden rounded-[1.75rem] ${s.card}`}>
+                  <article className="relative flex h-full min-h-[380px] flex-col p-7 md:p-9">
+                    <div className="flex items-center justify-between gap-3">
+                      <span className={`flex w-12 h-12 items-center justify-center rounded-2xl ${s.iconBox}`}>
+                        <s.icon size={22} />
+                      </span>
+                      <span className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-sm ${s.chip}`}>
+                        <Clock size={14} />
+                        {t(`services.${s.key}.duration`)}
+                      </span>
                     </div>
-                    <h3 className="font-headline text-lg md:text-xl font-bold text-foreground leading-tight">
-                      {service.title}
-                    </h3>
-                    <p className="label-tech text-[10px] text-primary/60 mt-0.5">{service.titleEn}</p>
-                  </div>
-                </div>
 
-                {/* Problem + Solution row */}
-                <div className="grid md:grid-cols-2 gap-3 md:gap-4 mb-6">
-                  {/* Problem */}
-                  <div
-                    className="rounded-xl p-4"
-                    style={{
-                      background: "hsl(var(--destructive) / 0.05)",
-                      border: "1px solid hsl(var(--destructive) / 0.1)",
-                    }}
-                  >
-                    <div className="flex items-center gap-2 mb-2">
-                      <AlertTriangle size={14} className="text-destructive/70" />
-                      <span className="label-tech text-[10px] text-destructive/80">{t("services.problem")}</span>
-                    </div>
-                    <p className="text-muted-foreground text-sm leading-relaxed">{service.problem}</p>
-                  </div>
+                    <h3 className="mt-8 font-headline text-2xl md:text-3xl font-semibold leading-tight">{title}</h3>
+                    <p className={`mt-3 leading-relaxed ${s.muted}`}>{t(`services.${s.key}.problem`)}</p>
 
-                  {/* Solution */}
-                  <div
-                    className="rounded-xl p-4"
-                    style={{
-                      background: "hsl(var(--primary) / 0.05)",
-                      border: "1px solid hsl(var(--primary) / 0.1)",
-                    }}
-                  >
-                    <div className="flex items-center gap-2 mb-2">
-                      <CheckCircle2 size={14} className="text-primary/70" />
-                      <span className="label-tech text-[10px] text-primary/80">{t("services.solution")}</span>
-                    </div>
-                    <p className="text-muted-foreground text-sm leading-relaxed">{service.solution}</p>
-                  </div>
-                </div>
+                    <ul className="mt-6 space-y-2">
+                      {deliverables.map((d) => (
+                        <li key={d} className="flex gap-2.5 text-[15px]">
+                          <Check size={18} className="mt-0.5 shrink-0 opacity-80" />
+                          <span>{d}</span>
+                        </li>
+                      ))}
+                    </ul>
 
-                {/* Deliverables */}
-                <div className="mb-6">
-                  <span className="label-tech text-[10px] text-muted-foreground/60 block mb-3">{t("services.delivers")}</span>
-                  <div className="grid md:grid-cols-2 gap-2">
-                    {service.deliverables.map((d, di) => (
-                      <div key={di} className="flex items-start gap-2">
-                        <CheckCircle2 size={14} className="text-primary/60 mt-0.5 shrink-0" strokeWidth={1.5} />
-                        <span className="text-sm text-muted-foreground">{d}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Footer: duration + price + CTA */}
-                <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-border/10">
-                  {/* Duration chip */}
-                  <div
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs text-muted-foreground"
-                    style={{ background: "hsl(var(--surface-container))" }}
-                  >
-                    <Clock size={12} />
-                    <span>{service.duration}</span>
-                  </div>
-
-
-                  <div className="flex-1" />
-
-                  {/* CTA */}
-                  <a
-                    href="https://wa.me/201148627137"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs text-muted-foreground hover:text-primary transition-colors hover-glow rounded-lg px-3 py-1.5"
-                  >
-                    {t("services.bookCall")}
-                  </a>
-                </div>
-              </motion.article>
+                    <a
+                      href={whatsappWithText(`${t("services.askMsg")} ${title}`)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-auto pt-8 inline-flex items-center gap-3 self-start font-semibold"
+                    >
+                      {t("services.ask")}
+                      <span
+                        className={`flex w-10 h-10 items-center justify-center rounded-full transition-transform duration-300 group-hover:scale-110 ${s.link}`}
+                      >
+                        <Arrow size={18} />
+                      </span>
+                    </a>
+                  </article>
+                </TiltCard>
+              </Reveal>
             );
           })}
         </div>
