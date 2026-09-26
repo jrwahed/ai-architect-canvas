@@ -18,7 +18,6 @@ const Navbar = () => {
     { label: t("nav.services"), target: "services" },
     { label: t("nav.caseStudies"), target: "case-studies" },
     { label: t("nav.process"), target: "process" },
-    { label: t("nav.insights"), target: "blog" },
     { label: t("nav.contact"), target: "contact" },
   ];
 

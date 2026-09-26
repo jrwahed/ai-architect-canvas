@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import {
   Car, Users, BarChart3, TrendingUp, MessageCircle, Shield,
-  ChevronDown, ChevronRight, Play, Zap, Target, Brain,
+  ChevronDown, ChevronRight, Zap, Target, Brain,
   ArrowRight, Check, Star, Building2, UserCheck, Megaphone,
   Layers, RefreshCw, FileText, Phone, MapPin, Clock,
   AlertTriangle, Eye, Gauge, Sparkles, Package,
@@ -90,9 +90,6 @@ const DriveLead = () => {
       {/* ─── Pain ─── */}
       <PainSection t={t} isAr={isAr} />
 
-      {/* ─── Video ─── */}
-      <VideoSection t={t} isAr={isAr} />
-
       {/* ─── How It Works ─── */}
       <HowItWorksSection t={t} isAr={isAr} />
 
@@ -107,9 +104,6 @@ const DriveLead = () => {
 
       {/* ─── Metrics ─── */}
       <MetricsSection t={t} isAr={isAr} />
-
-      {/* ─── Testimonials ─── */}
-      <TestimonialsSection t={t} isAr={isAr} />
 
       {/* ─── Pricing ─── */}
       <PricingSection t={t} isAr={isAr} />
@@ -199,8 +193,6 @@ const HeroSection = ({ t, isAr }: SectionProps) => {
     t("pipeline.4"), t("pipeline.5"), t("pipeline.6"),
   ];
   const stats = [
-    { v: t("hero.stat1v"), l: t("hero.stat1l") },
-    { v: t("hero.stat2v"), l: t("hero.stat2l") },
     { v: t("hero.stat3v"), l: t("hero.stat3l") },
     { v: t("hero.stat4v"), l: t("hero.stat4l") },
   ];
@@ -316,7 +308,7 @@ const HeroSection = ({ t, isAr }: SectionProps) => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.3, duration: 0.6 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mt-12"
+          className="grid grid-cols-2 gap-4 md:gap-6 mt-12 max-w-xl"
         >
           {stats.map((stat, i) => (
             <motion.div
@@ -387,58 +379,6 @@ const PainSection = ({ t }: SectionProps) => {
     </Section>
   );
 };
-
-/* ─── Video Section ─── */
-const VideoSection = ({ t }: SectionProps) => (
-  <Section id="video" className="py-24 md:py-32 max-w-5xl mx-auto px-6 md:px-12 text-center">
-    <p className="label-tech text-primary text-[11px] mb-4">// {t("video.label")}</p>
-    <h2 className="font-headline text-3xl md:text-5xl font-bold text-foreground">
-      {t("video.title")}
-    </h2>
-    <p className="text-muted-foreground text-lg max-w-xl mx-auto mt-4">
-      {t("video.desc")}
-    </p>
-
-    {/* Video placeholder */}
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
-      className="relative mt-10 rounded-2xl overflow-hidden aspect-video"
-      style={{
-        background: "linear-gradient(135deg, hsl(var(--surface-container)), hsl(var(--surface-container-high)))",
-        border: "1px solid hsl(var(--outline-variant) / 0.2)",
-      }}
-    >
-      {/* Decorative grid */}
-      <div className="absolute inset-0 hud-grid opacity-20" />
-
-      {/* Play button */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <motion.div
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          className="w-20 h-20 rounded-full bg-primary/20 backdrop-blur-sm flex items-center justify-center cursor-pointer group"
-          style={{ border: "2px solid hsl(var(--primary) / 0.4)" }}
-        >
-          <Play size={28} className="text-primary group-hover:text-foreground transition-colors ms-1" />
-        </motion.div>
-      </div>
-
-      {/* Duration badge */}
-      <div className="absolute bottom-4 right-4 glass-panel px-3 py-1.5">
-        <span className="label-tech text-[10px] text-muted-foreground">2:14</span>
-      </div>
-
-      {/* Corner accents */}
-      <div className="absolute top-3 left-3 w-6 h-6 border-t border-l border-primary/30" />
-      <div className="absolute top-3 right-3 w-6 h-6 border-t border-r border-primary/30" />
-      <div className="absolute bottom-3 left-3 w-6 h-6 border-b border-l border-primary/30" />
-      <div className="absolute bottom-3 right-3 w-6 h-6 border-b border-r border-primary/30" />
-    </motion.div>
-  </Section>
-);
 
 /* ─── How It Works ─── */
 const HowItWorksSection = ({ t, isAr }: SectionProps) => {
@@ -773,53 +713,6 @@ const MetricsSection = ({ t }: SectionProps) => {
   );
 };
 
-/* ─── Testimonials ─── */
-const TestimonialsSection = ({ t }: SectionProps) => {
-  const testimonials = ["1", "2", "3"];
-
-  return (
-    <Section className="py-24 md:py-32 max-w-7xl mx-auto px-6 md:px-12">
-      <h2 className="font-headline text-3xl md:text-5xl font-bold text-foreground text-center">
-        {t("test.title")}
-      </h2>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-        {testimonials.map((idx, i) => (
-          <motion.div
-            key={idx}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ delay: i * 0.15, duration: 0.5 }}
-            className="rounded-2xl p-6 flex flex-col justify-between"
-            style={{
-              background: "hsl(var(--surface-container) / 0.5)",
-              border: "1px solid hsl(var(--outline-variant) / 0.15)",
-            }}
-          >
-            {/* Stars */}
-            <div>
-              <div className="flex gap-1 mb-4">
-                {Array.from({ length: 5 }).map((_, si) => (
-                  <Star key={si} size={14} className="text-primary fill-primary" />
-                ))}
-              </div>
-              <p className="text-muted-foreground text-sm leading-relaxed italic">
-                "{t(`test.${idx}.quote`)}"
-              </p>
-            </div>
-
-            <div className="mt-6 pt-4" style={{ borderTop: "1px solid hsl(var(--outline-variant) / 0.1)" }}>
-              <div className="font-headline text-sm font-semibold text-foreground">{t(`test.${idx}.name`)}</div>
-              <div className="label-tech text-[10px] text-muted-foreground mt-0.5">{t(`test.${idx}.role`)}</div>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-    </Section>
-  );
-};
-
 /* ─── Pricing ─── */
 const PricingSection = ({ t }: SectionProps) => {
   const plans = [
@@ -1050,7 +943,7 @@ const DriveLeadFooter = ({ t }: SectionProps) => {
           {links.map((l) => (
             <a
               key={l}
-              href={l === "home" ? "#hero" : l === "pricing" ? "#pricing" : l === "contact" ? "https://wa.me/201148627137" : `#${l}`}
+              href={l === "home" ? "#hero" : l === "about" ? "#pain" : l === "platform" ? "#features" : l === "pricing" ? "#pricing" : "https://wa.me/201148627137"}
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               {t(`foot.${l}`)}

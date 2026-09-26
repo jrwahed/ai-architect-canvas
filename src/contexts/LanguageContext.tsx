@@ -57,8 +57,6 @@ const translations: Record<string, Record<Lang, string>> = {
   "about.pillar1": { en: "AI-Powered Lead Capture & Follow-up", ar: "استقطاب ومتابعة عملاء بالذكاء الاصطناعي" },
   "about.pillar2": { en: "Cross-Team Operations Alignment", ar: "مواءمة العمليات بين الأقسام" },
   "about.pillar3": { en: "Real-Time Decision Dashboards", ar: "لوحات قرارات لحظية" },
-  "about.stat1v": { en: "3", ar: "٣" },
-  "about.stat1l": { en: "Active Systems Live", ar: "أنظمة تعمل حالياً" },
   "about.stat2v": { en: "12", ar: "١٢" },
   "about.stat2l": { en: "CRM Pipelines Built", ar: "مسار CRM تم بناؤه" },
   "about.stat3v": { en: "<3min", ar: "<٣ دقائق" },
@@ -186,8 +184,6 @@ const translations: Record<string, Record<Lang, string>> = {
   "cases.c1.r1v": { en: "<3 min", ar: "<٣ دقائق" },
   "cases.c1.r2l": { en: "CRM Pipelines", ar: "مسارات CRM" },
   "cases.c1.r2v": { en: "12", ar: "١٢" },
-  "cases.c1.r3l": { en: "Active Companies", ar: "شركات نشطة" },
-  "cases.c1.r3v": { en: "3", ar: "٣" },
   "cases.c1.r4l": { en: "Auto-Reassignment", ar: "إعادة توزيع تلقائي" },
   "cases.c1.r4v": { en: "24h", ar: "٢٤ ساعة" },
 
@@ -366,6 +362,14 @@ const translations: Record<string, Record<Lang, string>> = {
   },
   "contact.submit": { en: "BOOK YOUR CALL", ar: "احجز مكالمتك" },
   "contact.submitted": { en: "REQUEST SENT", ar: "تم الإرسال" },
+  "contact.sentTitle": { en: "Your message is ready in WhatsApp", ar: "رسالتك جاهزة على واتساب" },
+  "contact.sentDesc": {
+    en: "Press send in WhatsApp so it reaches me. If WhatsApp didn't open, use one of the buttons below. Your details are still here.",
+    ar: "دوس إرسال في واتساب عشان توصلني. لو واتساب ماتفتحش، استخدم واحد من الزرارين اللي تحت. بياناتك لسه محفوظة هنا.",
+  },
+  "contact.sentWhatsapp": { en: "Open WhatsApp", ar: "افتح واتساب" },
+  "contact.sentEmail": { en: "Send by email instead", ar: "ابعتها بالإيميل بدل كده" },
+  "contact.sentReset": { en: "Send a new request", ar: "إرسال طلب جديد" },
 
   // ─── Solutions Page ───
   "sol.heroLabel": { en: "// Industry Solutions", ar: "// حلول القطاعات" },

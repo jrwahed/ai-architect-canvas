@@ -19,8 +19,8 @@ const dl: Record<string, Record<Lang, string>> = {
     en: "Not just a CRM. A complete system that captures every inquiry from Facebook, Google & OLX — assigns them to sales — tracks every customer until delivery — and tells you exactly where your money is going.",
   },
   "hero.experience": {
-    ar: "خبرة في سوق السيارات المصري. أكتر من 50 معرض. أكتر من 12,000 استفسار شهرياً.",
-    en: "Deep experience in the Egyptian car market. 50+ dealerships. 12,000+ monthly inquiries.",
+    ar: "مبني على خبرة عملية في سوق السيارات المصري.",
+    en: "Built on hands-on experience in the Egyptian car market.",
   },
   "hero.cta1": {
     ar: "احجز مكالمة مجانية",
@@ -30,10 +30,6 @@ const dl: Record<string, Record<Lang, string>> = {
     ar: "شوف المنصة شغالة إزاي",
     en: "See How It Works",
   },
-  "hero.stat1v": { ar: "+50", en: "50+" },
-  "hero.stat1l": { ar: "معرض سيارات", en: "Car Dealerships" },
-  "hero.stat2v": { ar: "12,000+", en: "12,000+" },
-  "hero.stat2l": { ar: "استفسار شهرياً", en: "Monthly Inquiries" },
   "hero.stat3v": { ar: "40%", en: "40%" },
   "hero.stat3l": { ar: "انخفاض في تكلفة الاستفسار", en: "Lower Cost Per Lead" },
   "hero.stat4v": { ar: "3x", en: "3x" },
@@ -82,15 +78,6 @@ const dl: Record<string, Record<Lang, string>> = {
     ar: "صاحب المعرض بيسأل \"بعنا كام الشهر ده؟\" والإجابة بتيجي بعد يومين. مفيش داشبورد. مفيش أرقام لحظية. القرارات بتتاخد بالإحساس مش بالداتا.",
     en: "The owner asks \"How many did we sell this month?\" and the answer takes two days. No dashboard. No real-time numbers. Decisions are made by gut feeling, not data.",
   },
-
-  // ─── Video Section ───
-  "video.label": { ar: "شوفه بنفسك", en: "See It Yourself" },
-  "video.title": { ar: "شوف المنصة شغالة.", en: "Watch the Platform in Action." },
-  "video.desc": {
-    ar: "نظرة عامة في دقيقتين على المنصة وإزاي الـ AI بيحول استفسارات معرضك لصفقات حقيقية.",
-    en: "A 2-minute overview of how AI turns your dealership inquiries into real deals.",
-  },
-  "video.cta": { ar: "شوف الفيديو", en: "Watch Video" },
 
   // ─── How It Works ───
   "how.label": { ar: "إزاي بيشتغل", en: "How It Works" },
@@ -332,27 +319,6 @@ const dl: Record<string, Record<Lang, string>> = {
   "metrics.4l": { ar: "دقيقة متوسط وقت الاستجابة", en: "Minute Avg. Response Time" },
   "metrics.5v": { ar: "100%", en: "100%" },
   "metrics.5l": { ar: "رؤية على أداء الفريق والحملات", en: "Visibility on Team & Campaign Performance" },
-
-  // ─── Testimonials ───
-  "test.title": { ar: "شهادات العملاء", en: "Client Testimonials" },
-  "test.1.quote": {
-    ar: "كنا بنضيع نص الاستفسارات عشان السيلز مش بيلحق يرد. دلوقتي كل استفسار بينزل أوتوماتيك والسيلز بيرد في أقل من دقيقة. المبيعات زادت 60% في أول شهرين.",
-    en: "We were losing half our inquiries because sales couldn't respond fast enough. Now every inquiry lands automatically and sales responds in under a minute. Sales increased 60% in the first two months.",
-  },
-  "test.1.name": { ar: "أحمد خالد", en: "Ahmed Khaled" },
-  "test.1.role": { ar: "صاحب معرض النيل للسيارات", en: "Owner, Al-Nil Car Showroom" },
-  "test.2.quote": {
-    ar: "أول مرة أعرف بالظبط أنهي حملة بتجيبلي عملاء بيشتروا فعلاً. وقفت 3 حملات كانت بتحرق فلوس وحولت الميزانية للحملة اللي شغالة. وفرت 40% من ميزانية الإعلانات.",
-    en: "First time I knew exactly which campaign brings buyers who actually purchase. Stopped 3 campaigns burning money and redirected budget to what works. Saved 40% of ad budget.",
-  },
-  "test.2.name": { ar: "سارة مصطفى", en: "Sara Mostafa" },
-  "test.2.role": { ar: "مديرة تسويق، معارض الصفوة", en: "Marketing Manager, Al-Safwa Showrooms" },
-  "test.3.quote": {
-    ar: "الداشبورد غيرت حياتي. بفتح الموبايل الصبح وبعرف كل حاجة — كام استفسار دخل أمبارح، مين رد ومين لأ، كام صفقة اتقفلت. من غير ما أسأل حد.",
-    en: "The dashboard changed my life. I open my phone in the morning and know everything — how many inquiries came yesterday, who responded and who didn't, how many deals closed. Without asking anyone.",
-  },
-  "test.3.name": { ar: "عمر فاروق", en: "Omar Farouk" },
-  "test.3.role": { ar: "مدير عام، معارض المستقبل", en: "General Manager, Al-Mostaqbal Showrooms" },
 
   // ─── Pricing ───
   "price.title": { ar: "ابدأ مجاناً. كبّر لما تحتاج.", en: "Start Free. Scale When You Need." },
