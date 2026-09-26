@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import { ClipboardList, KanbanSquare, Gauge, MessagesSquare, FolderTree, Users, ArrowLeft, ArrowRight } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { shiftOsCase } from "@/data/shiftOsCase";
+import BrowserFrame from "@/components/BrowserFrame";
+import agencyTasksShot from "@/assets/agency-os-tasks.webp";
 import skyLeadsDashboard from "@/assets/sky-leads-dashboard.png";
 import aiSystemDashboard from "@/assets/ai-system-dashboard.png";
 import SectionHeader from "@/components/home/SectionHeader";
@@ -34,19 +36,22 @@ const AgencyOsFeature = () => {
       <Link to="/work/agency-os" className="group block">
         <TiltCard max={3} glow="255 106 31 / 0.14" className="rounded-[2rem]">
           <article className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center rounded-[2rem] border border-primary/30 bg-surface-container p-6 md:p-10">
-            <div className="lg:col-span-7 grid grid-cols-3 gap-2.5">
-              {c.modules.map((m, i) => {
-                const Icon = MODULE_ICONS[i];
-                return (
-                  <div
-                    key={m.key}
-                    className="flex aspect-[4/3] flex-col justify-between rounded-2xl border border-white/10 bg-background/60 p-3.5 transition-colors duration-300 group-hover:border-primary/40"
-                  >
-                    <Icon size={20} className="text-primary" />
-                    <span className="text-xs md:text-sm font-medium text-foreground/85 leading-snug">{m.t}</span>
-                  </div>
-                );
-              })}
+            <div className="lg:col-span-7">
+              <BrowserFrame src={agencyTasksShot} alt={c.shots.tasks} />
+              <ul className="mt-3 flex flex-wrap gap-1.5">
+                {c.modules.map((m, i) => {
+                  const Icon = MODULE_ICONS[i];
+                  return (
+                    <li
+                      key={m.key}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-background/60 px-2.5 py-1 text-xs text-foreground/85"
+                    >
+                      <Icon size={13} className="text-primary" />
+                      {m.t}
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
             <div className="lg:col-span-5">
               <div className="flex flex-wrap items-center gap-2">
