@@ -21,10 +21,13 @@ export const shiftOsCase = {
     insideLabel: "من جوّه النظام",
     insideTitle: "شاشات حقيقية من النظام وهو شغال",
     insideNote: "أسماء العملاء والموظفين متخفية.",
-    shots: {
-      tasks: "المهام: فلاتر حسب العميل والمسؤول والإدارة والحالة، وعرض قايمة أو بورد أو تقويم. والنقط بتوضح المهمة وصلت لأنهي مرحلة.",
-      report: "التقرير اليومي: كل بند مربوط بعميل ومهمة، ومعاه الكونتنت اللي اتكتب والمرحلة اللي كانت فيها المهمة. واتبعت للمدير أول ما اتقدّم.",
-    },
+    shots: [
+      { key: "overview", label: "نظرة عامة", caption: "نظرة عامة للمدير: الحسابات الساكتة من أكتر من أسبوع، والعملاء اللي بريفهم ناقص، وأقدم مهمة واقفة، وميزان الحمل على كل موظف." },
+      { key: "team", label: "متابعة الفريق", caption: "متابعة الفريق: مين قدّم تقريره النهارده ومين لأ، وكل واحد شغال على كام حساب، وأطول مهمة واقفة عنده." },
+      { key: "tasks", label: "المهام", caption: "المهام: فلاتر حسب العميل والمسؤول والإدارة والحالة، وعرض قايمة أو بورد أو تقويم. والنقط بتوضح المهمة وصلت لأنهي مرحلة." },
+      { key: "report", label: "التقرير اليومي", caption: "التقرير اليومي: كل بند مربوط بعميل ومهمة، ومعاه الكونتنت اللي اتكتب والمرحلة اللي كانت فيها المهمة. واتبعت للمدير أول ما اتقدّم." },
+      { key: "assistant", label: "مساعد العملاء", caption: "مساعد العملاء: الموظف يختار العميل ويسأل. بيجاوب من قاعدة معرفة العميل بس، وكل إجابة معاها القسم اللي جات منه، وكل موظف يشوف الأقسام اللي تخص شغله." },
+    ],
     challengeLabel: "التحدي",
     challengeTitle: "وكالة بتكبر محتاجة تعرف ٣ حاجات كل يوم، من غير ما تسأل حد",
     challenges: [
@@ -136,10 +139,13 @@ export const shiftOsCase = {
     insideLabel: "Inside the system",
     insideTitle: "Real screens from the live system",
     insideNote: "Client and employee names are hidden.",
-    shots: {
-      tasks: "Tasks: filter by client, assignee, department and status, and switch between list, board and calendar. The dots show which stage each task has reached.",
-      report: "Daily report: every entry is tied to a client and a task, with the content that was written and the stage the task was in. It reached the manager as soon as it was submitted.",
-    },
+    shots: [
+      { key: "overview", label: "Overview", caption: "Manager overview: accounts silent for over a week, clients with incomplete briefs, the oldest stuck task, and the workload balance across the team." },
+      { key: "team", label: "Team tracking", caption: "Team tracking: who has submitted today's report and who hasn't, how many accounts each person is on, and their longest-stuck task." },
+      { key: "tasks", label: "Tasks", caption: "Tasks: filter by client, assignee, department and status, and switch between list, board and calendar. The dots show which stage each task has reached." },
+      { key: "report", label: "Daily report", caption: "Daily report: every entry is tied to a client and a task, with the content that was written and the stage the task was in. It reached the manager as soon as it was submitted." },
+      { key: "assistant", label: "Client assistant", caption: "Client assistant: pick a client and ask. It answers only from that client's knowledge base, cites the section behind each answer, and each person only sees the sections relevant to their work." },
+    ],
     challengeLabel: "The challenge",
     challengeTitle: "A growing agency needs three answers every day, without asking anyone",
     challenges: [

@@ -17,9 +17,12 @@ import {
   LucideIcon,
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
-import BrowserFrame from "@/components/BrowserFrame";
+import ShotGallery from "@/components/ShotGallery";
+import overviewShot from "@/assets/agency-os-overview.webp";
+import teamShot from "@/assets/agency-os-team.webp";
 import tasksShot from "@/assets/agency-os-tasks.webp";
 import reportShot from "@/assets/agency-os-report.webp";
+import assistantShot from "@/assets/agency-os-assistant.webp";
 import Footer from "@/components/Footer";
 import MobileCTABar from "@/components/home/MobileCTABar";
 import SectionHeader from "@/components/home/SectionHeader";
@@ -119,6 +122,14 @@ const ModuleVisual = ({ kind, isAr }: { kind: string; isAr: boolean }) => {
   }
 };
 
+const SHOT_SOURCES: Record<string, string> = {
+  overview: overviewShot,
+  team: teamShot,
+  tasks: tasksShot,
+  report: reportShot,
+  assistant: assistantShot,
+};
+
 const AgencyOsCase = () => {
   const { lang, isAr } = useLanguage();
   const c = shiftOsCase[lang];
@@ -190,21 +201,7 @@ const AgencyOsCase = () => {
           <section className="pb-20 md:pb-28">
             <div className="mx-auto max-w-6xl px-5 md:px-8">
               <SectionHeader label={c.insideLabel} title={c.insideTitle} sub={c.insideNote} />
-              <div className="space-y-10">
-                {[
-                  { src: tasksShot, caption: c.shots.tasks },
-                  { src: reportShot, caption: c.shots.report },
-                ].map((shot) => (
-                  <Reveal key={shot.caption}>
-                    <figure>
-                      <TiltCard max={3} glow="255 106 31 / 0.10" className="rounded-2xl">
-                        <BrowserFrame src={shot.src} alt={shot.caption} />
-                      </TiltCard>
-                      <figcaption className="mt-4 max-w-3xl text-muted-foreground leading-relaxed">{shot.caption}</figcaption>
-                    </figure>
-                  </Reveal>
-                ))}
-              </div>
+              <ShotGallery shots={c.shots.map((shot) => ({ ...shot, src: SHOT_SOURCES[shot.key] }))} />
             </div>
           </section>
 

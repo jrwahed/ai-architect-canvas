@@ -3,7 +3,7 @@ import { ClipboardList, KanbanSquare, Gauge, MessagesSquare, FolderTree, Users, 
 import { useLanguage } from "@/contexts/LanguageContext";
 import { shiftOsCase } from "@/data/shiftOsCase";
 import BrowserFrame from "@/components/BrowserFrame";
-import agencyTasksShot from "@/assets/agency-os-tasks.webp";
+import agencyOverviewShot from "@/assets/agency-os-overview.webp";
 import skyLeadsDashboard from "@/assets/sky-leads-dashboard.png";
 import aiSystemDashboard from "@/assets/ai-system-dashboard.png";
 import SectionHeader from "@/components/home/SectionHeader";
@@ -37,7 +37,7 @@ const AgencyOsFeature = () => {
         <TiltCard max={3} glow="255 106 31 / 0.14" className="rounded-[2rem]">
           <article className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center rounded-[2rem] border border-primary/30 bg-surface-container p-6 md:p-10">
             <div className="lg:col-span-7">
-              <BrowserFrame src={agencyTasksShot} alt={c.shots.tasks} />
+              <BrowserFrame src={agencyOverviewShot} alt={c.shots[0].caption} />
               <ul className="mt-3 flex flex-wrap gap-1.5">
                 {c.modules.map((m, i) => {
                   const Icon = MODULE_ICONS[i];
