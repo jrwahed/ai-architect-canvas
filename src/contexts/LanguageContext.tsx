@@ -482,6 +482,14 @@ const translations: Record<string, Record<Lang, string>> = {
   "footer.explore": { en: "Explore", ar: "استكشف" },
   "footer.contact": { en: "Contact", ar: "تواصل" },
   "footer.location": { en: "Egypt & the Gulf", ar: "مصر والخليج" },
+  "chips.title": { en: "What I build", ar: "اللي ببنيه" },
+  "chips.1": { en: "Lead generation", ar: "توليد عملاء" },
+  "chips.2": { en: "Sales automation", ar: "أتمتة مبيعات" },
+  "chips.3": { en: "Operations", ar: "تنظيم العمليات" },
+  "chips.4": { en: "Decision dashboards", ar: "داشبورد قرارات" },
+  "marquee.label": { en: "Tools I build with", ar: "أدوات ببني بيها" },
+  "why.yearsV": { en: "5+", ar: "+٥" },
+  "why.yearsL": { en: "Years in BD & marketing", ar: "سنين في تطوير الأعمال والتسويق" },
 };
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {

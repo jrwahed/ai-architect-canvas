@@ -1,19 +1,41 @@
+import AnimatedWords from "@/components/motion/AnimatedWords";
 import Reveal from "./Reveal";
 
 interface SectionHeaderProps {
   label: string;
   title: string;
   sub?: string;
+  tone?: "dark" | "light";
 }
 
-const SectionHeader = ({ label, title, sub }: SectionHeaderProps) => (
-  <Reveal className="max-w-3xl mb-10 md:mb-14">
-    <p className="text-sm font-medium text-primary mb-3">{label}</p>
-    <h2 className="font-headline text-3xl md:text-[2.5rem] font-semibold leading-tight tracking-tight text-foreground text-balance">
-      {title}
-    </h2>
-    {sub && <p className="mt-4 text-muted-foreground text-base md:text-lg leading-relaxed">{sub}</p>}
-  </Reveal>
-);
+const SectionHeader = ({ label, title, sub, tone = "dark" }: SectionHeaderProps) => {
+  const light = tone === "light";
+  return (
+    <div className="max-w-3xl mb-12 md:mb-16">
+      <Reveal>
+        <p
+          className={`inline-flex items-center gap-2 rounded-full border px-3.5 py-1 font-mono text-xs uppercase tracking-wider ${
+            light ? "border-ink/15 text-ink/70" : "border-white/15 text-foreground/75"
+          }`}
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+          {label}
+        </p>
+      </Reveal>
+      <h2
+        className={`mt-5 font-headline text-4xl md:text-6xl font-semibold leading-[1.08] tracking-tight text-balance ${
+          light ? "text-ink" : "text-foreground"
+        }`}
+      >
+        <AnimatedWords text={title} inView />
+      </h2>
+      {sub && (
+        <Reveal delay={0.15}>
+          <p className={`mt-5 text-lg leading-relaxed ${light ? "text-ink-muted" : "text-muted-foreground"}`}>{sub}</p>
+        </Reveal>
+      )}
+    </div>
+  );
+};
 
 export default SectionHeader;

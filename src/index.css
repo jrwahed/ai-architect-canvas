@@ -4,52 +4,60 @@
 
 @layer base {
   :root {
-    --background: 204 21% 7%;
-    --foreground: 204 17% 92%;
+    --background: 222 50% 5%;
+    --foreground: 216 30% 94%;
 
-    --card: 207 17% 10%;
-    --card-foreground: 204 17% 92%;
+    --card: 222 36% 9%;
+    --card-foreground: 216 30% 94%;
 
-    --popover: 207 17% 10%;
-    --popover-foreground: 204 17% 92%;
+    --popover: 222 36% 9%;
+    --popover-foreground: 216 30% 94%;
 
-    --primary: 183 63% 58%;
-    --primary-foreground: 185 77% 10%;
+    /* Brand orange; text on it is near-black for contrast */
+    --primary: 20 100% 56%;
+    --primary-foreground: 20 80% 7%;
 
-    --secondary: 190 60% 78%;
-    --secondary-foreground: 185 77% 10%;
+    /* Electric blue taken from the hero photo */
+    --secondary: 216 100% 62%;
+    --secondary-foreground: 222 50% 5%;
 
-    --muted: 206 17% 14%;
-    --muted-foreground: 206 12% 68%;
+    --muted: 222 30% 13%;
+    --muted-foreground: 220 14% 70%;
 
-    --accent: 183 40% 18%;
-    --accent-foreground: 183 63% 82%;
+    --accent: 20 60% 16%;
+    --accent-foreground: 25 100% 80%;
 
-    --destructive: 4 90% 68%;
+    --destructive: 0 84% 64%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 206 18% 20%;
-    --input: 206 18% 24%;
-    --ring: 183 63% 58%;
+    --border: 222 24% 17%;
+    --input: 222 24% 21%;
+    --ring: 20 100% 56%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
 
     /* Custom design tokens */
-    --surface: 204 21% 7%;
-    --surface-container: 207 17% 10%;
-    --surface-container-low: 204 20% 8%;
-    --surface-container-high: 205 17% 14%;
-    --surface-bright: 205 15% 20%;
-    --outline-variant: 205 14% 45%;
+    --surface: 222 50% 5%;
+    --surface-container: 222 36% 9%;
+    --surface-container-low: 222 45% 7%;
+    --surface-container-high: 222 30% 13%;
+    --surface-bright: 222 22% 20%;
+    --outline-variant: 220 16% 45%;
+
+    /* Light sections */
+    --cream: 36 38% 93%;
+    --cream-2: 34 30% 87%;
+    --ink: 220 18% 9%;
+    --ink-muted: 28 6% 36%;
 
     /* "leak" marks problems / before, "gain" marks results / after */
-    --leak: 30 85% 65%;
-    --gain: 151 58% 60%;
+    --leak: 355 80% 62%;
+    --gain: 150 62% 50%;
 
-    --gradient-primary: linear-gradient(135deg, hsl(183 63% 58%), hsl(190 70% 82%));
-    --gradient-glow: linear-gradient(135deg, hsl(183 63% 50%), hsl(190 70% 75%));
-    --shadow-neon: 0 0 30px -8px hsl(183 63% 58% / 0.25);
-    --shadow-purple: 0 0 40px -12px hsl(183 63% 58% / 0.2);
+    --gradient-primary: linear-gradient(135deg, hsl(14 100% 55%), hsl(35 100% 60%));
+    --gradient-glow: linear-gradient(135deg, hsl(14 100% 50%), hsl(35 100% 58%));
+    --shadow-neon: 0 0 30px -8px hsl(20 100% 56% / 0.35);
+    --shadow-purple: 0 0 40px -12px hsl(216 100% 62% / 0.3);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;

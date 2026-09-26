@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { MotionConfig } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
-import ProofStrip from "@/components/home/ProofStrip";
+import ToolsMarquee from "@/components/home/ToolsMarquee";
 import LeaksSection from "@/components/home/LeaksSection";
 import ServicesSection from "@/components/ServicesSection";
 import CaseStudiesSection from "@/components/CaseStudiesSection";
@@ -13,6 +13,7 @@ import ProductsSection from "@/components/home/ProductsSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import MobileCTABar from "@/components/home/MobileCTABar";
+import CursorFollower from "@/components/motion/CursorFollower";
 
 const Index = () => {
   const { hash } = useLocation();
@@ -29,7 +30,7 @@ const Index = () => {
         <Navbar />
         <main>
           <HeroSection />
-          <ProofStrip />
+          <ToolsMarquee />
           <LeaksSection />
           <ServicesSection />
           <CaseStudiesSection />
@@ -40,6 +41,7 @@ const Index = () => {
         </main>
         <Footer />
         <MobileCTABar />
+        <CursorFollower />
       </div>
     </MotionConfig>
   );
