@@ -18,6 +18,13 @@ export const shiftOsCase = {
       { v: "٤٨", l: "شاشة في نظام واحد" },
       { v: "١٣", l: "مهمة أوتوماتيك يوميًا" },
     ],
+    insideLabel: "من جوّه النظام",
+    insideTitle: "شاشات حقيقية من النظام وهو شغال",
+    insideNote: "أسماء العملاء والموظفين متخفية.",
+    shots: {
+      tasks: "المهام: فلاتر حسب العميل والمسؤول والإدارة والحالة، وعرض قايمة أو بورد أو تقويم. والنقط بتوضح المهمة وصلت لأنهي مرحلة.",
+      report: "التقرير اليومي: كل بند مربوط بعميل ومهمة، ومعاه الكونتنت اللي اتكتب والمرحلة اللي كانت فيها المهمة. واتبعت للمدير أول ما اتقدّم.",
+    },
     challengeLabel: "التحدي",
     challengeTitle: "وكالة بتكبر محتاجة تعرف ٣ حاجات كل يوم، من غير ما تسأل حد",
     challenges: [
@@ -126,6 +133,13 @@ export const shiftOsCase = {
       { v: "48", l: "Screens in one system" },
       { v: "13", l: "Automated daily jobs" },
     ],
+    insideLabel: "Inside the system",
+    insideTitle: "Real screens from the live system",
+    insideNote: "Client and employee names are hidden.",
+    shots: {
+      tasks: "Tasks: filter by client, assignee, department and status, and switch between list, board and calendar. The dots show which stage each task has reached.",
+      report: "Daily report: every entry is tied to a client and a task, with the content that was written and the stage the task was in. It reached the manager as soon as it was submitted.",
+    },
     challengeLabel: "The challenge",
     challengeTitle: "A growing agency needs three answers every day, without asking anyone",
     challenges: [

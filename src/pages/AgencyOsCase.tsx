@@ -17,6 +17,9 @@ import {
   LucideIcon,
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
+import BrowserFrame from "@/components/BrowserFrame";
+import tasksShot from "@/assets/agency-os-tasks.webp";
+import reportShot from "@/assets/agency-os-report.webp";
 import Footer from "@/components/Footer";
 import MobileCTABar from "@/components/home/MobileCTABar";
 import SectionHeader from "@/components/home/SectionHeader";
@@ -180,6 +183,28 @@ const AgencyOsCase = () => {
                 ))}
               </dl>
               <p className="mt-3 text-xs text-muted-foreground">{SHIFT_OS_MEASURED[lang]}</p>
+            </div>
+          </section>
+
+          {/* Inside the system: real screenshots with client and employee names blurred */}
+          <section className="pb-20 md:pb-28">
+            <div className="mx-auto max-w-6xl px-5 md:px-8">
+              <SectionHeader label={c.insideLabel} title={c.insideTitle} sub={c.insideNote} />
+              <div className="space-y-10">
+                {[
+                  { src: tasksShot, caption: c.shots.tasks },
+                  { src: reportShot, caption: c.shots.report },
+                ].map((shot) => (
+                  <Reveal key={shot.caption}>
+                    <figure>
+                      <TiltCard max={3} glow="255 106 31 / 0.10" className="rounded-2xl">
+                        <BrowserFrame src={shot.src} alt={shot.caption} />
+                      </TiltCard>
+                      <figcaption className="mt-4 max-w-3xl text-muted-foreground leading-relaxed">{shot.caption}</figcaption>
+                    </figure>
+                  </Reveal>
+                ))}
+              </div>
             </div>
           </section>
 
