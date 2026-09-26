@@ -62,10 +62,10 @@ const HeroSection = () => {
           <motion.img
             src={heroPhoto}
             alt=""
-            width={1448}
-            height={1086}
+            width={1670}
+            height={941}
             fetchPriority="high"
-            className="absolute -inset-[4%] w-[108%] h-[60%] md:h-[108%] max-w-none object-cover object-[62%_15%] md:object-[60%_35%]"
+            className="absolute -inset-[4%] w-[108%] h-[60%] md:h-[108%] max-w-none object-cover object-[63%_30%] md:object-[62%_30%]"
             style={{ x: photoX, y: photoY }}
             initial={reduce ? false : { scale: 1.08, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
