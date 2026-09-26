@@ -66,7 +66,7 @@ const WhoIAmSection = () => {
               <img
                 src={mohamedPhoto}
                 alt="Mohamed Waheed"
-                className="w-full h-full object-cover object-top rounded-2xl"
+                className="w-full h-full object-cover object-[50%_35%] rounded-2xl"
               />
 
               {/* Dynamic glow */}
