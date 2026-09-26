@@ -114,8 +114,6 @@ const HeroSection = ({ t, isAr }: SP) => {
   const pipes = [t("hero.pipe1"), t("hero.pipe2"), t("hero.pipe3"), t("hero.pipe4"), t("hero.pipe5"), t("hero.pipe6")];
   const stats = [
     { v: t("hero.stat1v"), l: t("hero.stat1l") },
-    { v: t("hero.stat2v"), l: t("hero.stat2l") },
-    { v: t("hero.stat3v"), l: t("hero.stat3l") },
     { v: t("hero.stat4v"), l: t("hero.stat4l") },
   ];
 
@@ -211,7 +209,7 @@ const HeroSection = ({ t, isAr }: SP) => {
         </motion.div>
 
         {/* Stats */}
-        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.3 }} className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mt-10">
+        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.3 }} className="grid grid-cols-2 gap-4 md:gap-6 mt-10 max-w-xl">
           {stats.map((s, i) => (
             <motion.div key={s.l} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.4 + i * 0.1 }} className="glass-panel p-4 md:p-5 text-center">
               <div className="font-headline text-2xl md:text-3xl font-bold gradient-text"><Counter value={s.v} /></div>

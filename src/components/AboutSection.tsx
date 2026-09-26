@@ -15,7 +15,6 @@ const AboutSection = () => {
   ];
 
   const stats = [
-    { value: t("about.stat1v"), label: t("about.stat1l") },
     { value: t("about.stat2v"), label: t("about.stat2l") },
     { value: t("about.stat3v"), label: t("about.stat3l") },
     { value: t("about.stat4v"), label: t("about.stat4l") },
@@ -92,13 +91,14 @@ const AboutSection = () => {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="glass-panel p-8 md:p-10"
             >
-              <div className="grid grid-cols-2 gap-8">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
                 {stats.map((stat, i) => (
                   <motion.div
                     key={stat.label}
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={isInView ? { opacity: 1, scale: 1 } : {}}
                     transition={{ duration: 0.6, delay: 0.5 + i * 0.1 }}
+                    className={i === stats.length - 1 ? "col-span-2 sm:col-span-1" : undefined}
                   >
                     <div className="font-headline text-3xl md:text-4xl font-bold gradient-text">
                       {stat.value}

@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { Radio, Diamond, MessageCircle, Mail, MapPin, Linkedin, Send } from "lucide-react";
+import { Radio, Diamond, MessageCircle, Mail, MapPin, Linkedin, Send, CheckCircle2 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { z } from "zod";
 
@@ -12,6 +12,7 @@ const contactSchema = z.object({
 });
 
 const WHATSAPP_NUMBER = "201148627137";
+const CONTACT_EMAIL = "moohamedwahed@gmail.com";
 
 const ContactSection = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -19,6 +20,8 @@ const ContactSection = () => {
   const [formData, setFormData] = useState({ name: "", email: "", company: "", message: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sending, setSending] = useState(false);
+  const [website, setWebsite] = useState("");
+  const [sent, setSent] = useState<{ whatsappUrl: string; emailUrl: string } | null>(null);
   const { t, lang } = useLanguage();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -50,13 +53,36 @@ const ContactSection = () => {
       .filter(Boolean)
       .join("\n");
 
-    const encoded = encodeURIComponent(text);
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`, "_blank");
+    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+    const emailUrl = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+      `New Project Inquiry — ${result.data.name}`
+    )}&body=${encodeURIComponent(text)}`;
 
-    setTimeout(() => {
-      setSending(false);
-      setFormData({ name: "", email: "", company: "", message: "" });
-    }, 1500);
+    // Bots fill the hidden field; show the normal confirmation without sending anything.
+    if (!website) {
+      // Record the lead on our side so it isn't lost if WhatsApp never gets sent.
+      fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...result.data,
+          lang,
+          page: window.location.pathname,
+          utm: window.location.search,
+        }),
+        keepalive: true,
+      }).catch(() => {});
+
+      window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+    }
+
+    setSending(false);
+    setSent({ whatsappUrl, emailUrl });
+  };
+
+  const resetForm = () => {
+    setFormData({ name: "", email: "", company: "", message: "" });
+    setSent(null);
   };
 
   const fields = [
@@ -196,13 +222,60 @@ const ContactSection = () => {
             initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="glass-panel p-8 md:p-10"
+            className="glass-panel p-8 md:p-10 relative"
           >
             <h3 className="font-headline text-xl font-bold text-foreground mb-8">
               {t("contact.formTitle")}
             </h3>
 
+            {sent ? (
+              <div className="space-y-6" role="status" aria-live="polite">
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 size={22} className="text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-foreground font-semibold">{t("contact.sentTitle")}</p>
+                    <p className="text-muted-foreground text-sm leading-relaxed mt-2">{t("contact.sentDesc")}</p>
+                  </div>
+                </div>
+                <a
+                  href={sent.whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-4 font-label text-xs uppercase tracking-[0.2em] font-semibold bg-primary text-primary-foreground flex items-center justify-center gap-2"
+                >
+                  <MessageCircle size={14} />
+                  {t("contact.sentWhatsapp")}
+                </a>
+                <a
+                  href={sent.emailUrl}
+                  className="w-full py-4 font-label text-xs uppercase tracking-[0.2em] font-semibold ghost-border text-foreground flex items-center justify-center gap-2"
+                >
+                  <Mail size={14} />
+                  {t("contact.sentEmail")}
+                </a>
+                <p className="text-muted-foreground text-xs text-center">
+                  {CONTACT_EMAIL} · +{WHATSAPP_NUMBER}
+                </p>
+                <button
+                  type="button"
+                  onClick={resetForm}
+                  className="w-full text-sm text-muted-foreground hover:text-foreground underline underline-offset-4"
+                >
+                  {t("contact.sentReset")}
+                </button>
+              </div>
+            ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
+              <input
+                type="text"
+                name="website"
+                value={website}
+                onChange={(e) => setWebsite(e.target.value)}
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="absolute -left-[9999px] w-px h-px opacity-0"
+              />
               {fields.map((field) => (
                 <div key={field.id}>
                   <label htmlFor={field.id} className="label-tech text-[10px] text-muted-foreground block mb-2">
@@ -268,6 +341,7 @@ const ContactSection = () => {
                 )}
               </motion.button>
             </form>
+            )}
           </motion.div>
         </div>
       </div>

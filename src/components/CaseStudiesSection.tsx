@@ -24,7 +24,6 @@ const CaseStudiesSection = () => {
       results: [
         { label: t("cases.c1.r1l"), value: t("cases.c1.r1v") },
         { label: t("cases.c1.r2l"), value: t("cases.c1.r2v") },
-        { label: t("cases.c1.r3l"), value: t("cases.c1.r3v") },
         { label: t("cases.c1.r4l"), value: t("cases.c1.r4v") },
       ],
     },
