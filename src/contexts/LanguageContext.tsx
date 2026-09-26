@@ -23,7 +23,7 @@ const translations: Record<string, Record<Lang, string>> = {
   "nav.about": { en: "About", ar: "عنّي" },
   "nav.services": { en: "Services", ar: "الخدمات" },
   "nav.caseStudies": { en: "Work", ar: "الأعمال" },
-  "nav.process": { en: "Process", ar: "المنهجية" },
+  "nav.process": { en: "Process", ar: "طريقة الشغل" },
   "nav.insights": { en: "Insights", ar: "رؤى" },
   "nav.contact": { en: "Contact", ar: "تواصل" },
   "nav.solutions": { en: "Solutions", ar: "الحلول" },
@@ -490,6 +490,13 @@ const translations: Record<string, Record<Lang, string>> = {
   "marquee.label": { en: "Tools I build with", ar: "أدوات ببني بيها" },
   "why.yearsV": { en: "5+", ar: "+٥" },
   "why.yearsL": { en: "Years in BD & marketing", ar: "سنين في تطوير الأعمال والتسويق" },
+  "nav.whyMe": { en: "Why me", ar: "ليه أنا" },
+  "nav.whyMeDesc": { en: "Background and how I work", ar: "الخلفية وطريقة الشغل" },
+  "nav.processDesc": { en: "How a system gets built, step by step", ar: "النظام بيتبني إزاي، خطوة بخطوة" },
+  "nav.cv": { en: "CV", ar: "الـCV" },
+  "nav.cvDesc": { en: "Full experience, with a PDF download", ar: "الخبرة الكاملة، ومعاها ملف PDF" },
+  "nav.flowosDesc": { en: "AI CRM and automation for any sales team", ar: "CRM وأتمتة بالـAI لأي فريق مبيعات" },
+  "nav.driveleadDesc": { en: "AI system built for car dealerships", ar: "نظام بالـAI مخصوص لمعارض السيارات" },
 };
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
