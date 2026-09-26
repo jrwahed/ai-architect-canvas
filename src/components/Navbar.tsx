@@ -1,213 +1,121 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
-import { Globe } from "lucide-react";
+import { Globe, Menu, X, MessageCircle } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { WHATSAPP_URL } from "@/lib/contact";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [active, setActive] = useState("");
   const location = useLocation();
   const isHome = location.pathname === "/";
-  const isSolutions = location.pathname === "/solutions";
-  const { t, toggle, lang } = useLanguage();
+  const { t, toggle, lang, isAr } = useLanguage();
 
   const navItems = [
-    { label: t("nav.about"), target: "about" },
-    { label: t("nav.services"), target: "services" },
-    { label: t("nav.caseStudies"), target: "case-studies" },
-    { label: t("nav.process"), target: "process" },
-    { label: t("nav.contact"), target: "contact" },
+    { label: t("nav.services"), id: "services" },
+    { label: t("nav.caseStudies"), id: "work" },
+    { label: t("nav.process"), id: "process" },
+    { label: t("nav.about"), id: "about" },
+    { label: t("nav.products"), id: "products" },
   ];
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", onScroll);
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const scrollTo = (id: string) => {
-    if (!isHome) {
-      window.location.href = `/#${id}`;
-      return;
-    }
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-    setActive(id);
-    setMobileOpen(false);
-  };
+  useEffect(() => setMobileOpen(false), [location.pathname, location.hash]);
+
+  // On the homepage links are plain anchors; elsewhere they go back to the homepage section.
+  const hrefFor = (id: string) => (isHome ? `#${id}` : `/#${id}`);
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? "glass-panel" : "bg-transparent"
+    <header
+      className={`fixed top-0 inset-x-0 z-50 transition-colors duration-300 ${
+        scrolled || mobileOpen ? "bg-background/90 backdrop-blur border-b border-border" : "bg-transparent border-b border-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between h-16">
-        <Link to="/">
-          <motion.span
-            className="font-headline text-lg font-bold tracking-tight cursor-pointer text-primary text-glow-primary"
-            whileHover={{ scale: 1.02 }}
-          >
-            MW
-          </motion.span>
+      <nav className="mx-auto max-w-6xl px-5 md:px-8 h-16 flex items-center justify-between gap-4" aria-label="Main">
+        <Link to="/" className="font-headline text-lg font-semibold text-foreground">
+          {isAr ? "محمد وحيد" : "Mohamed Waheed"}
         </Link>
 
-        {/* Center nav links — only on home page */}
-        <div className="hidden md:flex items-center gap-8">
-          {isHome &&
-            navItems.map((item) => (
-              <button
-                key={item.target}
-                onClick={() => scrollTo(item.target)}
-                className={`font-label text-xs uppercase tracking-[0.15em] transition-all duration-300 relative ${
-                  active === item.target
-                    ? "text-foreground"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
+        <ul className="hidden lg:flex items-center gap-7">
+          {navItems.map((item) => (
+            <li key={item.id}>
+              <a href={hrefFor(item.id)} className="text-[15px] text-muted-foreground hover:text-foreground transition-colors">
                 {item.label}
-                {active === item.target && (
-                  <motion.div
-                    layoutId="nav-underline"
-                    className="absolute -bottom-1 left-0 right-0 h-px bg-primary"
-                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                  />
-                )}
-              </button>
-            ))}
-        </div>
+              </a>
+            </li>
+          ))}
+        </ul>
 
-        {/* Right side: Lang + Solutions + Book a Call */}
-        <div className="flex items-center gap-3">
-          <motion.button
+        <div className="flex items-center gap-2">
+          <button
             onClick={toggle}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-label uppercase tracking-wider text-muted-foreground hover:text-foreground ghost-border transition-colors"
-            aria-label="Toggle language"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+            aria-label={lang === "en" ? "التبديل للعربية" : "Switch to English"}
           >
-            <Globe size={14} />
-            <span>{lang === "en" ? "AR" : "EN"}</span>
-          </motion.button>
+            <Globe size={16} />
+            <span>{lang === "en" ? "عربي" : "EN"}</span>
+          </button>
 
-          {/* FlowOS link */}
-          <Link
-            to="/flowos"
-            className={`hidden md:inline-flex px-4 py-2 text-xs font-label uppercase tracking-[0.15em] font-semibold ghost-border transition-all duration-300 ${
-              location.pathname === "/flowos"
-                ? "text-primary border-primary/30"
-                : "text-muted-foreground hover:text-foreground hover:border-[hsl(var(--outline-variant)/0.4)]"
-            }`}
-          >
-            FlowOS
-          </Link>
-
-          {/* Solutions — secondary CTA */}
-          <Link
-            to="/solutions"
-            className={`hidden md:inline-flex px-4 py-2 text-xs font-label uppercase tracking-[0.15em] font-semibold ghost-border transition-all duration-300 ${
-              isSolutions
-                ? "text-primary border-primary/30"
-                : "text-muted-foreground hover:text-foreground hover:border-[hsl(var(--outline-variant)/0.4)]"
-            }`}
-          >
-            {t("nav.solutions")}
-          </Link>
-
-          {/* CV link */}
-          <Link
-            to="/cv"
-            className={`hidden md:inline-flex px-4 py-2 text-xs font-label uppercase tracking-[0.15em] font-semibold ghost-border transition-all duration-300 ${
-              location.pathname === "/cv"
-                ? "text-primary border-primary/30"
-                : "text-muted-foreground hover:text-foreground hover:border-[hsl(var(--outline-variant)/0.4)]"
-            }`}
-          >
-            CV
-          </Link>
-
-          {/* Book a Call — primary CTA */}
-          <motion.a
-            href="https://wa.me/201148627137"
+          <a
+            href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.05, boxShadow: "0 0 25px -5px hsl(184 100% 68% / 0.4)" }}
-            whileTap={{ scale: 0.97 }}
-            className="hidden sm:inline-flex px-5 py-2 text-xs font-label uppercase tracking-[0.15em] bg-primary text-primary-foreground font-semibold"
+            className="hidden md:inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
           >
+            <MessageCircle size={16} />
             {t("nav.bookCall")}
-          </motion.a>
+          </a>
 
           <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden flex flex-col gap-1.5 p-2"
-            aria-label="Toggle menu"
+            onClick={() => setMobileOpen((open) => !open)}
+            className="lg:hidden inline-flex w-10 h-10 items-center justify-center rounded-lg border border-border text-foreground"
+            aria-label="Menu"
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-menu"
           >
-            <span className={`w-5 h-px bg-foreground transition-transform ${mobileOpen ? "rotate-45 translate-y-[3px]" : ""}`} />
-            <span className={`w-5 h-px bg-foreground transition-opacity ${mobileOpen ? "opacity-0" : ""}`} />
-            <span className={`w-5 h-px bg-foreground transition-transform ${mobileOpen ? "-rotate-45 -translate-y-[3px]" : ""}`} />
+            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
-      </div>
+      </nav>
 
       {mobileOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="md:hidden glass-panel px-6 py-6 space-y-4"
-        >
-          <Link
-            to="/flowos"
-            onClick={() => setMobileOpen(false)}
-            className={`block w-full text-left font-label text-sm uppercase tracking-[0.1em] transition-colors ${
-              location.pathname === "/flowos" ? "text-primary" : "text-muted-foreground hover:text-foreground"
-            }`}
+        <div id="mobile-menu" className="lg:hidden border-t border-border bg-background px-5 pb-6 pt-2">
+          <ul className="flex flex-col">
+            {navItems.map((item) => (
+              <li key={item.id}>
+                <a
+                  href={hrefFor(item.id)}
+                  onClick={() => setMobileOpen(false)}
+                  className="block py-3 text-lg text-foreground border-b border-border"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+            <li>
+              <a href={hrefFor("contact")} onClick={() => setMobileOpen(false)} className="block py-3 text-lg text-foreground">
+                {t("nav.contact")}
+              </a>
+            </li>
+          </ul>
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 flex items-center justify-center gap-2 rounded-xl bg-primary py-3.5 font-semibold text-primary-foreground"
           >
-            FlowOS
-          </Link>
-          <Link
-            to="/drivelead"
-            onClick={() => setMobileOpen(false)}
-            className={`block w-full text-left font-label text-sm uppercase tracking-[0.1em] transition-colors ${
-              location.pathname === "/drivelead" ? "text-primary" : "text-muted-foreground/60 hover:text-muted-foreground"
-            }`}
-          >
-            DriveLead
-          </Link>
-          <Link
-            to="/solutions"
-            onClick={() => setMobileOpen(false)}
-            className={`block w-full text-left font-label text-sm uppercase tracking-[0.1em] transition-colors ${
-              isSolutions ? "text-primary" : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            {t("nav.solutions")}
-          </Link>
-          <Link
-            to="/cv"
-            onClick={() => setMobileOpen(false)}
-            className={`block w-full text-left font-label text-sm uppercase tracking-[0.1em] transition-colors ${
-              location.pathname === "/cv" ? "text-primary" : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            CV
-          </Link>
-          {navItems.map((item) => (
-            <button
-              key={item.target}
-              onClick={() => scrollTo(item.target)}
-              className="block w-full text-left font-label text-sm uppercase tracking-[0.1em] text-muted-foreground hover:text-foreground transition-colors"
-            >
-              {item.label}
-            </button>
-          ))}
-        </motion.div>
+            <MessageCircle size={18} />
+            {t("nav.bookCall")}
+          </a>
+        </div>
       )}
-    </motion.nav>
+    </header>
   );
 };
 

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback, ReactNode } from "react";
+import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from "react";
 
 
 type Lang = "en" | "ar";
@@ -20,9 +20,9 @@ export const useLanguage = () => {
 
 const translations: Record<string, Record<Lang, string>> = {
   // ─── Navbar ───
-  "nav.about": { en: "About", ar: "من أنا" },
+  "nav.about": { en: "About", ar: "عنّي" },
   "nav.services": { en: "Services", ar: "الخدمات" },
-  "nav.caseStudies": { en: "Results", ar: "النتائج" },
+  "nav.caseStudies": { en: "Work", ar: "الأعمال" },
   "nav.process": { en: "Process", ar: "المنهجية" },
   "nav.insights": { en: "Insights", ar: "رؤى" },
   "nav.contact": { en: "Contact", ar: "تواصل" },
@@ -39,7 +39,7 @@ const translations: Record<string, Record<Lang, string>> = {
     ar: "بشخّص القصور في التسويق، المبيعات، والعمليات.\nوببني سيستم شغل يخلي كل حاجة ماشية بنظام… مش بعشوائية."
   },
   "hero.cta1": { en: "Book a 15-min Call", ar: "احجز مكالمة ١٥ دقيقة" },
-  "hero.cta2": { en: "See How It Works", ar: "كيف يعمل النظام" },
+  "hero.cta2": { en: "See real work", ar: "شوف شغل حقيقي" },
   "hero.scroll": { en: "Scroll to Explore", ar: "استكشف المزيد" },
 
   // ─── About ───
@@ -85,9 +85,9 @@ const translations: Record<string, Record<Lang, string>> = {
   "philosophy.result": { en: "The result: a complete operating system that runs without you", ar: "النتيجة: نظام تشغيلي كامل يعمل بدونك" },
 
   // ─── Services ───
-  "services.label": { en: "02 // Services", ar: "02 // الخدمات" },
-  "services.title1": { en: "Four systems.", ar: "أربعة أنظمة." },
-  "services.title2": { en: "One mission: eliminate chaos.", ar: "مهمة واحدة: القضاء على الفوضى." },
+  "services.label": { en: "Services", ar: "الخدمات" },
+  "services.title1": { en: "Four systems.", ar: "٤ أنظمة." },
+  "services.title2": { en: "Each one closes a specific leak.", ar: "كل واحد بيقفل تسريب محدد." },
   "services.subtitle": { en: "Each system solves a specific business failure", ar: "كل نظام يحل خللاً تجارياً محدداً" },
   "services.problem": { en: "The Problem", ar: "المشكلة" },
   "services.solution": { en: "The Solution", ar: "الحل" },
@@ -277,7 +277,7 @@ const translations: Record<string, Record<Lang, string>> = {
   "cases.ctaBtn": { en: "Book a Strategy Call", ar: "احجز مكالمة استراتيجية" },
 
   // ─── Process ───
-  "process.label": { en: "02 // Process", ar: "02 // المنهجية" },
+  "process.label": { en: "Process", ar: "طريقة الشغل" },
   "process.title1": { en: "HOW I", ar: "كيف" },
   "process.title2": { en: "BUILD SYSTEMS", ar: "أبني الأنظمة" },
   "process.subtitle": {
@@ -336,9 +336,9 @@ const translations: Record<string, Record<Lang, string>> = {
   },
 
   // ─── Contact ───
-  "contact.label": { en: "06 // Get Started", ar: "06 // ابدأ الآن" },
-  "contact.title1": { en: "READY TO", ar: "مستعد" },
-  "contact.title2": { en: "BUILD YOUR SYSTEM?", ar: "لبناء نظامك؟" },
+  "contact.label": { en: "Contact", ar: "تواصل" },
+  "contact.title1": { en: "Ready to close", ar: "جاهز تقفل" },
+  "contact.title2": { en: "the leak?", ar: "التسريب؟" },
   "contact.desc": {
     en: "Tell me about your business in 15 minutes. I'll identify your biggest operational leak and outline a system to fix it.",
     ar: "أخبرني عن شركتك في ١٥ دقيقة. سأحدد أكبر تسريب تشغيلي لديك وأرسم مخطط نظام لإصلاحه."
@@ -428,6 +428,60 @@ const translations: Record<string, Record<Lang, string>> = {
     en: "AI Growth Systems — Lead Generation — Marketing Automation — Sales Automation — Operations — Dashboards — AI Agents — Egypt — Gulf",
     ar: "أنظمة نمو بالذكاء الاصطناعي — توليد عملاء — أتمتة تسويق — أتمتة مبيعات — عمليات — لوحات بيانات — وكلاء ذكاء اصطناعي — مصر — الخليج"
   },
+  // ─── Redesigned homepage ───
+  "nav.products": { en: "Products", ar: "المنتجات" },
+  "hero.eyebrow": { en: "For sales-led companies in Egypt & the Gulf", ar: "للشركات اللي عندها فريق مبيعات، في مصر والخليج" },
+  "hero.byline": { en: "Mohamed Waheed · 5+ years in Business Development & Growth Marketing", ar: "محمد وحيد · +٥ سنين في تطوير الأعمال والتسويق" },
+  "flow.title": { en: "A new lead, handled", ar: "عميل جديد، اتعامل معاه" },
+  "flow.example": { en: "Example flow", ar: "مثال توضيحي" },
+  "flow.s1": { en: "Lead arrives from a Facebook ad", ar: "عميل جاي من إعلان فيسبوك" },
+  "flow.s2": { en: "AI qualifies it: ready to buy", ar: "الـAI قيّمه: جاهز يشتري" },
+  "flow.s3": { en: "Assigned to the right salesperson", ar: "اتوزع على السيلز المناسب" },
+  "flow.s4": { en: "First response", ar: "أول رد" },
+  "flow.s4v": { en: "2:41 min", ar: "٢:٤١ دقيقة" },
+  "proof.1v": { en: "<3 min", ar: "أقل من ٣ دقايق" },
+  "proof.1l": { en: "Average lead response time (Sky Leads)", ar: "متوسط وقت الرد على العميل (Sky Leads)" },
+  "proof.2v": { en: "12", ar: "١٢" },
+  "proof.2l": { en: "CRM pipelines built", ar: "Pipeline CRM اتبنت" },
+  "proof.3v": { en: "24h", ar: "٢٤ ساعة" },
+  "proof.3l": { en: "Automatic lead reassignment", ar: "إعادة توزيع تلقائي للعميل" },
+  "leaks.label": { en: "The problem", ar: "المشكلة" },
+  "leaks.title": { en: "Three places your revenue is probably leaking", ar: "٣ أماكن غالبًا فلوسك بتضيع فيها" },
+  "leaks.1.t": { en: "Leads wait too long", ar: "العميل بيستنى كتير" },
+  "leaks.1.d": { en: "A lead waits days for a reply and buys from the competitor who answered first.", ar: "العميل بيستنى أيام من غير رد، وبيشتري من المنافس اللي رد الأول." },
+  "leaks.2.t": { en: "Sales time goes to admin", ar: "وقت السيلز بيروح في الشيتات" },
+  "leaks.2.d": { en: "Your team spends hours on data entry, reports and manual follow-up instead of selling.", ar: "فريقك بيقضي ساعات في إدخال بيانات وتقارير ومتابعة يدوي بدل ما يبيع." },
+  "leaks.3.t": { en: "Decisions without numbers", ar: "قرارات من غير أرقام" },
+  "leaks.3.d": { en: "Data sits across Excel, sheets and platforms, so you guess which campaign and which rep actually bring in money.", ar: "الداتا متفرقة بين Excel والشيتات والمنصات، فبتخمّن أنهي حملة وأنهي سيلز بيجيبوا فلوس فعلًا." },
+  "leaks.footer": { en: "The fix isn't more people or more tools. It's one connected system.", ar: "الحل مش موظفين أكتر ولا أدوات أكتر. الحل نظام واحد مربوط ببعضه." },
+  "services.ask": { en: "Ask about this system", ar: "اسأل عن النظام ده" },
+  "services.askMsg": { en: "Hi Mohamed, I'd like to know more about:", ar: "أهلًا محمد، عايز أعرف أكتر عن:" },
+  "work.label": { en: "Work", ar: "الأعمال" },
+  "work.title": { en: "Real systems, with the numbers", ar: "أنظمة حقيقية، ومعاها الأرقام" },
+  "work.sub": { en: "Systems I designed and built: the problem, what I built, and the result.", ar: "أنظمة صممتها وبنيتها: المشكلة، واللي اتبنى، والنتيجة." },
+  "work.featured": { en: "Featured", ar: "مشروع مميز" },
+  "work.before": { en: "Before", ar: "قبل" },
+  "work.built": { en: "What I built", ar: "اللي اتبنى" },
+  "work.more": { en: "More systems", ar: "أنظمة تانية" },
+  "work.shot": { en: "Screenshot from the system", ar: "صورة من النظام" },
+  "why.label": { en: "Why me", ar: "ليه أنا" },
+  "why.title": { en: "Not just a developer. I sold and marketed before I automated.", ar: "مش مجرد developer. اشتغلت في المبيعات والتسويق قبل ما أأتمتهم." },
+  "why.body": { en: "5+ years in Business Development and Growth Marketing: building pipelines, running campaigns, managing accounts. That's why the systems I build follow how your team actually sells.", ar: "أكتر من ٥ سنين في تطوير الأعمال والتسويق: بنيت pipelines، وشغّلت حملات، وأدرت حسابات عملاء. عشان كده النظام اللي ببنيه بيمشي على طريقة بيع فريقك، مش العكس." },
+  "why.p1": { en: "I run the system myself before I hand it over", ar: "بشغّل النظام بنفسي الأول قبل ما أسلّمه" },
+  "why.p2": { en: "Team training and a written operations guide with every system", ar: "تدريب للفريق ودليل تشغيل مكتوب مع كل نظام" },
+  "why.p3": { en: "Built with n8n and OpenAI, connected to your CRM, email and WhatsApp", ar: "مبني بـn8n وOpenAI، ومربوط بالـCRM والإيميل والواتساب" },
+  "why.cv": { en: "Full experience & CV", ar: "الخبرة الكاملة والـCV" },
+  "process.heading": { en: "How a system gets built", ar: "النظام بيتبني إزاي" },
+  "products.label": { en: "Products", ar: "المنتجات" },
+  "products.title": { en: "Tools I built from this work", ar: "أدوات بنيتها من الشغل ده" },
+  "products.flowos": { en: "AI CRM and automation for any sales team: lead capture, scoring, follow-up and live dashboards.", ar: "CRM وأتمتة بالـAI لأي فريق مبيعات: استقبال العملاء، وتقييمهم، ومتابعتهم، وداشبورد مباشر." },
+  "products.drivelead": { en: "An AI system built for car dealerships: from OLX & Facebook inquiry to delivery.", ar: "نظام بالـAI مخصوص لمعارض السيارات: من استفسار OLX وفيسبوك لحد التسليم." },
+  "products.cta": { en: "Explore", ar: "اعرف أكتر" },
+  "cta.mobileForm": { en: "Write your request", ar: "اكتب طلبك" },
+  "footer.tagline": { en: "AI growth systems for sales-led companies.", ar: "أنظمة نمو بالـAI للشركات اللي عندها فريق مبيعات." },
+  "footer.explore": { en: "Explore", ar: "استكشف" },
+  "footer.contact": { en: "Contact", ar: "تواصل" },
+  "footer.location": { en: "Egypt & the Gulf", ar: "مصر والخليج" },
 };
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
@@ -443,6 +497,11 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   );
 
   const isAr = lang === "ar";
+
+  useEffect(() => {
+    document.documentElement.lang = lang;
+    document.documentElement.dir = isAr ? "rtl" : "ltr";
+  }, [lang, isAr]);
 
   return (
     <LanguageContext.Provider value={{ lang, isAr, toggle, t }}>

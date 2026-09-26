@@ -3,6 +3,7 @@ import { motion, useInView } from "framer-motion";
 import { Radio, Diamond, MessageCircle, Mail, MapPin, Linkedin, Send, CheckCircle2 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { z } from "zod";
+import { CONTACT_EMAIL, LINKEDIN_URL, WHATSAPP_NUMBER } from "@/lib/contact";
 
 const contactSchema = z.object({
   name: z.string().trim().min(1).max(100),
@@ -11,8 +12,6 @@ const contactSchema = z.object({
   message: z.string().trim().min(1).max(1000),
 });
 
-const WHATSAPP_NUMBER = "201148627137";
-const CONTACT_EMAIL = "moohamedwahed@gmail.com";
 
 const ContactSection = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -92,14 +91,14 @@ const ContactSection = () => {
   ];
 
   return (
-    <section id="contact" className="section-gap relative" ref={ref}>
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <div className="grid md:grid-cols-2 gap-16 md:gap-24 items-start">
+    <section id="contact" className="py-20 md:py-28 relative" ref={ref}>
+      <div className="max-w-6xl mx-auto px-5 md:px-8">
+        <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-start">
           <div>
             <motion.span
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : {}}
-              className="label-tech text-primary block mb-4"
+              className="text-sm font-medium text-primary block mb-3"
             >
               {t("contact.label")}
             </motion.span>
@@ -108,11 +107,10 @@ const ContactSection = () => {
               initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="font-headline text-4xl md:text-6xl font-bold tracking-tight leading-[0.95] mb-6"
+              className="font-headline text-3xl md:text-5xl font-semibold tracking-tight leading-tight mb-6"
             >
-              {t("contact.title1")}
-              <br />
-              <span className="gradient-text">{t("contact.title2")}</span>
+              {t("contact.title1")}{" "}
+              <span className="text-primary">{t("contact.title2")}</span>
             </motion.h2>
 
             <motion.p
@@ -131,20 +129,20 @@ const ContactSection = () => {
               className="space-y-4"
             >
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 glass-panel flex items-center justify-center text-primary">
+                <div className="w-10 h-10 rounded-lg border border-border bg-surface-container flex items-center justify-center text-primary">
                   <Radio size={16} />
                 </div>
                 <div>
-                  <span className="label-tech text-[10px] text-muted-foreground">{t("contact.availability")}</span>
+                  <span className="text-sm text-muted-foreground">{t("contact.availability")}</span>
                   <div className="text-foreground text-sm font-medium">{t("contact.availabilityValue")}</div>
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 glass-panel flex items-center justify-center text-secondary">
+                <div className="w-10 h-10 rounded-lg border border-border bg-surface-container flex items-center justify-center text-primary">
                   <Diamond size={16} />
                 </div>
                 <div>
-                  <span className="label-tech text-[10px] text-muted-foreground">{t("contact.engagement")}</span>
+                  <span className="text-sm text-muted-foreground">{t("contact.engagement")}</span>
                   <div className="text-foreground text-sm font-medium">{t("contact.engagementValue")}</div>
                 </div>
               </div>
@@ -157,9 +155,9 @@ const ContactSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.6 }}
-              whileHover={{ scale: 1.02, boxShadow: "0 0 30px -5px hsl(184 100% 68% / 0.5)" }}
+              whileHover={{ y: -2 }}
               whileTap={{ scale: 0.97 }}
-              className="mt-8 inline-flex items-center justify-center gap-2 w-full text-center py-4 font-label text-xs uppercase tracking-[0.2em] font-semibold bg-primary text-primary-foreground hover-glow"
+              className="mt-8 inline-flex items-center justify-center gap-2 w-full text-center py-4 rounded-xl text-base font-semibold bg-primary text-primary-foreground"
             >
               <MessageCircle size={16} />
               {t("contact.whatsapp")}
@@ -170,7 +168,7 @@ const ContactSection = () => {
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : {}}
               transition={{ delay: 0.8 }}
-              className="mt-10 pt-8 border-t border-border/20"
+              className="mt-10 pt-8 border-t border-border"
             >
               <div className="flex items-center gap-4 mb-4">
                 <div className="w-12 h-12 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center">
@@ -180,13 +178,13 @@ const ContactSection = () => {
                   <h4 className="text-foreground font-headline font-semibold text-sm">
                     {lang === "ar" ? "محمد وحيد" : "Mohamed Waheed"}
                   </h4>
-                  <span className="label-tech text-[10px] text-muted-foreground">
+                  <span className="text-sm text-muted-foreground">
                     {lang === "ar" ? "مهندس أنظمة ذكاء اصطناعي" : "AI Systems Architect"}
                   </span>
                 </div>
               </div>
 
-              <p className="text-muted-foreground text-xs leading-relaxed mb-5">
+              <p className="text-muted-foreground text-sm leading-relaxed mb-5">
                 {lang === "ar"
                   ? "أصمم وأبني أنظمة ذكاء اصطناعي تقضي على الهدر التشغيلي وتسرّع النمو."
                   : "I design and build AI systems that eliminate operational waste and accelerate growth."}
@@ -194,17 +192,17 @@ const ContactSection = () => {
 
               <div className="flex items-center gap-4">
                 <a
-                  href="https://www.linkedin.com/in/moohamedwaheed/"
+                  href={LINKEDIN_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-8 h-8 glass-panel flex items-center justify-center text-muted-foreground hover:text-primary transition-colors"
+                  className="w-10 h-10 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:text-primary transition-colors"
                   aria-label="LinkedIn"
                 >
                   <Linkedin size={14} />
                 </a>
                 <a
-                  href="mailto:moohamedwahed@gmail.com"
-                  className="w-8 h-8 glass-panel flex items-center justify-center text-muted-foreground hover:text-primary transition-colors"
+                  href={`mailto:${CONTACT_EMAIL}`}
+                  className="w-10 h-10 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:text-primary transition-colors"
                   aria-label="Email"
                 >
                   <Mail size={14} />
@@ -222,9 +220,9 @@ const ContactSection = () => {
             initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="glass-panel p-8 md:p-10 relative"
+            className="rounded-2xl border border-border bg-surface-container p-6 md:p-8 relative"
           >
-            <h3 className="font-headline text-xl font-bold text-foreground mb-8">
+            <h3 className="font-headline text-xl font-semibold text-foreground mb-6">
               {t("contact.formTitle")}
             </h3>
 
@@ -241,14 +239,14 @@ const ContactSection = () => {
                   href={sent.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-4 font-label text-xs uppercase tracking-[0.2em] font-semibold bg-primary text-primary-foreground flex items-center justify-center gap-2"
+                  className="w-full py-4 rounded-xl text-base font-semibold bg-primary text-primary-foreground flex items-center justify-center gap-2"
                 >
                   <MessageCircle size={14} />
                   {t("contact.sentWhatsapp")}
                 </a>
                 <a
                   href={sent.emailUrl}
-                  className="w-full py-4 font-label text-xs uppercase tracking-[0.2em] font-semibold ghost-border text-foreground flex items-center justify-center gap-2"
+                  className="w-full py-4 rounded-xl text-base font-semibold border border-border text-foreground flex items-center justify-center gap-2"
                 >
                   <Mail size={14} />
                   {t("contact.sentEmail")}
@@ -278,7 +276,7 @@ const ContactSection = () => {
               />
               {fields.map((field) => (
                 <div key={field.id}>
-                  <label htmlFor={field.id} className="label-tech text-[10px] text-muted-foreground block mb-2">
+                  <label htmlFor={field.id} className="text-sm text-muted-foreground block mb-2">
                     {field.label}{field.required && <span className="text-primary"> *</span>}
                   </label>
                   <input
@@ -291,8 +289,8 @@ const ContactSection = () => {
                       setFormData((prev) => ({ ...prev, [field.id]: e.target.value }));
                       if (errors[field.id]) setErrors((prev) => ({ ...prev, [field.id]: "" }));
                     }}
-                    className={`w-full bg-transparent border-b pb-3 text-foreground placeholder:text-muted-foreground/40 font-label text-sm focus:outline-none transition-colors ${
-                      errors[field.id] ? "border-destructive" : "border-border/30 focus:border-primary"
+                    className={`w-full rounded-lg border bg-surface-container-low px-3.5 py-3 text-foreground placeholder:text-muted-foreground/60 text-base focus:outline-none transition-colors ${
+                      errors[field.id] ? "border-destructive" : "border-border focus:border-primary"
                     }`}
                   />
                   {errors[field.id] && (
@@ -302,7 +300,7 @@ const ContactSection = () => {
               ))}
 
               <div>
-                <label htmlFor="message" className="label-tech text-[10px] text-muted-foreground block mb-2">
+                <label htmlFor="message" className="text-sm text-muted-foreground block mb-2">
                   {t("contact.message")}<span className="text-primary"> *</span>
                 </label>
                 <textarea
@@ -315,8 +313,8 @@ const ContactSection = () => {
                     setFormData((prev) => ({ ...prev, message: e.target.value }));
                     if (errors.message) setErrors((prev) => ({ ...prev, message: "" }));
                   }}
-                  className={`w-full bg-transparent border-b pb-3 text-foreground placeholder:text-muted-foreground/40 font-label text-sm focus:outline-none transition-colors resize-none ${
-                    errors.message ? "border-destructive" : "border-border/30 focus:border-primary"
+                  className={`w-full rounded-lg border bg-surface-container-low px-3.5 py-3 text-foreground placeholder:text-muted-foreground/60 text-base focus:outline-none transition-colors resize-none ${
+                    errors.message ? "border-destructive" : "border-border focus:border-primary"
                   }`}
                 />
                 {errors.message && (
@@ -327,9 +325,9 @@ const ContactSection = () => {
               <motion.button
                 type="submit"
                 disabled={sending}
-                whileHover={{ scale: 1.02, boxShadow: "0 0 30px -5px hsl(184 100% 68% / 0.4)" }}
+                whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full py-4 font-label text-xs uppercase tracking-[0.2em] font-semibold bg-primary text-primary-foreground transition-all flex items-center justify-center gap-2 disabled:opacity-70"
+                className="w-full py-4 rounded-xl text-base font-semibold bg-primary text-primary-foreground transition-all flex items-center justify-center gap-2 disabled:opacity-70"
               >
                 {sending ? (
                   <span className="inline-block w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />

@@ -14,10 +14,11 @@ export default {
     },
     extend: {
       fontFamily: {
-        headline: ["Space Grotesk", "sans-serif"],
-        body: ["Inter", "sans-serif"],
-        label: ["Manrope", "sans-serif"],
-        arabic: ["IBM Plex Sans Arabic", "sans-serif"],
+        headline: ["Readex Pro", "IBM Plex Sans Arabic", "system-ui", "sans-serif"],
+        body: ["IBM Plex Sans Arabic", "system-ui", "sans-serif"],
+        label: ["IBM Plex Sans Arabic", "system-ui", "sans-serif"],
+        arabic: ["IBM Plex Sans Arabic", "system-ui", "sans-serif"],
+        mono: ["IBM Plex Mono", "ui-monospace", "monospace"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -53,6 +54,8 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        leak: "hsl(var(--leak))",
+        gain: "hsl(var(--gain))",
         surface: {
           DEFAULT: "hsl(var(--surface))",
           container: "hsl(var(--surface-container))",
@@ -72,9 +75,9 @@ export default {
         },
       },
       borderRadius: {
-        lg: "0.25rem",
-        md: "0.125rem",
-        sm: "0.0625rem",
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 4px)",
+        sm: "calc(var(--radius) - 6px)",
       },
       keyframes: {
         "accordion-down": {
