@@ -155,8 +155,9 @@ npm run build
 - فيه honeypot (خانة `website`) ضد السبام.
 - `api/lead.js` بيتحقق من البيانات، وبيبعتها لـ`LEAD_WEBHOOK_URL` لو متعرّف.
 - الـwebhook هو Google Apps Script (`docs/leads-apps-script.gs`). بيكتب في شيت اسمه `Leads` وبيبعت إيميل، وبيتأكد من `LEAD_WEBHOOK_SECRET`.
+- **واتساب أوتوماتيك لصاحب الموقع:** `api/lead.js` بيبعتله رسالة مع كل طلب عن طريق CallMeBot لو `WHATSAPP_NOTIFY_APIKEY` متعرّف (والرقم في `WHATSAPP_NOTIFY_PHONE`، والافتراضي `+201148627137`).
 - خطوات الإعداد لصاحب الموقع بالعربي في `docs/leads-setup.md`.
-- ⚠️ **لحد ما صاحب الموقع يحط `LEAD_WEBHOOK_URL` و`LEAD_WEBHOOK_SECRET` في Vercel ويعمل Redeploy، الطلبات مش بتتحفظ.**
+- ⚠️ **لحد ما صاحب الموقع يحط المتغيرات دي في Vercel ويعمل Redeploy، الطلبات مش بتتحفظ ومش بتوصله على الواتساب.**
 
 ---
 
@@ -246,7 +247,7 @@ npm run build
 | #13 | إعادة كتابة كلام الصفحة الرئيسية بالمصري حوالين الـBI والأتمتة، وخطوات شغل جديدة. |
 | #14 | عنوان جديد، وقسم التشخيص المجاني. |
 | #15 | ١٣ خدمة، وصفحة لكل خدمة، وطريقة الشغل «من الفوضى للنظام». |
-| #16 | SEO لكل صفحة + sitemap، وحفظ الطلبات في Google Sheet. |
+| #16 | SEO لكل صفحة + sitemap، وحفظ الطلبات في Google Sheet، وإشعار واتساب لصاحب الموقع مع كل طلب. |
 
 **تقارير سابقة** (Artifacts على claude.ai، private لصاحب الموقع):
 - **Audit الموقع:** `https://claude.ai/artifact/CBW76skT9GgLb6f6nAktWq`
