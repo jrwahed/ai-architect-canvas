@@ -2,7 +2,7 @@
 
 > الملف ده بيشرح كل حاجة عن موقع **محمد وحيد**: إيه اللي اتعمل، وليه، وإيه القرارات اللي خدها صاحب الموقع، وإيه اللي لسه ناقص.
 > أي AI أو مطوّر يشتغل على الريبو ده يقراه **الأول** قبل ما يلمس أي حاجة.
-> آخر تحديث: ٢٧ سبتمبر ٢٠٢٦.
+> آخر تحديث: ٢٨ سبتمبر ٢٠٢٦.
 
 ---
 
@@ -10,8 +10,8 @@
 
 | البند | القيمة |
 |---|---|
-| صاحب الموقع | محمد وحيد (Mohamed Waheed): 5+ سنين في تطوير الأعمال والتسويق، وبيبني أنظمة نمو وأتمتة بالـAI |
-| إيه الموقع | موقع شخصي بيبيع خدمة بناء أنظمة (AI Growth Systems) لشركات عندها فريق مبيعات في مصر والخليج، ومعاه منتجين: FlowOS وDriveLead |
+| صاحب الموقع | محمد وحيد (Mohamed Waheed): 5+ سنين في تطوير الأعمال والتسويق، وبيبني أنظمة Business Intelligence وأتمتة بالـAI |
+| إيه الموقع | موقع شخصي بيبيع بناء أنظمة (BI وأتمتة بالـAI، ١٣ خدمة) لأي شركة في مصر والخليج، وأول خطوة تشخيص مجاني. ومعاه منتجين: FlowOS وDriveLead |
 | الريبو | `jrwahed/ai-architect-canvas` (الفرع الأساسي `main`) |
 | الموقع الحي | `mohamedwaheed.vercel.app`، والدومين `mohamedwaheed.com` |
 | النشر | Vercel بيبني ويرفع **أوتوماتيك** مع أي merge على `main`. مفيش staging. |
@@ -52,14 +52,14 @@
 
 - React 18 + TypeScript + Vite 5 + Tailwind 3 + shadcn/ui (فولدر `src/components/ui`، ومعظمه مش مستخدم).
 - `framer-motion` لكل الحركة.
-- `react-router-dom` 6 (SPA، ومفيش SSR/prerender).
+- `react-router-dom` 6 (SPA، ومفيش SSR). المحتوى بيترندر بالـJS، بس كل صفحة ليها HTML بالـmeta بتاعتها (تحت).
 - `vercel.json`: كل صفحة معروفة بترجع نسخة `index.html` الخاصة بيها (`dist/<path>/index.html`)، وأي حاجة تانية بترجع `index.html` **ماعدا** `/api/*`.
 - **SEO:**
   - عنوان ووصف كل صفحة في `src/data/seo.ts` (صفحات الخدمات بتتعمل أوتوماتيك من `services.ts`).
   - `SeoManager` بيحدّث الـtitle والـmeta والـcanonical مع كل صفحة.
   - الـplugin اللي في `vite.config.ts` بيكتب نسخة HTML لكل صفحة، و`sitemap.xml`، و`404.html`.
   - **صفحة جديدة؟** ضيفها في `seo.ts` وفي `vercel.json`.
-- Vercel Function واحدة: `api/lead.js`.
+- Vercel Function واحدة: `api/lead.js` (قسم ٦).
 
 **الأوامر:**
 ```bash
@@ -86,20 +86,20 @@ npm run build
 | `*` | `src/pages/NotFound.tsx` | 404 |
 
 ### ترتيب الصفحة الرئيسية (`Index.tsx`)
-1. `HeroSection`: صورته كبيرة. الصورة والكروت الطايرة بيتحركوا مع الماوس، وفي spotlight برتقالي، والعنوان بيظهر كلمة كلمة، والأزرار magnetic. في العربي الصورة بتتقلب (`rtl:-scale-x-100`). على الموبايل الصورة فوق والكلام تحت.
+1. `HeroSection`: عنوان «كل عميل، وكل مهمة، وكل رقم… في نظام واحد ذكي»، وزرار «احجز تشخيص مجاني»، وسطر إثبات (٢١ موظف و٤٨ شاشة). صورته كبيرة. الصورة والكروت الطايرة بيتحركوا مع الماوس، وفي spotlight برتقالي، والعنوان بيظهر كلمة كلمة، والأزرار magnetic. في العربي الصورة بتتقلب (`rtl:-scale-x-100`). على الموبايل الصورة فوق والكلام تحت.
 2. `home/ToolsMarquee`: شريط متحرك للأدوات (من قايمة الأدوات في صفحة الـCV).
-3. `home/LeaksSection`: كريمي. "٣ أماكن فلوسك بتضيع فيها".
-4. `ServicesSection`: الخدمات الـ4، كل خدمة كارت bento بلون مختلف، والكروت بتميل مع الماوس.
+3. `home/LeaksSection`: كريمي. "٣ حاجات بتاكل وقت ومجهود فريقك".
+4. `ServicesSection`: الـ١٣ خدمة في ٤ كروت bento (مجموعة لكل كارت، بلون مختلف)، وكل خدمة لينك لصفحتها `/services/:slug`. البيانات من `src/data/services.ts`.
 5. `CaseStudiesSection` (id=`work`):
    - **الأول:** كارت Shift OS المميز، بيودّي لـ`/work/agency-os`.
    - **بعده:** Sky Leads وAI Outreach بصورهم.
    - **تحت:** 4 مشاريع مختصرة (c3، c5، c6، c7).
-6. `home/WhyMeSection` (id=`about`): صورته، و"+5 سنين"، ولينك للـCV.
-6.5. `home/OfferSection` (id=`audit`): التشخيص المجاني، وبييجي بعد قسم الأعمال.
-7. `PipelineSection` (فيه `ProcessSection`، id=`process`): الخطوات، وخط بيتملى مع السكرول.
-8. `home/ProductsSection` (id=`products`): FlowOS وDriveLead.
-9. `ContactSection` (id=`contact`): الفورم.
-10. `Footer` و`home/MobileCTABar` (زرار حجز ثابت على الموبايل بعد السكرول) و`motion/CursorFollower` (دايرة ورا الماوس).
+6. `home/OfferSection` (id=`audit`): التشخيص المجاني (٣ خطوات + كارت "مجاني" + زرار واتساب).
+7. `home/WhyMeSection` (id=`about`): صورته، و"+5 سنين"، ولينك للـCV.
+8. `PipelineSection` (فيه `ProcessSection`، id=`process`): طريقة الشغل «من الفوضى للنظام» (٥ مراحل)، وخط بيتملى مع السكرول.
+9. `home/ProductsSection` (id=`products`): FlowOS وDriveLead.
+10. `ContactSection` (id=`contact`): الفورم.
+11. `Footer` و`home/MobileCTABar` (زرار حجز ثابت على الموبايل بعد السكرول) و`motion/CursorFollower` (دايرة ورا الماوس).
 
 ### القايمة (`src/components/Navbar.tsx`)، ومشتركة في كل الصفحات ماعدا DriveLead
 - **روابط:** الخدمات، والحلول، والأعمال.
@@ -149,7 +149,7 @@ npm run build
 
 ## ٦) الفورم وحفظ العملاء المحتملين
 
-- `ContactSection` بيبعت الطلب لـ`/api/lead` (من غير ما يستنى الرد)، وبعدين بيفتح WhatsApp برسالة جاهزة.
+- `ContactSection` بيبعت الطلب لـ`/api/lead` (من غير ما يستنى الرد)، وبعدين بيفتح WhatsApp عند الزائر برسالة جاهزة. ده غير الإشعار الأوتوماتيك اللي بيوصل لصاحب الموقع (تحت).
 - بعد الإرسال بتظهر رسالة تأكيد، ومعاها زرار WhatsApp وزرار إيميل احتياطي.
 - البيانات مش بتتمسح بعد الإرسال.
 - فيه honeypot (خانة `website`) ضد السبام.
@@ -271,7 +271,7 @@ npm run build
 
 **حاجات تقنية مستنية حد ينفذها:**
 
-5. صاحب الموقع يعمل خطوات `docs/leads-setup.md` (Google Sheet + متغيرات Vercel).
+5. صاحب الموقع يعمل خطوات `docs/leads-setup.md`: إعداد Meta (WhatsApp Cloud API + قالب `new_lead`)، وGoogle Sheet، ومتغيرات Vercel.
 6. مفيش Analytics خالص (GA4 أو Plausible). اتقترح ولسه ماتعملش.
 7. SEO: اتعمل (meta لكل صفحة، وsitemap، و404 بـnoindex). اللي فاضل:
    - المحتوى نفسه لسه بيترندر بالـJS بس.
