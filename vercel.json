@@ -1,5 +1,11 @@
 {
   "rewrites": [
+    { "source": "/solutions", "destination": "/solutions/index.html" },
+    { "source": "/cv", "destination": "/cv/index.html" },
+    { "source": "/flowos", "destination": "/flowos/index.html" },
+    { "source": "/drivelead", "destination": "/drivelead/index.html" },
+    { "source": "/work/agency-os", "destination": "/work/agency-os/index.html" },
+    { "source": "/services/:slug", "destination": "/services/:slug/index.html" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]
 }

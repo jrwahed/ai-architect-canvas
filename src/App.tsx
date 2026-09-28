@@ -12,6 +12,7 @@ import FlowOS from "./pages/FlowOS.tsx";
 import AgencyOsCase from "./pages/AgencyOsCase.tsx";
 import ServiceDetail from "./pages/ServiceDetail.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import SeoManager from "./components/SeoManager.tsx";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <SeoManager />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/solutions" element={<Solutions />} />

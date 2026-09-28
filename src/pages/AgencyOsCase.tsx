@@ -280,11 +280,7 @@ const AgencyOsCase = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = isAr ? "نظام تشغيل وكالة تسويق — محمد وحيد" : "Marketing Agency Operating System — Mohamed Waheed";
-    return () => {
-      document.title = "Mohamed Waheed | AI-Powered Growth Systems Builder";
-    };
-  }, [isAr]);
+  }, []);
 
   return (
     <MotionConfig reducedMotion="user">
