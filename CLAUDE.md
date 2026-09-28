@@ -39,6 +39,8 @@
    - أول خطوة **تشخيص مجاني** (قسم `home/OfferSection`، id=`audit`).
    - **ممنوع كتابة أسعار** على الموقع.
    - مدة النظام: **من أسبوعين لـ٣ شهور حسب حجمه**.
+   - الخدمات الـ١٣ اللي في `src/data/services.ts` صاحب الموقع أكّد إنه بيقدّمها. الخدمات اللي مالهاش مدة مؤكدة مكتوب فيها "بتتحدد في التشخيص".
+   - طريقة الشغل اسمها **«من الفوضى للنظام»**: تشخيص، ثم تصميم، ثم بناء، ثم تسليم وتدريب، ثم متابعة وتحسين.
 9. **صوره اللي بعتها:**
    - `mohamed-hero.webp`: صورته جنب الشباك بإضاءة برتقالي.
    - `mohamed-portrait.webp` و`mohamed-waheed.webp`: selfie في المكتب.
@@ -70,6 +72,7 @@ npm run build
 | المسار | الملف | إيه هي |
 |---|---|---|
 | `/` | `src/pages/Index.tsx` | الصفحة الرئيسية (اتعملت من جديد) |
+| `/services/:slug` | `src/pages/ServiceDetail.tsx` | صفحة لكل خدمة (١٣ خدمة). المحتوى كله في `src/data/services.ts` |
 | `/work/agency-os` | `src/pages/AgencyOsCase.tsx` | دراسة حالة نظام تشغيل الوكالة (جديدة) |
 | `/solutions` | `src/pages/Solutions.tsx` | حلول حسب الصناعة + ROI calculator (قديمة، أخدت الألوان الجديدة بس) |
 | `/flowos` | `src/pages/FlowOS.tsx` | صفحة منتج FlowOS (قديمة) |
