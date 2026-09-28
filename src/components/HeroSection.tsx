@@ -191,6 +191,11 @@ const HeroSection = () => {
                 </a>
               </Magnetic>
             </motion.div>
+
+            <motion.p {...enter(1.05)} className="mt-6 flex items-center gap-2 text-sm text-white/65">
+              <span className="w-1.5 h-1.5 shrink-0 rounded-full bg-gain" />
+              {t("hero.proof")}
+            </motion.p>
           </div>
         </div>
       </div>
