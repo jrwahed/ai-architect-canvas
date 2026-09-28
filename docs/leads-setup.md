@@ -1,33 +1,67 @@
 # إزاي طلبات الفورم توصلك
 
 فيه حاجتين، وكل واحدة شغالة لوحدها:
-- **الجزء الأول:** كل طلب يوصلك **رسالة واتساب** أوتوماتيك (٣ دقايق).
+- **الجزء الأول:** كل طلب يوصلك **رسالة واتساب** أوتوماتيك (حوالي ٢٠ دقيقة، مرة واحدة).
 - **الجزء التاني:** كل طلب يتسجّل في **Google Sheet** ويجيلك **إيميل** (١٠ دقايق).
 
 ---
 
 # الجزء الأول: رسالة واتساب مع كل طلب
 
-بنستخدم خدمة مجانية اسمها **CallMeBot**، بتبعتلك رسايل على الواتساب بتاعك إنت بس.
+الرسالة بتتبعت من **واتساب نفسه** (WhatsApp Cloud API بتاعة Meta)، من غير أي خدمة وسيطة. محتاج تعمل الإعداد ده **مرة واحدة**، وبعدها كله متغيرات في Vercel.
 
-## ١) خد المفتاح (API key)
-1. افتح [callmebot.com/blog/free-api-whatsapp-messages](https://www.callmebot.com/blog/free-api-whatsapp-messages/). هتلاقي فيها **رقم تليفون** الخدمة.
-2. سجّل الرقم ده في موبايلك (على رقم الواتساب اللي عايز الطلبات توصله).
-3. ابعتله على الواتساب الرسالة دي بالظبط:
-   `I allow callmebot to send me messages`
-4. في خلال دقيقتين هيردّ عليك برسالة فيها **apikey** (أرقام). احفظه.
+## ١) اعمل App على Meta
+1. افتح [developers.facebook.com/apps](https://developers.facebook.com/apps) وادخل بحساب فيسبوك بتاعك.
+2. **Create App**. اختار **Other**، وبعدين **Business**، وسمّيه مثلًا «Website Leads».
+3. في صفحة الـApp، جنب **WhatsApp** دوس **Set up**، واختار (أو اعمل) Business Account.
 
-## ٢) حطه في Vercel
+## ٢) هات رقم الإرسال ورقمك
+1. من القايمة: **WhatsApp ← API Setup**.
+2. Meta بتديك **رقم تجريبي مجاني** بيبعت منه. انسخ الرقم اللي مكتوب جنب **Phone number ID** (أرقام طويلة).
+3. تحت **To**، دوس **Manage phone number list**، وضيف رقمك `+201148627137`، ودخّل الكود اللي هيجيلك على الواتساب.
+
+## ٣) اعمل مفتاح دايم (Token)
+المفتاح اللي بيظهر في صفحة API Setup بيخلص بعد ٢٤ ساعة، فمحتاج واحد دايم:
+1. افتح [business.facebook.com/settings](https://business.facebook.com/settings) ← **Users ← System users ← Add**. سمّيه «website» وخليه **Admin**.
+2. دوس **Assign assets**: اختار الـApp (Full control)، واختار الـWhatsApp account (Full control).
+3. دوس **Generate new token**، واختار الـApp، و**Token expiration: Never**، وعلّم على:
+   - `whatsapp_business_messaging`
+   - `whatsapp_business_management`
+4. انسخ الـToken واحفظه في مكان آمن (مش هيظهر تاني).
+
+## ٤) اعمل قالب الرسالة (Template)
+واتساب مابيسمحش إن رقم شركة يبعتلك رسالة عادية إلا لو إنت كلمته في آخر ٢٤ ساعة. القالب بيخلي الرسالة توصل في أي وقت:
+1. افتح [WhatsApp Manager](https://business.facebook.com/wa/manage/message-templates/) ← **Create template**.
+2. **Category:** Utility. **Name:** `new_lead`. **Language:** Arabic.
+3. في **Body** الصق ده بالظبط:
+   ```
+   📩 طلب جديد من الموقع
+   الاسم: {{1}}
+   الإيميل: {{2}}
+   الشركة: {{3}}
+   الرسالة: {{4}}
+   الصفحة: {{5}}
+   ```
+4. لو طلب أمثلة للمتغيرات، اكتب أي حاجة (مثلًا: أحمد، a@b.com، شركة، عايز نظام، /).
+5. **Submit**. الموافقة غالبًا بتاخد دقايق.
+
+## ٥) حط المتغيرات في Vercel
 1. افتح المشروع على [vercel.com](https://vercel.com) ← **Settings ← Environment Variables**.
 2. ضيف (والبيئة **Production**):
-   - `WHATSAPP_NOTIFY_APIKEY` = الأرقام اللي جاتلك.
-   - `WHATSAPP_NOTIFY_PHONE` = رقمك بالشكل ده: `+201148627137` (لو هو نفس الرقم ده، مش لازم تضيفه).
+   - `WHATSAPP_TOKEN` = الـToken الدايم من خطوة ٣.
+   - `WHATSAPP_PHONE_NUMBER_ID` = الرقم من خطوة ٢.
+   - `WHATSAPP_TEMPLATE` = `new_lead`
+   - `WHATSAPP_NOTIFY_TO` = رقمك بالأرقام بس، زي `201148627137` (لو هو نفس الرقم ده، مش لازم تضيفه).
 3. روح **Deployments**، ودوس على الـ⋯ جنب آخر نشر ← **Redeploy**.
 
-## ٣) جرّب
+## ٦) جرّب
 ابعت طلب من الفورم، وفي خلال ثواني هتجيلك رسالة «📩 طلب جديد من الموقع» فيها الاسم والإيميل والشركة والرسالة.
 
-> ملحوظة: الخدمة دي مجانية ومن شركة تانية، يعني بيانات الطلب بتعدّي عليهم عشان يبعتوها. لو حبيت بعد كده حاجة رسمية أكتر، ينفع ننقل لـWhatsApp Business API.
+**لو ماوصلتش:** في Vercel افتح **Logs** ودوّر على `WhatsApp notify failed`، هتلاقي جنبها السبب اللي Meta رجّعته.
+
+> ملاحظات:
+> - الرقم التجريبي بيبعت لحد ٥ أرقام إنت مسجّلها، وده كفاية ليك. لو عايز الرسايل تيجي من رقم باسمك، ضيف رقم حقيقي من **API Setup ← Add phone number**، وغيّر `WHATSAPP_PHONE_NUMBER_ID`.
+> - Meta ممكن تحاسب على رسايل القوالب حسب البلد، والتكلفة غالبًا صغيرة. تفاصيلها في [صفحة الأسعار](https://developers.facebook.com/docs/whatsapp/pricing).
 
 ---
 
