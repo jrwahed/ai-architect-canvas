@@ -21,7 +21,7 @@ const ProcessSection = () => {
     <section id="process" className="bg-background py-20 md:py-32">
       <div className="mx-auto max-w-6xl px-5 md:px-8 grid lg:grid-cols-12 gap-10 lg:gap-16">
         <div className="lg:col-span-5 lg:sticky lg:top-28 lg:self-start">
-          <SectionHeader label={t("process.label")} title={t("process.heading")} />
+          <SectionHeader label={t("process.label")} title={t("process.heading")} sub={t("process.sub")} />
           <Reveal>
             <Magnetic>
               <a
