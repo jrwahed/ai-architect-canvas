@@ -1,12 +1,6 @@
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const NotFound = () => {
-  useEffect(() => {
-    document.title = "404 — Page Not Found";
-    return () => { document.title = "Mohamed Waheed | AI-Powered Growth Systems Builder"; };
-  }, []);
-
   return (
     <div className="flex min-h-screen items-center justify-center bg-background">
       <div className="text-center px-6">

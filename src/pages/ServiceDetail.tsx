@@ -26,10 +26,6 @@ const ServiceDetail = () => {
     window.scrollTo(0, 0);
   }, [slug]);
 
-  useEffect(() => {
-    if (service) document.title = `${service.title[lang]} | Mohamed Waheed`;
-  }, [service, lang]);
-
   if (!service) return <NotFound />;
 
   const bookUrl = whatsappWithText(`${t("offer.msg")} (${service.title[lang]})`);

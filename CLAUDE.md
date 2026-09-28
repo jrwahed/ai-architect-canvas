@@ -53,7 +53,12 @@
 - React 18 + TypeScript + Vite 5 + Tailwind 3 + shadcn/ui (فولدر `src/components/ui`، ومعظمه مش مستخدم).
 - `framer-motion` لكل الحركة.
 - `react-router-dom` 6 (SPA، ومفيش SSR/prerender).
-- `vercel.json`: كل المسارات بترجع `index.html` **ماعدا** `/api/*`.
+- `vercel.json`: كل صفحة معروفة بترجع نسخة `index.html` الخاصة بيها (`dist/<path>/index.html`)، وأي حاجة تانية بترجع `index.html` **ماعدا** `/api/*`.
+- **SEO:**
+  - عنوان ووصف كل صفحة في `src/data/seo.ts` (صفحات الخدمات بتتعمل أوتوماتيك من `services.ts`).
+  - `SeoManager` بيحدّث الـtitle والـmeta والـcanonical مع كل صفحة.
+  - الـplugin اللي في `vite.config.ts` بيكتب نسخة HTML لكل صفحة، و`sitemap.xml`، و`404.html`.
+  - **صفحة جديدة؟** ضيفها في `seo.ts` وفي `vercel.json`.
 - Vercel Function واحدة: `api/lead.js`.
 
 **الأوامر:**
@@ -149,7 +154,10 @@ npm run build
 - البيانات مش بتتمسح بعد الإرسال.
 - فيه honeypot (خانة `website`) ضد السبام.
 - `api/lead.js` بيتحقق من البيانات، وبيبعتها لـ`LEAD_WEBHOOK_URL` لو متعرّف.
-- ⚠️ **`LEAD_WEBHOOK_URL` لسه مش متحط في Vercel**، يعني الطلبات **مش بتتحفظ** لحد دلوقتي. الخطة: n8n webhook يكتب في Google Sheet ويبعت إشعار. صاحب الموقع لسه ماعملهاش.
+- الـwebhook هو Google Apps Script (`docs/leads-apps-script.gs`). بيكتب في شيت اسمه `Leads` وبيبعت إيميل، وبيتأكد من `LEAD_WEBHOOK_SECRET`.
+- **واتساب أوتوماتيك لصاحب الموقع:** `api/lead.js` بيبعتله رسالة مع كل طلب عن طريق CallMeBot لو `WHATSAPP_NOTIFY_APIKEY` متعرّف (والرقم في `WHATSAPP_NOTIFY_PHONE`، والافتراضي `+201148627137`).
+- خطوات الإعداد لصاحب الموقع بالعربي في `docs/leads-setup.md`.
+- ⚠️ **لحد ما صاحب الموقع يحط المتغيرات دي في Vercel ويعمل Redeploy، الطلبات مش بتتحفظ ومش بتوصله على الواتساب.**
 
 ---
 
@@ -237,6 +245,9 @@ npm run build
 | #10 | صور نظرة عامة ومتابعة الفريق والمساعد. |
 | #11 | إعادة بناء صفحة دراسة الحالة: الصور جنب كل جزء، وحركة مع السكرول. |
 | #13 | إعادة كتابة كلام الصفحة الرئيسية بالمصري حوالين الـBI والأتمتة، وخطوات شغل جديدة. |
+| #14 | عنوان جديد، وقسم التشخيص المجاني. |
+| #15 | ١٣ خدمة، وصفحة لكل خدمة، وطريقة الشغل «من الفوضى للنظام». |
+| #16 | SEO لكل صفحة + sitemap، وحفظ الطلبات في Google Sheet، وإشعار واتساب لصاحب الموقع مع كل طلب. |
 
 **تقارير سابقة** (Artifacts على claude.ai، private لصاحب الموقع):
 - **Audit الموقع:** `https://claude.ai/artifact/CBW76skT9GgLb6f6nAktWq`
@@ -257,13 +268,12 @@ npm run build
 
 **حاجات تقنية مستنية حد ينفذها:**
 
-5. `LEAD_WEBHOOK_URL` في Vercel + n8n + Google Sheet (قسم ٦).
+5. صاحب الموقع يعمل خطوات `docs/leads-setup.md` (Google Sheet + متغيرات Vercel).
 6. مفيش Analytics خالص (GA4 أو Plausible). اتقترح ولسه ماتعملش.
-7. SEO:
-   - مفيش meta/canonical/OG لكل صفحة (الـcanonical ثابت على الـhome).
-   - مفيش `sitemap.xml`.
-   - الموقع SPA من غير prerender.
-   - صفحة 404 بترجع 200.
+7. SEO: اتعمل (meta لكل صفحة، وsitemap، و404 بـnoindex). اللي فاضل:
+   - المحتوى نفسه لسه بيترندر بالـJS بس.
+   - صفحة الـ404 لمسار غلط بره `/services/` لسه بترجع 200 (بس عليها noindex).
+   - تسجيل الموقع والـsitemap في Google Search Console.
 8. صفحات FlowOS وSolutions والـCV لسه بالتصميم القديم، وأخدت الألوان والخطوط الجديدة بس. وDriveLead ليه navbar مختلف.
 9. الـJS bundle كبير (حوالي 920KB). ملف الـCV كـPDF متحط جوه الكود (`src/utils/cvPdfData.ts`)، وصور الـcase studies القديمة (`ai-*.jpg`) حجم كل واحدة قريب من 1MB.
 10. خطأ lint قديم في `src/pages/CV.tsx` (prefer-const).

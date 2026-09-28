@@ -284,11 +284,6 @@ const CV = () => {
   const statsInView = useInView(statsRef, { once: true, margin: "-80px" });
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
-  useEffect(() => {
-    document.title = "CV — Mohamed Waheed | AI Systems Architect";
-    return () => { document.title = "Mohamed Waheed | AI-Powered Growth Systems Builder"; };
-  }, []);
-
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
