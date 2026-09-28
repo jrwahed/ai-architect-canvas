@@ -155,7 +155,9 @@ npm run build
 - فيه honeypot (خانة `website`) ضد السبام.
 - `api/lead.js` بيتحقق من البيانات، وبيبعتها لـ`LEAD_WEBHOOK_URL` لو متعرّف.
 - الـwebhook هو Google Apps Script (`docs/leads-apps-script.gs`). بيكتب في شيت اسمه `Leads` وبيبعت إيميل، وبيتأكد من `LEAD_WEBHOOK_SECRET`.
-- **واتساب أوتوماتيك لصاحب الموقع:** `api/lead.js` بيبعتله رسالة مع كل طلب عن طريق CallMeBot لو `WHATSAPP_NOTIFY_APIKEY` متعرّف (والرقم في `WHATSAPP_NOTIFY_PHONE`، والافتراضي `+201148627137`).
+- **واتساب أوتوماتيك لصاحب الموقع:** `api/lead.js` بيبعتله رسالة مع كل طلب عن طريق **WhatsApp Cloud API الرسمي بتاع Meta**، من غير أي خدمة وسيطة (صاحب الموقع طلب كده بالنص).
+  - **المتغيرات:** `WHATSAPP_TOKEN` و`WHATSAPP_PHONE_NUMBER_ID`، و`WHATSAPP_TEMPLATE` (قالب `new_lead` بـ٥ متغيرات)، و`WHATSAPP_NOTIFY_TO` (الافتراضي `201148627137`).
+  - **من غير قالب** بيبعت رسالة عادية، ودي بتوصل بس لو صاحب الموقع كلّم رقم الإرسال في آخر ٢٤ ساعة.
 - خطوات الإعداد لصاحب الموقع بالعربي في `docs/leads-setup.md`.
 - ⚠️ **لحد ما صاحب الموقع يحط المتغيرات دي في Vercel ويعمل Redeploy، الطلبات مش بتتحفظ ومش بتوصله على الواتساب.**
 
@@ -248,6 +250,7 @@ npm run build
 | #14 | عنوان جديد، وقسم التشخيص المجاني. |
 | #15 | ١٣ خدمة، وصفحة لكل خدمة، وطريقة الشغل «من الفوضى للنظام». |
 | #16 | SEO لكل صفحة + sitemap، وحفظ الطلبات في Google Sheet، وإشعار واتساب لصاحب الموقع مع كل طلب. |
+| #17 | إشعار الواتساب بقى من WhatsApp Cloud API الرسمي بدل CallMeBot. |
 
 **تقارير سابقة** (Artifacts على claude.ai، private لصاحب الموقع):
 - **Audit الموقع:** `https://claude.ai/artifact/CBW76skT9GgLb6f6nAktWq`
