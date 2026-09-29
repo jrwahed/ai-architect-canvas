@@ -4,7 +4,7 @@ import {
   Bot, BarChart3, Users, TrendingUp, TrendingDown,
   Clock, Database, Building2, Megaphone, Zap, Layers,
   CheckCircle2, DollarSign, MessageCircle, Inbox,
-  Car, ArrowRight, RefreshCw, Check, ChevronRight, User,
+  Car, ArrowRight, RefreshCw, Check, ChevronRight,
   Brain, Eye,
 } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -29,31 +29,6 @@ const S = ({ children, className = "", id }: { children: React.ReactNode; classN
       {children}
     </motion.section>
   );
-};
-
-/* ─── Animated counter ─── */
-const Counter = ({ value }: { value: string }) => {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true });
-  const num = parseInt(value.replace(/[^0-9]/g, ""));
-  const prefix = value.match(/^[^0-9]*/)?.[0] || "";
-  const suffix = value.match(/[^0-9]*$/)?.[0] || "";
-  const [display, setDisplay] = useState(0);
-  useEffect(() => {
-    if (!inView || isNaN(num)) return;
-    let frame: number;
-    const dur = 1500;
-    const start = performance.now();
-    const step = (now: number) => {
-      const p = Math.min((now - start) / dur, 1);
-      setDisplay(Math.round((1 - Math.pow(1 - p, 3)) * num));
-      if (p < 1) frame = requestAnimationFrame(step);
-    };
-    frame = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(frame);
-  }, [inView, num]);
-  if (isNaN(num)) return <span ref={ref}>{value}</span>;
-  return <span ref={ref}>{prefix}{display.toLocaleString()}{suffix}</span>;
 };
 
 interface SP { t: (k: string) => string; isAr: boolean; }
@@ -112,10 +87,7 @@ const HeroSection = ({ t, isAr }: SP) => {
   };
 
   const pipes = [t("hero.pipe1"), t("hero.pipe2"), t("hero.pipe3"), t("hero.pipe4"), t("hero.pipe5"), t("hero.pipe6")];
-  const stats = [
-    { v: t("hero.stat1v"), l: t("hero.stat1l") },
-    { v: t("hero.stat4v"), l: t("hero.stat4l") },
-  ];
+  const facts = [t("hero.fact1"), t("hero.fact2")];
 
   return (
     <section
@@ -191,11 +163,6 @@ const HeroSection = ({ t, isAr }: SP) => {
           </Link>
         </motion.div>
 
-        {/* Urgency text */}
-        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }} className="label-tech text-amber-400 text-[11px] mt-4">
-          {t("hero.urgency")}
-        </motion.p>
-
         {/* Pipeline chips */}
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1, duration: 0.6 }} className="mt-10 overflow-hidden">
           <div className="flex items-center gap-2 md:gap-3 overflow-x-auto scrollbar-hide pb-2">
@@ -208,12 +175,12 @@ const HeroSection = ({ t, isAr }: SP) => {
           </div>
         </motion.div>
 
-        {/* Stats */}
-        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.3 }} className="grid grid-cols-2 gap-4 md:gap-6 mt-10 max-w-xl">
-          {stats.map((s, i) => (
-            <motion.div key={s.l} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.4 + i * 0.1 }} className="glass-panel p-4 md:p-5 text-center">
-              <div className="font-headline text-2xl md:text-3xl font-bold gradient-text"><Counter value={s.v} /></div>
-              <div className="label-tech text-[10px] mt-1 text-muted-foreground">{s.l}</div>
+        {/* Feature facts (no numbers) */}
+        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.3 }} className="flex flex-wrap gap-3 mt-10">
+          {facts.map((f, i) => (
+            <motion.div key={f} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.4 + i * 0.1 }} className="glass-panel px-4 py-2.5 inline-flex items-center gap-2">
+              <CheckCircle2 size={14} className="text-primary shrink-0" />
+              <span className="text-sm text-foreground/80">{f}</span>
             </motion.div>
           ))}
         </motion.div>
@@ -526,7 +493,7 @@ const DashboardSection = ({ t, isAr }: SP) => {
         <div className="flex items-center justify-between mb-5">
           <div>
             <h3 className="font-headline font-bold text-foreground">FlowOS Dashboard</h3>
-            <span className="label-tech text-[10px] text-muted-foreground">Live • Updated 2 sec ago</span>
+            <span className="label-tech text-[10px] text-muted-foreground">{t("dash.sample")}</span>
           </div>
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
@@ -779,7 +746,7 @@ const FlowMindSection = ({ t }: SP) => {
           <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center"><Bot size={20} className="text-primary" /></div>
           <div>
             <h4 className="font-headline font-bold text-foreground text-sm">FlowMind AI</h4>
-            <span className="label-tech text-[10px] text-primary">Online • Connected to your data</span>
+            <span className="label-tech text-[10px] text-primary">{t("mind.sample")}</span>
           </div>
         </div>
 
@@ -1159,16 +1126,13 @@ const IndustriesSection = ({ t }: SP) => {
                 </div>
               </div>
 
-              <div className="flex flex-col items-start md:items-end gap-3 shrink-0">
-                <div className="glass-panel px-4 py-2 rounded-xl">
-                  <span className="label-tech text-[10px] text-primary">{t(`ind.${ind.k}.proof`)}</span>
-                </div>
-                {ind.link && (
+              {ind.link && (
+                <div className="flex flex-col items-start md:items-end gap-3 shrink-0">
                   <Link to={ind.link} className="text-sm text-primary font-semibold hover:underline inline-flex items-center gap-1">
                     {t(`ind.${ind.k}.cta`)}
                   </Link>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </motion.div>
         ))}
@@ -1185,26 +1149,10 @@ const ReadyCTASection = ({ t }: SP) => (
     <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at center, hsl(184 100% 68% / 0.06), transparent 70%)" }} />
 
     <div className="max-w-3xl mx-auto px-6 md:px-12 text-center relative z-10">
-      {/* Urgency badge */}
-      <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-        className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8"
-        style={{ background: "hsl(45 100% 60% / 0.08)", border: "1px solid hsl(45 100% 60% / 0.25)" }}>
-        <span className="status-dot bg-amber-400" />
-        <span className="label-tech text-[10px] text-amber-400">{t("newcta.urgency")}</span>
-      </motion.div>
-
       <h2 className="font-headline text-3xl md:text-5xl font-bold">
         {t("newcta.headline1")} <span className="gradient-text">{t("newcta.headline2")}</span>
       </h2>
       <p className="text-muted-foreground text-lg mt-4 max-w-xl mx-auto">{t("newcta.sub")}</p>
-
-      {/* Referral nudge */}
-      <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-        className="mt-8 inline-flex items-center gap-2 px-5 py-3 rounded-2xl"
-        style={{ background: "hsl(var(--primary) / 0.05)", border: "1px solid hsl(var(--primary) / 0.15)" }}>
-        <User size={16} className="text-primary" />
-        <span className="text-sm text-muted-foreground">{t("newcta.referral")}</span>
-      </motion.div>
 
       {/* CTA buttons */}
       <div className="flex flex-wrap justify-center gap-4 mt-8">

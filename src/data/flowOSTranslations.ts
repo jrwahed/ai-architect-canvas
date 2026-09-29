@@ -13,22 +13,16 @@ const fl: Record<string, Record<Lang, string>> = {
     en: "One AI-powered platform that captures every lead, runs your CRM, automates your follow-ups, and gives you a live dashboard to see everything — built for any company with an active sales and marketing team in Egypt & Gulf.",
     ar: "منصة AI واحدة بتستقبل كل الليدز، بتدير الـ CRM، بتعمل المتابعة تلقائي، وبتديك داشبورد لايف تشوف فيه كل حاجة — متصممة لأي شركة عندها حركة في المبيعات والتسويق في مصر والخليج.",
   },
-  "hero.cta1": { en: "See Pricing & Demo →", ar: "شوف السعر والتجربة ←" },
+  "hero.cta1": { en: "Book a Demo Call →", ar: "احجز مكالمة وشوف عرض ←" },
   "hero.cta2": { en: "Who Built This? →", ar: "مين عمل ده؟ ←" },
-  "hero.urgency": {
-    en: "⚡ Referral deal: bring a company → get 20% off your plan",
-    ar: "⚡ عرض الإحالة: جيب شركة → خصم ٢٠٪ على اشتراكك",
-  },
   "hero.pipe1": { en: "New Lead", ar: "ليد جديد" },
   "hero.pipe2": { en: "AI Score", ar: "تقييم AI" },
   "hero.pipe3": { en: "Assign", ar: "توزيع" },
   "hero.pipe4": { en: "Follow Up", ar: "متابعة" },
   "hero.pipe5": { en: "Meeting", ar: "اجتماع" },
   "hero.pipe6": { en: "Deal Closed", ar: "Deal اتقفل" },
-  "hero.stat1v": { en: "3", ar: "٣" },
-  "hero.stat1l": { en: "Industries Served", ar: "صناعات" },
-  "hero.stat4v": { en: "<3 min", ar: "<٣ دقايق" },
-  "hero.stat4l": { en: "Avg Lead Response", ar: "متوسط رد على الليد" },
+  "hero.fact1": { en: "Arabic & English", ar: "عربي وإنجليزي" },
+  "hero.fact2": { en: "Works on mobile", ar: "بيشتغل على الموبايل" },
 
   // ─── Problem ───
   "problem.label": { en: "// The Problem", ar: "// المشكلة" },
@@ -44,8 +38,8 @@ const fl: Record<string, Record<Lang, string>> = {
   },
   "problem.2.title": { en: "Leads go cold in minutes", ar: "الليدز بتبرد في دقايق" },
   "problem.2.desc": {
-    en: "A lead you contact in the first 3 minutes is 10x more likely to convert. Without automation, your team simply can't move that fast.",
-    ar: "الليد اللي بتكلمه في أول ٣ دقايق احتمال يشتري ١٠ أضعاف. من غير أتمتة، فريقك مش هيقدر يتحرك بالسرعة دي.",
+    en: "The faster you reach a new lead, the better your chance of closing. Without automation, your team simply can't move that fast.",
+    ar: "كل ما توصل للليد الجديد أسرع، فرصتك تقفل معاه بتكبر. من غير أتمتة، فريقك مش هيقدر يتحرك بالسرعة دي.",
   },
   "problem.3.title": { en: "Budget burning with no visibility", ar: "ميزانية بتحترق من غير رؤية" },
   "problem.3.desc": {
@@ -75,8 +69,8 @@ const fl: Record<string, Record<Lang, string>> = {
   // ─── Automation ───
   "auto.label": { en: "// Automation — How It Works", ar: "// الأوتوميشن — إزاي بيشتغل" },
   "auto.title": {
-    en: "From Facebook click to sales call — in under 3 minutes.",
-    ar: "من كليك على فيسبوك لمكالمة المبيعات — في أقل من ٣ دقايق.",
+    en: "From Facebook click to sales call — automatically.",
+    ar: "من كليك على فيسبوك لمكالمة المبيعات — أوتوماتيك.",
   },
   "auto.1.title": { en: "Lead clicks your Facebook ad", ar: "الليد بيضغط على إعلانك على فيسبوك" },
   "auto.1.desc": {
@@ -89,7 +83,7 @@ const fl: Record<string, Record<Lang, string>> = {
     en: "FlowOS AI analyzes every new lead in real-time: Where did they come from? What did they click on? What's their likely budget? Have they inquired before? In seconds, they're classified as Hot, Warm, or Cold — with a score from 1-100.",
     ar: "FlowOS AI بيحلل كل ليد جديد في لحظتها: جه منين؟ ضغط على إيه؟ إيه الميزانية المحتملة؟ سأل قبل كده؟ في ثواني، بيتصنف سخن، فاتر، أو بارد — بدرجة من ١ لـ ١٠٠.",
   },
-  "auto.2.proof": { en: "✓ AI Classified in 1.2s", ar: "✓ الـ AI صنّفه في ١.٢ ثانية" },
+  "auto.2.proof": { en: "✓ Classified automatically by AI", ar: "✓ الـ AI صنّفه أوتوماتيك" },
   "auto.3.title": { en: "Auto-assigned to the right salesperson", ar: "بيتوزع تلقائياً على السيلز الصح" },
   "auto.3.desc": {
     en: "Based on score, area, product interest, and current workload — FlowOS assigns the lead to the best available salesperson automatically. No manager intervention needed. The salesperson gets an instant WhatsApp notification.",
@@ -113,6 +107,7 @@ const fl: Record<string, Record<Lang, string>> = {
     en: "No more asking your team for updates. Open FlowOS and see every number, live.",
     ar: "خلاص متسألش فريقك عن أخبار. افتح FlowOS وشوف كل رقم، لايف.",
   },
+  "dash.sample": { en: "Sample data — for illustration", ar: "بيانات توضيحية — للشرح بس" },
   "dash.feat1.title": { en: "Live campaign ROI", ar: "ROI الحملات لايف" },
   "dash.feat1.desc": { en: "See which ad EGP goes to real deals — not just clicks", ar: "شوف أنهي جنيه إعلانات بيروح لصفقات حقيقية — مش بس كليكات" },
   "dash.feat2.title": { en: "Team performance", ar: "أداء الفريق" },
@@ -156,6 +151,7 @@ const fl: Record<string, Record<Lang, string>> = {
     en: "Ask FlowMind anything about your business. It knows your data, your leads, your campaigns — and gives you real answers, not generic advice.",
     ar: "اسأل FlowMind أي حاجة عن شغلك. عارف بياناتك، ليدزك، حملاتك — وبيديك إجابات حقيقية، مش نصايح عامة.",
   },
+  "mind.sample": { en: "Example conversation — sample data", ar: "محادثة توضيحية — بيانات مثال" },
   "mind.cap1": { en: "Ask in Arabic or English", ar: "اسأله بالعربي أو الإنجليزي" },
   "mind.cap2": { en: "Knows your actual business data", ar: "عارف بياناتك الحقيقية" },
   "mind.cap3": { en: "Spots trends before you do", ar: "بيلاقي الـ trends قبلك" },
@@ -185,19 +181,18 @@ const fl: Record<string, Record<Lang, string>> = {
 
   // ─── Industries ───
   "ind.label": { en: "// Examples", ar: "// أمثلة" },
-  "ind.title": { en: "Works for any industry. Here's where we've proven it.", ar: "بيشتغل مع أي صناعة. وده أين أثبتنا ده." },
+  "ind.title": { en: "Designed for these industries — and adaptable to yours.", ar: "متصمم للصناعات دي — وبيتظبط على صناعتك." },
   "ind.subtitle": {
-    en: "These are examples of industries where FlowOS is already running — but the platform adapts to any business that has leads, a sales team, and needs visibility.",
-    ar: "دي أمثلة لصناعات FlowOS شغّال فيها فعلاً — بس المنصة بتتكيّف مع أي شركة عندها ليدز، فريق مبيعات، ومحتاجة رؤية.",
+    en: "These are examples of how FlowOS is designed to work in different industries — the platform adapts to any business that has leads, a sales team, and needs visibility.",
+    ar: "دي أمثلة لإزاي FlowOS متصمم يشتغل في صناعات مختلفة — والمنصة بتتظبط على أي شركة عندها ليدز وفريق مبيعات ومحتاجة تشوف شغلها بوضوح.",
   },
   "ind.re.title": { en: "Real Estate", ar: "العقارات" },
-  "ind.re.sub": { en: "Built and proven in the Egyptian real estate market", ar: "مبني ومثبت في السوق العقاري المصري" },
+  "ind.re.sub": { en: "Designed around how the Egyptian real estate market sells", ar: "متصمم على طريقة البيع في السوق العقاري المصري" },
   "ind.re.f1": { en: "Facebook & Google lead auto-capture", ar: "استقطاب ليدز فيسبوك وجوجل تلقائي" },
   "ind.re.f2": { en: "12 CRM pipeline stages", ar: "١٢ مرحلة في الـ CRM" },
   "ind.re.f3": { en: "Auto-reassignment in 24h", ar: "إعادة توزيع تلقائي في ٢٤ ساعة" },
   "ind.re.f4": { en: "Project & unit tracking", ar: "تتبع المشاريع والوحدات" },
   "ind.re.f5": { en: "Developer & broker dashboards", ar: "داشبورد للديفيلوبر والبروكر" },
-  "ind.re.proof": { en: "<3min average lead response time", ar: "متوسط رد على الليد أقل من ٣ دقايق" },
   "ind.re.cta": { en: "See Real Estate System →", ar: "شوف نظام العقارات ←" },
 
   "ind.car.title": { en: "Car Dealerships", ar: "معارض السيارات" },
@@ -207,7 +202,6 @@ const fl: Record<string, Record<Lang, string>> = {
   "ind.car.f3": { en: "Trade-in system", ar: "نظام استبدال" },
   "ind.car.f4": { en: "Financing & mortgage tracking", ar: "تتبع التمويل والقروض" },
   "ind.car.f5": { en: "Multi-branch support", ar: "دعم الفروع المتعددة" },
-  "ind.car.proof": { en: "40% lower CPL", ar: "انخفاض ٤٠٪ في تكلفة الليد" },
   "ind.car.cta": { en: "See Dealership System →", ar: "شوف نظام المعارض ←" },
 
   "ind.agency.title": { en: "Marketing Agencies", ar: "وكالات التسويق" },
@@ -217,96 +211,31 @@ const fl: Record<string, Record<Lang, string>> = {
   "ind.agency.f3": { en: "Campaign performance tracking", ar: "تتبع أداء الحملات" },
   "ind.agency.f4": { en: "White-label option", ar: "خيار White-label" },
   "ind.agency.f5": { en: "Team performance by client", ar: "أداء الفريق لكل عميل" },
-  "ind.agency.proof": { en: "85% less manual reporting time", ar: "٨٥٪ وقت أقل في الريبورتات اليدوية" },
-
-  // ─── Pricing ───
-  "price.label": { en: "// Pricing & Offer", ar: "// السعر والعرض" },
-  "price.title": { en: "Simple pricing. Serious results.", ar: "سعر بسيط. نتايج حقيقية." },
-  "price.urgency.title": {
-    en: "Limited Launch Offer — 10 spots left this month",
-    ar: "عرض الإطلاق المحدود — ١٠ أماكن فاضلة الشهر ده",
-  },
-  "price.urgency.sub": {
-    en: "First 10 companies get 30% off first 3 months",
-    ar: "أول ١٠ شركات بتاخد خصم ٣٠٪ لأول ٣ شهور",
-  },
-  "price.spotsLeft": { en: "spots left", ar: "مكان فاضل" },
-
-  "price.starter.name": { en: "Starter", ar: "ابدأ" },
-  "price.starter.price": { en: "Contact Us", ar: "تواصل معنا" },
-  "price.starter.desc": { en: "For small teams starting out", ar: "للفرق الصغيرة اللي بتبدأ" },
-  "price.starter.f1": { en: "Up to 200 leads/month", ar: "حتى ٢٠٠ ليد/شهر" },
-  "price.starter.f2": { en: "1-3 users", ar: "١-٣ مستخدمين" },
-  "price.starter.f3": { en: "Smart CRM", ar: "CRM ذكي" },
-  "price.starter.f4": { en: "Basic dashboard", ar: "داشبورد أساسي" },
-  "price.starter.f5": { en: "WhatsApp integration", ar: "ربط واتساب" },
-  "price.starter.cta": { en: "Book a Call", ar: "احجز مكالمة" },
-
-  "price.pro.name": { en: "Professional", ar: "احترافي" },
-  "price.pro.price": { en: "Contact Us", ar: "تواصل معنا" },
-  "price.pro.desc": { en: "For growing companies with 3-15 salespeople", ar: "للشركات النامية ٣-١٥ سيلز" },
-  "price.pro.f1": { en: "Unlimited leads", ar: "ليدز غير محدودة" },
-  "price.pro.f2": { en: "Up to 15 users", ar: "حتى ١٥ مستخدم" },
-  "price.pro.f3": { en: "All CRM features", ar: "كل مميزات الـ CRM" },
-  "price.pro.f4": { en: "Live dashboard", ar: "داشبورد لايف" },
-  "price.pro.f5": { en: "AI lead scoring", ar: "تقييم الليدز بالـ AI" },
-  "price.pro.f6": { en: "Auto follow-up", ar: "متابعة أوتوماتيك" },
-  "price.pro.f7": { en: "Campaign analytics", ar: "تحليلات الحملات" },
-  "price.pro.f8": { en: "FlowMind AI", ar: "FlowMind AI" },
-  "price.pro.f9": { en: "Dedicated account manager", ar: "أكاونت مانجر مخصص" },
-  "price.pro.cta": { en: "Book a Call + See Demo", ar: "احجز مكالمة + شوف عرض" },
-  "price.popular": { en: "Most Popular", ar: "الأكثر طلباً" },
-
-  "price.ent.name": { en: "Enterprise", ar: "المؤسسات" },
-  "price.ent.price": { en: "Custom", ar: "مخصص" },
-  "price.ent.desc": { en: "Multi-branch, large teams, custom dev", ar: "فروع متعددة، فرق كبيرة، تطوير مخصص" },
-  "price.ent.f1": { en: "Everything in Professional", ar: "كل حاجة في الاحترافي" },
-  "price.ent.f2": { en: "Unlimited users", ar: "مستخدمين غير محدودين" },
-  "price.ent.f3": { en: "Multi-branch support", ar: "دعم فروع متعددة" },
-  "price.ent.f4": { en: "Custom development", ar: "تطوير مخصص" },
-  "price.ent.f5": { en: "Priority support", ar: "أولوية في الدعم" },
-  "price.ent.f6": { en: "White-label option", ar: "خيار White-label" },
-  "price.ent.cta": { en: "Let's Talk", ar: "خلينا نتكلم" },
-
-  "price.referral.title": { en: "Refer a Company → Get 20% Off", ar: "جيب شركة → خصم ٢٠٪ عليك" },
-  "price.referral.desc": {
-    en: "Know a business that would benefit from FlowOS? Refer them and get 20% off your next month. They get 10% off their first month too.",
-    ar: "تعرف شركة هتستفيد من FlowOS؟ جيبها وخد خصم ٢٠٪ على شهرك الجاي. وهما بياخدوا خصم ١٠٪ على أول شهر.",
-  },
-  "price.referral.cta": { en: "Send a Referral →", ar: "ابعت إحالة ←" },
 
   // ─── Final CTA ───
-  "cta.title": { en: "Your competitors are already using AI.", ar: "منافسيك بيستخدموا الـ AI دلوقتي." },
+  "cta.title": { en: "See how it would work for your team.", ar: "شوف هيشتغل إزاي مع فريقك." },
   "cta.subtitle": {
     en: "Whether you're in real estate, automotive, services, or any field — every day without a system is leads lost, budget burned, and deals missed.",
     ar: "سواء في العقارات، السيارات، الخدمات، أو أي مجال — كل يوم من غير سيستم ده ليدز ضايعة، ميزانية محترقة، وصفقات فاتت.",
   },
-  "cta.btn1": { en: "See Pricing & Book a Demo →", ar: "شوف السعر واحجز عرض ←" },
+  "cta.btn1": { en: "Book a Demo Call →", ar: "احجز مكالمة وشوف عرض ←" },
   "cta.btn2": { en: "About Mohamed Waheed & His Services →", ar: "تعرف على محمد وحيد وخدماته ←" },
   "cta.trust1": { en: "No commitment", ar: "من غير التزام" },
   "cta.trust2": { en: "30-min free call", ar: "مكالمة ٣٠ دقيقة مجانية" },
-  "cta.trust3": { en: "Results in 30 days", ar: "نتايج في ٣٠ يوم" },
+  "cta.trust3": { en: "Built around your process", ar: "مبني على طريقة شغلك" },
 
   // ─── New CTA Section (replaces pricing) ───
-  "newcta.urgency": {
-    en: "Limited spots — 10 companies this month",
-    ar: "أماكن محدودة — ١٠ شركات الشهر ده",
-  },
   "newcta.headline1": { en: "Stop guessing.", ar: "خلاص متخمنش." },
   "newcta.headline2": { en: "Start closing deals.", ar: "ابدأ تقفل Deals." },
   "newcta.sub": {
-    en: "Book a free 30-minute call. We'll analyze your current situation and show you exactly how FlowOS will change your results.",
-    ar: "احجز مكالمة مجانية ٣٠ دقيقة. هنحلل وضعك الحالي ونوريك بالظبط إزاي FlowOS هيغير نتايجك.",
+    en: "Book a free 30-minute call. We'll look at how your team works today and show you how FlowOS would fit it.",
+    ar: "احجز مكالمة مجانية ٣٠ دقيقة. هنشوف فريقك شغال إزاي دلوقتي، ونوريك FlowOS هيتظبط على شغلك إزاي.",
   },
-  "newcta.referral": {
-    en: "🤝 Refer a company → You get 20% off, they get 10% off",
-    ar: "🤝 جيب شركة ← أنت بتاخد ٢٠٪ خصم، وهما ١٠٪",
-  },
-  "newcta.btn1": { en: "See Pricing & Book a Demo →", ar: "شوف السعر واحجز عرض ←" },
+  "newcta.btn1": { en: "Book a Demo Call →", ar: "احجز مكالمة وشوف عرض ←" },
   "newcta.btn2": { en: "About Mohamed Waheed & Services →", ar: "تعرف على محمد وحيد وخدماته ←" },
   "newcta.trust1": { en: "No commitment", ar: "من غير أي التزام" },
   "newcta.trust2": { en: "30 min free call", ar: "٣٠ دقيقة مجانية" },
-  "newcta.trust3": { en: "Results in 30 days", ar: "نتايج في ٣٠ يوم" },
+  "newcta.trust3": { en: "Built around your process", ar: "مبني على طريقة شغلك" },
 
   // ─── More Capabilities (Task Intelligence + Competitor Intelligence) ───
   "feat2.label": { en: "// More Capabilities", ar: "// قدرات إضافية" },

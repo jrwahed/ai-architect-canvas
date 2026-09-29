@@ -30,10 +30,6 @@ const dl: Record<string, Record<Lang, string>> = {
     ar: "شوف المنصة شغالة إزاي",
     en: "See How It Works",
   },
-  "hero.stat3v": { ar: "40%", en: "40%" },
-  "hero.stat3l": { ar: "انخفاض في تكلفة الاستفسار", en: "Lower Cost Per Lead" },
-  "hero.stat4v": { ar: "3x", en: "3x" },
-  "hero.stat4l": { ar: "سرعة إغلاق الصفقات", en: "Faster Deal Closing" },
 
   // Pipeline stages
   "pipeline.1": { ar: "استفسار جديد", en: "New Inquiry" },
@@ -70,8 +66,8 @@ const dl: Record<string, Record<Lang, string>> = {
   },
   "pain.4.title": { ar: "العميل بيبرد في دقايق", en: "Leads Go Cold in Minutes" },
   "pain.4.desc": {
-    ar: "العميل اللي بيسأل عن عربية — لو مكلمتهوش في أول 10 دقائق — احتمال كبير يكون راح معرض تاني. من غير نظام سريع، فريقك مش هيقدر يلحق.",
-    en: "A customer asking about a car — if you don't contact them in the first 10 minutes — they've likely gone to another dealership. Without a fast system, your team can't keep up.",
+    ar: "العميل اللي بيسأل عن عربية — لو متكلمتهوش بسرعة — ممكن يكون راح معرض تاني. من غير نظام سريع، فريقك مش هيقدر يلحق.",
+    en: "A customer asking about a car — if you don't contact them quickly — may well have gone to another dealership. Without a fast system, your team can't keep up.",
   },
   "pain.5.title": { ar: "المدير شايف أرقام ناقصة", en: "Management Flying Blind" },
   "pain.5.desc": {
@@ -156,8 +152,6 @@ const dl: Record<string, Record<Lang, string>> = {
     ar: "عميل بارد — لسه بيسأل. حطه في المتابعة ومتضيعش وقت السيلز.",
     en: "Cold lead — just browsing. Queue for follow-up, don't waste sales time.",
   },
-  "feat.crm.stat1": { ar: "23% معدل تحويل", en: "23% Conversion Rate" },
-  "feat.crm.stat2": { ar: "أقل من دقيقة للرد", en: "Under 1 Min Response" },
   "feat.crm.stat3": { ar: "تصنيف ذكي بالـ AI", en: "AI-Powered Scoring" },
 
   // Feature 2: Inventory
@@ -182,8 +176,8 @@ const dl: Record<string, Record<Lang, string>> = {
     en: "Customer has an old car? Turn it into a sales opportunity.",
   },
   "feat.trade.desc": {
-    ar: "40% من عملاء المعارض عندهم عربية عاوزين يبدلوها. المنصة بتتعامل مع ده أوتوماتيك. لما عميل يقول \"عندي عربية عاوز أبدلها\" — المنصة بتعمل سجل تلقائي لعربيته.",
-    en: "40% of dealership customers have a car they want to trade. The platform handles this automatically. When a customer says \"I have a car to trade\" — the platform creates an automatic record.",
+    ar: "عملاء كتير في المعارض عندهم عربية عاوزين يبدلوها. المنصة بتتعامل مع ده أوتوماتيك. لما عميل يقول \"عندي عربية عاوز أبدلها\" — المنصة بتعمل سجل تلقائي لعربيته.",
+    en: "Many dealership customers have a car they want to trade in. The platform handles this automatically. When a customer says \"I have a car to trade\" — the platform creates an automatic record.",
   },
 
   // Feature 4: Dashboard
@@ -304,63 +298,6 @@ const dl: Record<string, Record<Lang, string>> = {
     en: "All sources land in one place — automatically.",
   },
 
-  // ─── Metrics ───
-  "metrics.title": {
-    ar: "أرقام من معارض حقيقية.",
-    en: "Numbers from Real Dealerships.",
-  },
-  "metrics.1v": { ar: "40%", en: "40%" },
-  "metrics.1l": { ar: "انخفاض في تكلفة الاستفسار", en: "Lower Cost Per Lead" },
-  "metrics.2v": { ar: "3x", en: "3x" },
-  "metrics.2l": { ar: "سرعة الرد على العملاء", en: "Faster Customer Response" },
-  "metrics.3v": { ar: "2x", en: "2x" },
-  "metrics.3l": { ar: "زيادة في معدل إغلاق الصفقات", en: "Higher Deal Close Rate" },
-  "metrics.4v": { ar: "<1", en: "<1" },
-  "metrics.4l": { ar: "دقيقة متوسط وقت الاستجابة", en: "Minute Avg. Response Time" },
-  "metrics.5v": { ar: "100%", en: "100%" },
-  "metrics.5l": { ar: "رؤية على أداء الفريق والحملات", en: "Visibility on Team & Campaign Performance" },
-
-  // ─── Pricing ───
-  "price.title": { ar: "ابدأ مجاناً. كبّر لما تحتاج.", en: "Start Free. Scale When You Need." },
-  "price.noContract": { ar: "من غير عقود طويلة — ابدأ ووقف في أي وقت.", en: "No long contracts — start and stop anytime." },
-
-  "price.free.name": { ar: "المجانية", en: "Free" },
-  "price.free.price": { ar: "0 جنيه/شهر", en: "0 EGP/mo" },
-  "price.free.desc": { ar: "مناسبة لمعرض صغير بيبدأ.", en: "Perfect for a small dealership starting out." },
-  "price.free.f1": { ar: "حتى 50 استفسار شهرياً", en: "Up to 50 inquiries/month" },
-  "price.free.f2": { ar: "مستخدم واحد", en: "1 User" },
-  "price.free.f3": { ar: "CRM أساسي", en: "Basic CRM" },
-  "price.free.f4": { ar: "داشبورد", en: "Dashboard" },
-  "price.free.f5": { ar: "واتساب بكبسة", en: "One-click WhatsApp" },
-
-  "price.pro.name": { ar: "الاحترافية", en: "Professional" },
-  "price.pro.price": { ar: "تواصل معنا", en: "Contact Us" },
-  "price.pro.desc": { ar: "مناسبة لمعرض متوسط عنده 3-10 سيلز.", en: "For a mid-size dealership with 3-10 salespeople." },
-  "price.pro.f1": { ar: "استفسارات غير محدودة", en: "Unlimited inquiries" },
-  "price.pro.f2": { ar: "حتى 10 مستخدمين", en: "Up to 10 users" },
-  "price.pro.f3": { ar: "كل صفحات المنصة", en: "All platform features" },
-  "price.pro.f4": { ar: "ربط فيسبوك وجوجل أوتوماتيك", en: "Auto Facebook & Google sync" },
-  "price.pro.f5": { ar: "إدارة المخزون", en: "Inventory management" },
-  "price.pro.f6": { ar: "نظام البدل", en: "Trade-in system" },
-  "price.pro.f7": { ar: "التقارير الذكية بالـ AI", en: "AI-powered smart reports" },
-  "price.pro.f8": { ar: "DriveMind", en: "DriveMind AI" },
-  "price.pro.f9": { ar: "دعم واتساب", en: "WhatsApp support" },
-
-  "price.ent.name": { ar: "المعارض الكبيرة", en: "Enterprise" },
-  "price.ent.price": { ar: "تواصل معنا", en: "Contact Us" },
-  "price.ent.desc": { ar: "مناسبة لمجموعة معارض أو وكيل.", en: "For multi-location dealerships or distributors." },
-  "price.ent.f1": { ar: "كل حاجة في الاحترافية", en: "Everything in Professional" },
-  "price.ent.f2": { ar: "مستخدمين غير محدودين", en: "Unlimited users" },
-  "price.ent.f3": { ar: "فروع متعددة", en: "Multi-branch support" },
-  "price.ent.f4": { ar: "تدريب الفريق", en: "Team training" },
-  "price.ent.f5": { ar: "أكاونت مانجر مخصص", en: "Dedicated account manager" },
-  "price.ent.f6": { ar: "تخصيص حسب الطلب", en: "Custom development" },
-  "price.ent.f7": { ar: "أولوية في الدعم", en: "Priority support" },
-
-  "price.cta": { ar: "ابدأ مجاناً", en: "Start Free" },
-  "price.ctaPro": { ar: "تواصل معنا", en: "Contact Us" },
-  "price.popular": { ar: "الأكثر طلباً", en: "Most Popular" },
-
   // ─── FAQ ───
   "faq.title": { ar: "أسئلة شائعة", en: "Frequently Asked Questions" },
   "faq.1.q": { ar: "هل محتاج خبرة تقنية عشان أستخدم المنصة؟", en: "Do I need technical experience to use the platform?" },
@@ -378,9 +315,9 @@ const dl: Record<string, Record<Lang, string>> = {
   "faq.7.q": { ar: "إيه الفرق بينكم وبين أي CRM تاني؟", en: "What makes you different from other CRMs?" },
   "faq.7.a": { ar: "DriveLead مش CRM عام. ده نظام متخصص لمعارض السيارات في مصر. المراحل مصممة لدورة بيع العربيات. التقارير بتفهم سوق السيارات. الـ AI بيتكلم بلغة المعارض.", en: "DriveLead isn't a generic CRM. It's a system specialized for Egyptian car dealerships. Stages are designed for car sales cycles. Reports understand the car market. AI speaks dealership language." },
   "faq.8.q": { ar: "لو عندي أكتر من فرع؟", en: "What if I have multiple branches?" },
-  "faq.8.a": { ar: "الباقة الكبيرة بتدعم فروع متعددة — كل فرع بياناته لوحده والمدير بيشوف الكل.", en: "The Enterprise plan supports multiple branches — each branch has its own data and managers see everything." },
-  "faq.9.q": { ar: "ممكن أجرب قبل ما أدفع؟", en: "Can I try before paying?" },
-  "faq.9.a": { ar: "أيوه. الباقة المجانية موجودة عشان تجرب. ولو حبيت عرض على المنصة — احجز مكالمة وهنوريك كل حاجة.", en: "Yes. The free plan is there to try. And if you want a demo — book a call and we'll show you everything." },
+  "faq.8.a": { ar: "النظام بيدعم فروع متعددة — كل فرع بياناته لوحده والمدير بيشوف الكل.", en: "The system supports multiple branches — each branch has its own data and managers see everything." },
+  "faq.9.q": { ar: "ممكن أشوف المنصة قبل ما أقرر؟", en: "Can I see the platform before deciding?" },
+  "faq.9.a": { ar: "أيوه. احجز مكالمة وهنوريك المنصة شغالة إزاي، ونشوف هتتظبط على معرضك إزاي.", en: "Yes. Book a call and we'll walk you through the platform and how it would fit your dealership." },
 
   // ─── Final CTA ───
   "cta.label": { ar: "ابدأ دلوقتي", en: "Start Now" },
@@ -393,8 +330,8 @@ const dl: Record<string, Record<Lang, string>> = {
     en: "Stop guessing. Start closing deals.",
   },
   "cta.desc": {
-    ar: "احجز مكالمة مجانية 30 دقيقة. هنفهم معرضك ونوريك إزاي DriveLead هيغير طريقة شغلك.",
-    en: "Book a free 30-minute call. We'll understand your dealership and show you how DriveLead will transform your workflow.",
+    ar: "احجز مكالمة مجانية 30 دقيقة. هنفهم معرضك ونوريك DriveLead هيتظبط على طريقة شغلك إزاي.",
+    en: "Book a free 30-minute call. We'll understand your dealership and show you how DriveLead would fit your workflow.",
   },
   "cta.btn1": { ar: "احجز مكالمتك المجانية", en: "Book Your Free Call" },
   "cta.btn2": { ar: "كلمنا على واتساب", en: "Message Us on WhatsApp" },
@@ -407,7 +344,6 @@ const dl: Record<string, Record<Lang, string>> = {
   "foot.home": { ar: "الرئيسية", en: "Home" },
   "foot.about": { ar: "عنّا", en: "About" },
   "foot.platform": { ar: "المنصة", en: "Platform" },
-  "foot.pricing": { ar: "الأسعار", en: "Pricing" },
   "foot.contact": { ar: "تواصل معنا", en: "Contact" },
   "foot.wa": { ar: "تواصل عبر واتساب", en: "Contact via WhatsApp" },
   "foot.copy": { ar: "© 2026 DriveLead. جميع الحقوق محفوظة.", en: "© 2026 DriveLead. All rights reserved." },

@@ -13,15 +13,11 @@ import CountUp from "@/components/motion/CountUp";
 
 // Cases shown with a real screenshot, then the rest as compact cards.
 const FEATURED = [
-  { key: "c1", image: skyLeadsDashboard, results: ["r1", "r2", "r4"] },
-  { key: "c2", image: aiSystemDashboard, results: ["r1", "r2", "r4"] },
+  { key: "c1", image: skyLeadsDashboard, results: ["r2", "r4"] },
+  { key: "c2", image: aiSystemDashboard, results: ["r2", "r3", "r4"] },
 ];
-const COMPACT = [
-  { key: "c3", results: ["r1", "r3"] },
-  { key: "c5", results: ["r1", "r2"] },
-  { key: "c6", results: ["r1", "r2"] },
-  { key: "c7", results: ["r2", "r1"] },
-];
+// No result numbers here: these were estimates, not measurements.
+const COMPACT = ["c3", "c5", "c6", "c7"];
 
 const MODULE_ICONS = [ClipboardList, KanbanSquare, Gauge, MessagesSquare, FolderTree, Users];
 
@@ -124,7 +120,7 @@ const CaseStudiesSection = () => {
                   <p className="mt-4 text-sm font-medium text-primary">{t("work.built")}</p>
                   <p className="mt-1 text-muted-foreground leading-relaxed">{t(`cases.${key}.solution`)}</p>
 
-                  <dl className="mt-7 grid grid-cols-3 gap-2.5">
+                  <dl className={`mt-7 grid gap-2.5 ${results.length === 2 ? "grid-cols-2" : "grid-cols-3"}`}>
                     {results.map((r) => {
                       const res = result(key, r);
                       return (
@@ -145,24 +141,12 @@ const CaseStudiesSection = () => {
 
         <h3 className="mt-16 mb-6 font-headline text-2xl font-semibold text-foreground">{t("work.more")}</h3>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {COMPACT.map(({ key, results }, i) => (
+          {COMPACT.map((key, i) => (
             <Reveal key={key} delay={i * 0.06} className="h-full">
               <article className="flex h-full flex-col rounded-3xl border border-border bg-surface-container p-6 transition duration-300 hover:-translate-y-1 hover:border-primary/50">
                 <p className="text-sm text-muted-foreground">{t(`cases.${key}.tag`)}</p>
                 <h4 className="mt-2 font-semibold leading-snug text-foreground">{t(`cases.${key}.title`)}</h4>
-                <dl className="mt-auto pt-6 grid grid-cols-2 gap-3">
-                  {results.map((r) => {
-                    const res = result(key, r);
-                    return (
-                      <div key={r} className="flex flex-col-reverse">
-                        <dt className="text-xs text-muted-foreground">{res.label}</dt>
-                        <dd className="font-headline text-xl font-semibold text-gain">
-                          <CountUp value={res.value} />
-                        </dd>
-                      </div>
-                    );
-                  })}
-                </dl>
+                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{t(`cases.${key}.short`)}</p>
               </article>
             </Reveal>
           ))}

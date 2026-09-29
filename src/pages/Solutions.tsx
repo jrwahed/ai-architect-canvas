@@ -678,20 +678,6 @@ function DepartmentCard({
   );
 }
 
-/* ───── Animated Result Stat ───── */
-function ResultStat({ text, isInView }: { text: string; isInView: boolean }) {
-  const numMatch = text.match(/[\d.]+/);
-  const num = numMatch ? parseFloat(numMatch[0]) : 0;
-  const animated = useAnimatedNumber(isInView ? num : 0, 1500);
-  const display = numMatch ? text.replace(numMatch[0], String(animated)) : text;
-
-  return (
-    <div className="rounded-xl bg-[hsl(var(--surface-container)/0.7)] border border-[hsl(var(--outline-variant)/0.1)] p-4 text-center backdrop-blur-sm">
-      <span className="font-headline text-lg md:text-xl font-bold text-primary text-glow-primary">{display}</span>
-    </div>
-  );
-}
-
 /* ───── Case Study Modal ───── */
 function CaseStudyModal({
   industry,
@@ -846,21 +832,6 @@ function CaseStudyModal({
             </motion.div>
           </AnimatePresence>
 
-          {/* Results */}
-          <div>
-            <div className="flex items-center gap-2 mb-4">
-              <TrendingUp size={16} className="text-primary" />
-              <h4 className="text-xs font-label font-semibold uppercase tracking-wider text-primary">
-                {t("sol.results")}
-              </h4>
-            </div>
-            <div className="grid grid-cols-3 gap-3">
-              {industry.results.map((r) => (
-                <ResultStat key={r} text={r} isInView={true} />
-              ))}
-            </div>
-          </div>
-
           {/* CTA */}
           <motion.a
             href={`https://wa.me/201148627137?text=${encodeURIComponent(
@@ -950,8 +921,6 @@ const Solutions = () => {
   const selectorRef = useRef<HTMLDivElement>(null);
   const selectorInView = useInView(selectorRef, { once: true, margin: "-80px" });
   const deptRef = useRef<HTMLDivElement>(null);
-  const resultsRef = useRef<HTMLDivElement>(null);
-  const resultsInView = useInView(resultsRef, { once: true, margin: "-50px" });
   const { t, isAr } = useLanguage();
 
   useEffect(() => {
@@ -1162,7 +1131,6 @@ const Solutions = () => {
           <AnimatePresence mode="wait">
             <motion.div
               key={selectedIndustry.id + "-results"}
-              ref={resultsRef}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
@@ -1170,18 +1138,6 @@ const Solutions = () => {
               className="mt-10 rounded-2xl bg-[hsl(var(--surface-container)/0.5)] border border-[hsl(var(--outline-variant)/0.1)] p-6 md:p-8"
               style={{ background: "linear-gradient(135deg, hsl(var(--primary) / 0.03), transparent 60%)" }}
             >
-              <div className="flex items-center gap-2 mb-5">
-                <TrendingUp size={16} className="text-primary" />
-                <span className="text-xs font-label font-semibold uppercase tracking-wider text-primary">
-                  {t("sol.results")}
-                </span>
-              </div>
-              <div className="grid grid-cols-3 gap-3">
-                {selectedIndustry.results.map((r) => (
-                  <ResultStat key={r} text={r} isInView={resultsInView} />
-                ))}
-              </div>
-
               <motion.a
                 href={`https://wa.me/201148627137?text=${encodeURIComponent(
                   isAr ? `مهتم بنظام ${selectedIndustry.nameAr}` : `Interested in ${selectedIndustry.nameEn} system`
@@ -1190,7 +1146,7 @@ const Solutions = () => {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.01, boxShadow: "0 0 30px -5px hsl(184 100% 68% / 0.4)" }}
                 whileTap={{ scale: 0.98 }}
-                className="flex items-center justify-center gap-3 w-full mt-6 py-4 bg-primary text-primary-foreground font-headline font-bold text-sm md:text-base rounded-xl transition-shadow"
+                className="flex items-center justify-center gap-3 w-full py-4 bg-primary text-primary-foreground font-headline font-bold text-sm md:text-base rounded-xl transition-shadow"
               >
                 <MessageCircle size={18} />
                 {t("sol.cta")}

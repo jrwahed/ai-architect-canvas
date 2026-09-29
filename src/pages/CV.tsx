@@ -1,11 +1,12 @@
 import { useRef, useEffect, useState } from "react";
-import { motion, useScroll, useTransform, AnimatePresence, useInView } from "framer-motion";
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import {
   Download, Brain, TrendingUp, Settings2, Workflow, BarChart3, Users,
-  ChevronDown, ExternalLink, Mail, Phone, MapPin
+  ExternalLink, Mail, Phone, MapPin
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { Link } from "react-router-dom";
 import WhoIAmSection from "@/components/WhoIAmSection";
 import { downloadCV } from "@/utils/cvPdfData";
 
@@ -14,7 +15,7 @@ function useCountUp(end: number, duration = 1500, inView: boolean) {
   const [val, setVal] = useState(0);
   useEffect(() => {
     if (!inView) return;
-    let start = 0;
+    const start = 0;
     const startTime = performance.now();
     const step = (now: number) => {
       const progress = Math.min((now - startTime) / duration, 1);
@@ -44,102 +45,77 @@ const experiences = [
     location: "Cairo, Egypt",
     duration: "2+ Years",
     current: true,
-    description: "Designed and implemented AI-integrated operating models for companies across marketing, legal, commercial, and operational environments.",
-    expandMetrics: [
-      { value: "3x", label: "Execution Speed" },
-      { value: "10x", label: "Cost Reduction" },
-      { value: "95%+", label: "Data Accuracy" },
-    ],
+    description: "Designed and built AI-integrated operating systems for companies across marketing, legal (including a Saudi law office), commercial, and operational environments.",
   },
   {
     role: "Business Development & Growth Lead",
     company: "Cloudilic | Dragify.ai",
     duration: "3 Months",
-    description: "Led validation of AI-powered automation platform. Mapped 15+ monetizable automation scenarios.",
-    expandMetrics: [{ value: "40%", label: "Feature Clarity Improvement" }],
+    description: "Led market validation of an AI automation platform and mapped monetizable automation scenarios from real customer pain points.",
   },
   {
     role: "Business Developer & Account Manager",
     company: "KMF Agency",
     duration: "6 Months",
-    description: "Generated new business contributing to 20% growth in client acquisition pipeline.",
-    expandMetrics: [
-      { value: "35%", label: "Lead Quality Improvement" },
-      { value: "50%", label: "Opportunity Visibility" },
-    ],
+    description: "Generated new business, designed inbound and outbound acquisition frameworks, and structured CRM reporting.",
   },
   {
     role: "Business Developer",
     company: "Point Trade",
     duration: "6 Months",
-    description: "Competitor analysis across 10+ players. Reduced execution misalignment by 30%.",
+    description: "Competitor analysis to find expansion gaps; aligned marketing and sales priorities and introduced structured lead follow-up.",
   },
   {
     role: "Marketing & Growth Specialist",
     company: "CMG Holding",
     duration: "6 Months",
-    description: "Multi-channel campaigns increasing lead flow ~25%. Improved funnel visibility.",
+    description: "Ran multi-channel campaigns and improved funnel visibility and reporting for management.",
   },
 ];
 
+// Only the agency system has measured figures (19 Sep 2026). The others are described, not scored:
+// their earlier numbers were estimates.
 const projects = [
+  {
+    tag: "Internal Operating System",
+    title: "Marketing Agency Operating System",
+    desc: "Designed and built solo: daily reports, tasks with 9 review stages and escalation, a performance formula, a client assistant, Drive files and HR, in one app.",
+    link: "/work/agency-os",
+    metrics: [
+      { value: "21", label: "Daily users" },
+      { value: "48", label: "Screens" },
+      { value: "13", label: "Automated jobs" },
+    ],
+  },
+  {
+    tag: "Legal AI · Saudi Arabia",
+    title: "Legal RAG Knowledge System",
+    desc: "An assistant for a Saudi law office that answers from the office's own documents, so research starts from the right source.",
+  },
   {
     tag: "Marketing Operations",
     title: "Marketing Operating Model Redesign",
-    metrics: [
-      { value: "3x", label: "Speed Increase" },
-      { value: "95%", label: "Content Consistency" },
-      { value: "-70%", label: "Reactive Dependency" },
-    ],
-  },
-  {
-    tag: "Legal AI",
-    title: "Legal RAG Knowledge System",
-    metrics: [
-      { value: "Hours→Secs", label: "Response Time" },
-      { value: "45min→5min", label: "Research Time" },
-      { value: "10x", label: "Cost Reduction" },
-    ],
-  },
-  {
-    tag: "AI Intelligence",
-    title: "Client Intelligence System (RAG)",
-    metrics: [
-      { value: "15min→10sec", label: "Data Search" },
-      { value: "95%+", label: "Data Accuracy" },
-      { value: "+60%", label: "Team Productivity" },
-    ],
+    desc: "A brand messaging system, a weekly content cycle, and AI helpers for strategy, copy and design.",
   },
   {
     tag: "Operations",
     title: "Organizational Operating Model",
-    metrics: [
-      { value: "Daily+Weekly", label: "Operating Rhythm" },
-      { value: "100%", label: "Decision Visibility" },
-      { value: "0", label: "New Hires Needed" },
-    ],
+    desc: "Clear task and follow-up rules, a daily and weekly rhythm, and a live performance dashboard, without new hires.",
   },
   {
     tag: "HR Automation",
     title: "AI-Based Recruitment System",
-    metrics: [
-      { value: "7d→24h", label: "Hiring Cycle" },
-      { value: "+85%", label: "Evaluation Accuracy" },
-      { value: "Automated", label: "Screening" },
-    ],
+    desc: "A competency matrix, one interview template, AI screening that scores CVs against it, and automatic scheduling.",
   },
   {
     tag: "Financial Intelligence",
     title: "Financial Intelligence Dashboard",
-    metrics: [
-      { value: "-75%", label: "Manual Workload" },
-      { value: "99%", label: "Data Accuracy" },
-      { value: "Real-time", label: "Visibility" },
-    ],
+    desc: "AI extracts and classifies financial data into a live executive dashboard.",
   },
 ];
 
 const toolCategories = [
+  { label: "Build", tools: ["React", "TypeScript", "Supabase", "PostgreSQL"] },
   { label: "Automation", tools: ["n8n", "Zapier", "Make"] },
   { label: "AI Systems", tools: ["OpenAI API", "AI Agents", "RAG Architectures"] },
   { label: "CRM Platforms", tools: ["HubSpot", "Zoho CRM"] },
@@ -174,7 +150,6 @@ const StatCard = ({ value, suffix, label, inView }: { value: number; suffix: str
 };
 
 const ExperienceCard = ({ exp, index }: { exp: typeof experiences[0]; index: number }) => {
-  const [expanded, setExpanded] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -231,47 +206,6 @@ const ExperienceCard = ({ exp, index }: { exp: typeof experiences[0]; index: num
 
         <p className="text-sm text-muted-foreground leading-relaxed">{exp.description}</p>
 
-        {exp.expandMetrics && (
-          <>
-            <button
-              onClick={() => setExpanded(!expanded)}
-              className="flex items-center gap-1 mt-3 text-xs text-primary hover:text-primary/80 transition-colors font-label"
-            >
-              {expanded ? "Hide results" : "Show key results"}
-              <ChevronDown
-                size={14}
-                className={`transition-transform duration-300 ${expanded ? "rotate-180" : ""}`}
-              />
-            </button>
-            <AnimatePresence>
-              {expanded && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="overflow-hidden"
-                >
-                  <div className="flex flex-wrap gap-3 mt-3">
-                    {exp.expandMetrics.map((m) => (
-                      <div
-                        key={m.label}
-                        className="px-3 py-2 rounded-lg"
-                        style={{
-                          background: "hsl(var(--primary) / 0.05)",
-                          border: "1px solid hsl(var(--primary) / 0.1)",
-                        }}
-                      >
-                        <span className="font-headline text-sm font-bold text-primary">{m.value}</span>
-                        <span className="text-[10px] text-muted-foreground ml-2">{m.label}</span>
-                      </div>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </>
-        )}
       </motion.div>
     </div>
   );
@@ -351,10 +285,10 @@ const CV = () => {
                 transition={{ delay: 0.6, duration: 0.8 }}
               >
                 <p className="font-headline text-lg md:text-xl text-muted-foreground mt-3">
-                  AI-Integrated Business Growth Architect
+                  Business Systems Builder
                 </p>
                 <p className="font-headline text-base text-muted-foreground/60 mt-1">
-                  &amp; Operating Systems Designer
+                  BI &amp; AI Automation
                 </p>
               </motion.div>
 
@@ -364,7 +298,7 @@ const CV = () => {
                 transition={{ delay: 0.8, duration: 0.8 }}
                 className="mt-6 max-w-lg text-sm md:text-base text-muted-foreground leading-relaxed"
               >
-                2+ years designing scalable operating systems that connect marketing, sales, and operations into unified revenue engines. Specialized in workflow automation, AI-driven systems, and executive dashboard design.
+                5+ years in business development, marketing and growth. Now I design and build the operating systems that connect marketing, sales and operations: workflow automation, AI-driven systems, and executive dashboards.
               </motion.p>
 
               <motion.div
@@ -405,11 +339,11 @@ const CV = () => {
               style={{ borderRadius: "16px" }}
             >
               <div className="grid grid-cols-2">
-                <StatCard value={2} suffix="+" label="Years Experience" inView={statsInView} />
-                <StatCard value={6} suffix="" label="Companies Impacted" inView={statsInView} />
+                <StatCard value={5} suffix="+" label="Years Experience" inView={statsInView} />
+                <StatCard value={21} suffix="" label="Daily Users, Latest System" inView={statsInView} />
                 <div className="col-span-2 h-px" style={{ background: "hsl(var(--outline-variant) / 0.1)" }} />
-                <StatCard value={10} suffix="x" label="Cost Reduction" inView={statsInView} />
-                <StatCard value={95} suffix="%+" label="Data Accuracy Achieved" inView={statsInView} />
+                <StatCard value={48} suffix="" label="Screens in One System" inView={statsInView} />
+                <StatCard value={13} suffix="" label="Automated Daily Jobs" inView={statsInView} />
               </div>
             </motion.div>
           </div>
@@ -494,10 +428,12 @@ const CV = () => {
               >
                 {proj.tag}
               </span>
-              <h3 className="font-headline text-sm md:text-base font-bold text-foreground mt-2 mb-4">
+              <h3 className="font-headline text-sm md:text-base font-bold text-foreground mt-2 mb-3">
                 {proj.title}
               </h3>
-              <div className="flex flex-wrap gap-2">
+              <p className="text-sm text-muted-foreground leading-relaxed">{proj.desc}</p>
+              {proj.metrics && (
+              <div className="flex flex-wrap gap-2 mt-4">
                 {proj.metrics.map((m) => (
                   <div
                     key={m.label}
@@ -512,6 +448,12 @@ const CV = () => {
                   </div>
                 ))}
               </div>
+              )}
+              {proj.link && (
+                <Link to={proj.link} className="inline-flex items-center gap-1 mt-4 text-xs text-primary hover:text-primary/80 transition-colors font-label">
+                  Read the case study →
+                </Link>
+              )}
             </motion.div>
           ))}
         </div>

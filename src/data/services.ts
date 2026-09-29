@@ -170,7 +170,7 @@ export const SERVICES: Service[] = [
         a: { en: "Usually yes. I connect to what you have, or set up a new one if needed.", ar: "غالبًا آه. بربط على اللي عندك، أو بركّب واحد جديد لو محتاج." },
       },
     ],
-    proof: { label: { en: "See Sky Leads: replies in under 3 minutes", ar: "شوف Sky Leads: رد في أقل من ٣ دقايق" }, to: "/#work" },
+    proof: { label: { en: "See Sky Leads: every lead routed automatically", ar: "شوف Sky Leads: كل عميل بيتوزع لوحده" }, to: "/#work" },
   },
   {
     slug: "whatsapp-agent",
@@ -252,7 +252,7 @@ export const SERVICES: Service[] = [
         a: { en: "I build it so every message is reviewed before it goes out.", ar: "ببنيه بحيث كل رسالة تتراجع قبل ما تتبعت." },
       },
     ],
-    proof: { label: { en: "See AI Outreach: 20 personal messages an hour", ar: "شوف AI Outreach: ٢٠ رسالة شخصية في الساعة" }, to: "/#work" },
+    proof: { label: { en: "See AI Outreach: a personal message for each company", ar: "شوف AI Outreach: رسالة شخصية لكل شركة" }, to: "/#work" },
   },
   {
     slug: "crm-setup",
@@ -339,7 +339,7 @@ export const SERVICES: Service[] = [
         },
       },
     ],
-    proof: { label: { en: "See the content system: 3x faster", ar: "شوف نظام المحتوى: أسرع ٣ مرات" }, to: "/#work" },
+    proof: { label: { en: "See the content system", ar: "شوف نظام المحتوى" }, to: "/#work" },
   },
   {
     slug: "company-os",
@@ -465,7 +465,7 @@ export const SERVICES: Service[] = [
         a: { en: "No. It sorts and scores; the decision stays with your team.", ar: "لأ. هو بيرتّب ويقيّم، والقرار بيفضل عند فريقك." },
       },
     ],
-    proof: { label: { en: "See the hiring system: from 7 days to 24 hours", ar: "شوف نظام التوظيف: من ٧ أيام لـ٢٤ ساعة" }, to: "/#work" },
+    proof: { label: { en: "See the hiring system", ar: "شوف نظام التوظيف" }, to: "/#work" },
   },
   {
     slug: "documents",
