@@ -385,7 +385,7 @@ const translations: Record<string, Record<Lang, string>> = {
   "journey.action": { en: "What I do", ar: "هعمل إيه" },
   "journey.gain": { en: "What you get", ar: "هتكسب إيه" },
   "journey.more": { en: "Service details", ar: "تفاصيل الخدمة" },
-  "journey.hint": { en: "Scroll and I'll run", ar: "انزل وأنا هجري" },
+  "journey.hint": { en: "Scroll down and I'll run", ar: "انزل بالسكرول وأنا هجري" },
   "journey.skip": { en: "Skip", ar: "تخطّى" },
   "journey.finish.label": { en: "Finish line", ar: "خط النهاية" },
   "journey.finish.title": { en: "All of it, in one system", ar: "كل ده… في نظام واحد" },

@@ -4,8 +4,9 @@ import {
   motion,
   useMotionValueEvent,
   useReducedMotion,
-  useScroll,
+  useMotionValue,
   useSpring,
+  useTime,
   useTransform,
 } from "framer-motion";
 import { ArrowDown, ArrowUpRight, Check, Flag } from "lucide-react";
@@ -22,13 +23,13 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 
 const easeInOut = (m: number) => (m < 0.5 ? 2 * m * m : 1 - (-2 * m + 2) ** 2 / 2);
 
-// Scroll progress → position on the track (0 … STOPS). The runner waits at each
-// station for a moment so the card can be read, then runs to the next one.
+// Scroll progress → position on the track (0 … STOPS). The runner starts running
+// as soon as the visitor scrolls, then waits at each station so the card can be read.
 const toTrackPosition = (p: number) => {
-  const r = Math.min(Math.max(p, 0), 1) * (STOPS + 0.5);
+  const r = Math.min(Math.max(p, 0), 1) * (STOPS + 0.4);
   const i = Math.floor(r);
   if (i >= STOPS) return STOPS;
-  const move = Math.min(Math.max((r - i - 0.4) / 0.6, 0), 1);
+  const move = Math.min(Math.max((r - i) / 0.6, 0), 1);
   return i + easeInOut(move);
 };
 
@@ -77,13 +78,38 @@ const JourneyTrack = () => {
   const at = (i: number) => (isAr ? worldWidth - (start + i * step) : start + i * step);
   const side = (px: number) => (isAr ? { right: px } : { left: px });
 
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end end"] });
-  const rawPos = useTransform(scrollYProgress, toTrackPosition);
+  // How far the visitor has scrolled through the section (0 → 1), read straight from the page.
+  const progress = useMotionValue(0);
+  useEffect(() => {
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const el = sectionRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const total = rect.height - window.innerHeight;
+      progress.set(total > 0 ? Math.min(Math.max(-rect.top / total, 0), 1) : 0);
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, [progress]);
+  const rawPos = useTransform(progress, toTrackPosition);
   const pos = useSpring(rawPos, { stiffness: 140, damping: 28, mass: 0.6 });
 
   const worldX = useTransform(pos, (v) => (isAr ? 1 : -1) * v * step);
   const builtWidth = useTransform(pos, (v) => start + v * step);
-  const stride = useTransform(pos, (v) => v * 3.5);
+  // Legs move with the distance covered, plus a light jog in place so he never looks frozen.
+  const time = useTime();
+  const stride = useTransform(() => pos.get() * 3.5 + time.get() / 700);
   const jump = useTransform(pos, (v) => {
     const k = Math.round(v + HURDLE_BEFORE);
     if (k < 1 || k >= STOPS) return 0;
@@ -107,7 +133,7 @@ const JourneyTrack = () => {
       id="journey"
       ref={sectionRef}
       className="relative bg-cream text-ink rounded-t-[2rem] md:rounded-t-[2.5rem]"
-      style={{ height: `calc(${(STOPS + 0.5) * SEGMENT_VH}vh + 100svh)` }}
+      style={{ height: `calc(${(STOPS + 0.4) * SEGMENT_VH}vh + 100svh)` }}
     >
       <div className="sticky top-0 h-[100svh] overflow-hidden flex flex-col pt-20 md:pt-24 pb-24 md:pb-8">
         {/* Header + station counter */}
@@ -270,8 +296,8 @@ const JourneyTrack = () => {
           </motion.div>
 
           {reached === 0 && (
-            <p className="mt-4 flex items-center gap-3 text-sm text-ink/55">
-              <span className="inline-flex items-center gap-1.5">
+            <p className="mt-4 flex items-center gap-3 text-sm md:text-base text-ink/60">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-1.5 font-semibold text-primary-foreground">
                 <ArrowDown className="h-4 w-4 animate-bounce" />
                 {t("journey.hint")}
               </span>
