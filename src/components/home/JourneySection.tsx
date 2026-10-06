@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   AnimatePresence,
   motion,
+  MotionValue,
   useMotionValue,
   useMotionValueEvent,
   useReducedMotion,
@@ -19,12 +20,11 @@ import SectionHeader from "./SectionHeader";
 import Reveal from "./Reveal";
 
 const STOPS = JOURNEY.length; // the finish line sits at index STOPS
-const START_POS = -0.55; // where he waits before the first station
-const END_POS = STOPS + 0.45; // a little past the finish line
-const HURDLE_BEFORE = 0.34; // hurdle position, in stations, before each building
+const START_POS = -0.6; // where he waits before the first station
+const END_POS = STOPS + 0.5; // a little past the finish line
+const HURDLE_BEFORE = 0.4; // hurdle position, in stations, before each building
 const SEGMENT_VH = 62; // scroll length per station
 const DWELL = 0.3; // the part of each station's scroll where he stays put and builds
-const FLOOR_TILT = 58; // the track plane, in degrees from the screen
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 const clamp = (v: number, lo: number, hi: number) => Math.min(Math.max(v, lo), hi);
@@ -48,12 +48,15 @@ const useViewport = () => {
   return size;
 };
 
-// Deterministic skyline for the far background.
-const SKYLINE = Array.from({ length: 90 }, (_, i) => ({
-  w: 34 + ((i * 37) % 46),
-  h: 40 + ((i * 53) % 90),
-  gap: 6 + ((i * 17) % 18),
-}));
+// Deterministic skyline on the horizon.
+const skyline = (() => {
+  let x = 0;
+  return Array.from({ length: 60 }, (_, i) => {
+    const b = { w: 14 + ((i * 37) % 26), h: 10 + ((i * 53) % 34), gap: 3 + ((i * 17) % 9), left: x };
+    x += b.w + b.gap;
+    return b;
+  });
+})();
 
 // Confetti pieces for the finish line.
 const CONFETTI = Array.from({ length: 42 }, (_, i) => ({
@@ -87,21 +90,145 @@ const StationCopy = ({ station }: { station: JourneyStation }) => {
   );
 };
 
+// The road's geometry, shared by everything standing on it.
+interface Road {
+  pos: MotionValue<number>;
+  stepDepth: number;
+  runnerDepth: number;
+  planeDepth: number;
+}
+
+// Where something at `station` is, in px in front of the camera.
+const useDepth = (road: Road, station: number) =>
+  useTransform(road.pos, (v) => (station - v) * road.stepDepth + road.runnerDepth);
+
+// An upright thing standing on the road plane. It is hidden once it has gone past the camera,
+// where the 3D maths would blow it up.
+const Standing = ({
+  road,
+  depth,
+  x,
+  width,
+  height,
+  hidden,
+  children,
+}: {
+  road: Road;
+  depth: MotionValue<number>;
+  x: number;
+  width: number;
+  height: number;
+  hidden: boolean;
+  children: ReactNode;
+}) => {
+  const top = useTransform(depth, (d) => road.planeDepth - d - height);
+  return (
+    <motion.div
+      className="absolute flex items-end justify-center"
+      style={{
+        top,
+        left: `calc(50% + ${x - width / 2}px)`,
+        width,
+        height,
+        transformOrigin: "50% 100%",
+        transform: "rotateX(-90deg)",
+        visibility: hidden ? "hidden" : "visible",
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+// A line painted flat across the road at a station.
+const Painted = ({ road, station, height, className, style }: { road: Road; station: number; height: number; className?: string; style?: React.CSSProperties }) => {
+  const depth = useDepth(road, station);
+  const top = useTransform(depth, (d) => road.planeDepth - d - height / 2);
+  return <motion.div className={`absolute left-1/2 ${className ?? ""}`} style={{ top, height, ...style }} />;
+};
+
+// One station's building (beside the road) and the hurdle before it (across the road).
+const StationOnRoad = ({
+  road,
+  station,
+  index,
+  label,
+  done,
+  here,
+  party,
+  hidden,
+  cleared,
+  x,
+  buildScale,
+  hurdleW,
+  rtl,
+}: {
+  road: Road;
+  station: JourneyStation;
+  index: number;
+  label: string;
+  done: boolean;
+  here: boolean;
+  party: boolean;
+  hidden: boolean;
+  cleared: boolean;
+  x: number;
+  buildScale: number;
+  hurdleW: number;
+  rtl: boolean;
+}) => {
+  const depth = useDepth(road, index);
+  const hurdleDepth = useDepth(road, index - HURDLE_BEFORE);
+  return (
+    <>
+      <Standing road={road} depth={depth} x={x} width={240 * buildScale} height={260 * buildScale} hidden={hidden}>
+        <div style={{ transform: `scale(${buildScale})`, transformOrigin: "50% 100%" }}>
+          <Building station={station} label={label} built={done} active={here} party={party} rtl={rtl} />
+        </div>
+      </Standing>
+      {index > 0 && (
+        <Standing road={road} depth={hurdleDepth} x={0} width={hurdleW} height={70} hidden={hidden}>
+          <div className="relative w-full">
+            <div
+              className={`h-4 w-full rounded-sm shadow-sm transition-colors duration-300 ${cleared ? "bg-gain" : ""}`}
+              style={cleared ? undefined : { backgroundImage: "repeating-linear-gradient(-45deg, hsl(var(--leak)) 0 10px, #fff 10px 18px)" }}
+            />
+            <div className="flex justify-between px-2">
+              <span className="h-12 w-1.5 bg-ink/70 rounded-b-sm" />
+              <span className="h-12 w-1.5 bg-ink/70 rounded-b-sm" />
+            </div>
+            {cleared && (
+              <span className="absolute -top-7 left-1/2 -translate-x-1/2 flex h-6 w-6 items-center justify-center rounded-full bg-gain text-white">
+                <Check className="h-4 w-4" strokeWidth={3} />
+              </span>
+            )}
+          </div>
+        </Standing>
+      )}
+    </>
+  );
+};
+
 const JourneyTrack = () => {
   const { t, lang, isAr } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const { w: vw, h: vh } = useViewport();
   const mobile = vw < 768;
-  const step = mobile ? 300 : 460; // px between stations
-  const start = mobile ? 120 : Math.min(vw * 0.26, 380); // runner's distance from the inline-start edge
-  const jumpHeight = mobile ? 50 : 66;
-  const floorH = mobile ? 150 : 190; // depth of the track plane before it is tilted
-  const buildingBack = mobile ? 0.42 : 0.32; // buildings stand behind the spot where he stops, in stations
-  const worldWidth = start + STOPS * step + vw;
-  // Physical left offset inside the track world (it runs right-to-left in Arabic).
-  const at = (i: number) => (isAr ? worldWidth - (start + i * step) : start + i * step);
-  const side = (px: number) => (isAr ? { right: px } : { left: px });
-  const back = isAr ? 1 : -1; // physical direction of "behind him"
+
+  // The road is a plane lying flat under the camera, running away to the horizon.
+  const sceneH = mobile ? 360 : 440;
+  const horizon = mobile ? 0.28 : 0.3; // where the road vanishes, as a share of the scene height
+  const perspective = mobile ? 460 : 640;
+  const stepDepth = mobile ? 620 : 760; // depth between stations
+  const runnerDepth = mobile ? 230 : 290; // how far in front of the camera he runs
+  // The plane is kept small enough for the browser to paint it in one go; things beyond it are tiny.
+  const planeW = mobile ? 1400 : 1900;
+  const planeDepth = mobile ? 3800 : 5200;
+  const roadHalf = mobile ? 150 : 230; // half the road's width on the plane
+  const sideX = mobile ? 235 : 420; // where buildings stand, left/right of the centre line
+  const buildScale = mobile ? 1.5 : 1.9;
+  const hurdleW = mobile ? 180 : 260;
+  const jumpHeight = mobile ? 54 : 72;
 
   // How far the visitor has scrolled through the section (0 → 1), read straight from the page.
   const progress = useMotionValue(0);
@@ -131,7 +258,7 @@ const JourneyTrack = () => {
   }, [progress]);
 
   // pos = where he is on the track, in stations. He follows the visitor's scroll like a race,
-  // but each station holds him for a short part of the scroll so he stops in front of what he builds.
+  // but each station holds him for a short part of the scroll so he stops beside what he builds.
   const rawPos = useTransform(progress, (p) => {
     const r = START_POS + p * (END_POS - START_POS);
     if (r < 0 || r >= STOPS) return r;
@@ -144,32 +271,35 @@ const JourneyTrack = () => {
   const velocity = useVelocity(pos); // stations per second
   const runRaw = useTransform(velocity, (v) => clamp(Math.abs(v) / 1.1, 0, 1));
   const run = useSpring(runRaw, { stiffness: 140, damping: 22 });
-  const lean = useTransform(velocity, (v) => 8 + clamp(Math.abs(v) * 5, 0, 8));
   const stride = useTransform(pos, (v) => v * 2.6);
+  const road: Road = { pos, stepDepth, runnerDepth, planeDepth };
 
-  const worldX = useTransform(pos, (v) => back * v * step);
-  const skylineX = useTransform(pos, (v) => back * (v - START_POS) * step * 0.28);
-  const builtWidth = useTransform(pos, (v) => Math.max(0, start + v * step + 2500));
+  const roadShift = useTransform(pos, (v) => `0px ${(v * stepDepth) % 160}px`);
+  const skylineX = useTransform(pos, (v) => (v - START_POS) * -6);
   const jump = useTransform(pos, (v) => {
     const k = Math.round(v + HURDLE_BEFORE);
     if (k < 1 || k >= STOPS) return 0;
-    const d = (v + HURDLE_BEFORE - k) / 0.2;
+    const d = (v + HURDLE_BEFORE - k) / 0.22;
     return Math.abs(d) < 1 ? -(1 - d * d) * jumpHeight : 0;
   });
   const air = useTransform(jump, (y) => clamp(-y / jumpHeight, 0, 1));
-  const shadowScale = useTransform(jump, (y) => 1 + y / (jumpHeight * 1.4));
-  const shadowFade = useTransform(jump, (y) => 1 + y / (jumpHeight * 2));
+  const shadowScale = useTransform(air, (a) => 1 - a * 0.35);
+  const shadowFade = useTransform(air, (a) => 1 - a * 0.5);
+  const startDepth = useDepth(road, START_POS);
+  const finishDepth = useDepth(road, STOPS);
 
   // React state follows the motion values only where the markup has to change.
   const [current, setCurrent] = useState(0); // the station he is at or heading to
   const [reachedCount, setReachedCount] = useState(0); // stations he has reached (built)
+  const [passed, setPassed] = useState(-2); // last station whose building went past the camera
   const [cleared, setCleared] = useState(0); // hurdles behind him
   const [moving, setMoving] = useState(false);
   const [started, setStarted] = useState(false);
   useMotionValueEvent(pos, "change", (v) => {
     setCurrent(clamp(Math.round(v), 0, STOPS));
     setReachedCount(clamp(Math.floor(v + 0.12) + 1, 0, STOPS + 1));
-    setCleared(Math.floor(v + HURDLE_BEFORE - 0.1));
+    setPassed(Math.floor(v - (runnerDepth - 40) / stepDepth));
+    setCleared(Math.floor(v + HURDLE_BEFORE - 0.08));
     setStarted(v > START_POS + 0.05);
   });
   useMotionValueEvent(run, "change", (v) => setMoving(v > 0.25));
@@ -189,15 +319,6 @@ const JourneyTrack = () => {
         ? { icon: Hammer, text: `${t("journey.building")} ${deptName(current)}` }
         : { icon: ArrowDown, text: t("journey.waiting") };
 
-  const skyline = useMemo(() => {
-    let x = 0;
-    return SKYLINE.map((b) => {
-      const left = x;
-      x += b.w + b.gap;
-      return { ...b, left };
-    });
-  }, []);
-
   // The buttons scroll the page to a station, so the runner gets there the same way the visitor would.
   const scrollToStation = (i: number) => {
     const el = sectionRef.current;
@@ -213,9 +334,11 @@ const JourneyTrack = () => {
   const Back = isAr ? ChevronRight : ChevronLeft;
   const Forward = isAr ? ChevronLeft : ChevronRight;
 
-  const laneStripe = "repeating-linear-gradient(to top, transparent 0 46px, rgba(255,255,255,0.85) 46px 49px)";
   const checker = (size: number) =>
     `repeating-conic-gradient(hsl(var(--ink)) 0 25%, hsl(var(--cream)) 0 50%) 0 0 / ${size}px ${size}px`;
+  const laneLines = `repeating-linear-gradient(to right, transparent 0 ${roadHalf / 2 - 2}px, rgba(255,255,255,0.8) ${roadHalf / 2 - 2}px ${roadHalf / 2 + 2}px)`;
+  const crossMarks = "repeating-linear-gradient(to top, transparent 0 150px, rgba(255,255,255,0.22) 150px 160px)";
+  const roadEdges = `linear-gradient(to right, hsl(var(--ink) / 0.12) 0, hsl(var(--ink) / 0.12) calc(50% - ${roadHalf}px), rgba(255,255,255,0.9) calc(50% - ${roadHalf}px), rgba(255,255,255,0.9) calc(50% - ${roadHalf - 5}px), hsl(var(--track)) calc(50% - ${roadHalf - 5}px), hsl(var(--track)) calc(50% + ${roadHalf - 5}px), rgba(255,255,255,0.9) calc(50% + ${roadHalf - 5}px), rgba(255,255,255,0.9) calc(50% + ${roadHalf}px), hsl(var(--ink) / 0.12) calc(50% + ${roadHalf}px))`;
 
   return (
     <section
@@ -279,172 +402,101 @@ const JourneyTrack = () => {
           </ul>
         </div>
 
-        {/* The scene */}
+        {/* The scene: the road comes out of the horizon toward the viewer */}
         <div
-          className="relative mt-2 md:mt-4 h-[290px] md:h-[360px] flex-none"
-          style={{ perspective: 1100, perspectiveOrigin: "50% 35%" }}
+          className="relative mt-2 md:mt-3 flex-none overflow-hidden"
+          style={{ height: sceneH, perspective, perspectiveOrigin: `50% ${horizon * 100}%` }}
           aria-hidden="true"
         >
-          {/* far skyline, slower than the track */}
-          <motion.div className="absolute bottom-[4.5rem] md:bottom-24 h-44" style={{ x: skylineX, width: 6000, ...side(-200) }}>
+          {/* sky and a far skyline on the horizon */}
+          <div
+            className="absolute inset-x-0 top-0"
+            style={{ height: sceneH * horizon, background: "linear-gradient(to bottom, hsl(var(--cream)) 40%, hsl(var(--cream-2)))" }}
+          />
+          <motion.div className="absolute left-1/2 h-12" style={{ top: sceneH * horizon - 48, x: skylineX, width: 2000, marginLeft: -1000 }}>
             {skyline.map((b) => (
-              <span
-                key={b.left}
-                className="absolute bottom-0 rounded-t-sm bg-ink/[0.035]"
-                style={{ width: b.w, height: b.h, ...side(b.left) }}
-              />
+              <span key={b.left} className="absolute bottom-0 bg-ink/[0.07]" style={{ width: b.w, height: b.h, left: b.left }} />
             ))}
           </motion.div>
-          {/* pavement behind the track */}
-          <div className="absolute inset-x-0 bottom-[4.5rem] md:bottom-24 h-3 md:h-4 bg-ink/[0.09] border-t border-ink/10" />
 
-          <motion.div className="absolute inset-y-0" style={{ x: worldX, width: worldWidth, transformStyle: "preserve-3d", ...side(0) }}>
-            {/* the running track, tilted back like a real floor */}
+          {/* the road plane, lying flat: its near edge is the bottom of the scene */}
+          <motion.div
+            className="absolute left-1/2"
+            style={{
+              width: planeW,
+              marginLeft: -planeW / 2,
+              height: planeDepth,
+              top: sceneH - planeDepth,
+              transformOrigin: "50% 100%",
+              transform: "rotateX(90deg)",
+              transformStyle: "preserve-3d",
+              backgroundColor: "hsl(var(--cream-2))",
+              backgroundImage: `${crossMarks}, ${laneLines}, ${roadEdges}`,
+              backgroundPosition: roadShift,
+            }}
+          >
+            {/* haze toward the horizon */}
             <div
-              className="absolute bottom-0 border-t-4 border-white/70"
-              style={{
-                ...side(-2500),
-                width: worldWidth + 5000,
-                height: floorH,
-                transform: `rotateX(${FLOOR_TILT}deg)`,
-                transformOrigin: "center bottom",
-                backgroundColor: "hsl(var(--track))",
-                backgroundImage: `${laneStripe}, linear-gradient(to top, hsl(var(--track)) 0, hsl(var(--track-2)) 100%)`,
-                boxShadow: "inset 0 -6px 12px rgba(0,0,0,0.08)",
-              }}
-            >
-              {/* built lanes glow orange behind him */}
-              <motion.div
-                className="absolute inset-y-0 bg-primary/35"
-                style={{ ...side(0), width: builtWidth, backgroundImage: laneStripe }}
-              />
-              {/* start and finish painted across the lanes */}
-              <div className="absolute inset-y-0 w-[14px] bg-white/90" style={{ left: at(START_POS) + 2500 - 7 }} />
-              <div className="absolute inset-y-0 w-[22px]" style={{ left: at(STOPS) + 2500 - 11, background: checker(11) }} />
-              {/* a faint mark at every station */}
-              {JOURNEY.map((s, i) => (
-                <div key={s.key} className="absolute inset-y-0 w-[3px] bg-white/30" style={{ left: at(i) + 2500 - 1 }} />
-              ))}
-            </div>
-
-            {/* the "system" cable over the roofs: faint ahead, glowing where it's built */}
-            <div
-              className="absolute h-0 border-t-2 border-dashed border-ink/10 bottom-[226px] md:bottom-[286px]"
-              style={{ ...side(-2500), width: worldWidth + 5000 }}
-            />
-            <motion.div
-              className="absolute h-[3px] rounded-full bottom-[225px] md:bottom-[285px] shadow-[0_0_10px_hsl(var(--primary)/0.7)]"
-              style={{
-                ...side(-2500),
-                width: builtWidth,
-                backgroundImage:
-                  "repeating-linear-gradient(90deg, hsl(var(--primary)) 0 22px, hsl(var(--primary) / 0.45) 22px 40px)",
-                animation: `journey-flow 0.9s linear infinite${isAr ? " reverse" : ""}`,
-              }}
+              className="absolute inset-x-0 top-0 h-[55%]"
+              style={{ background: "linear-gradient(to bottom, hsl(var(--cream)) 0, hsl(var(--cream) / 0) 100%)" }}
             />
 
-            {/* start sign */}
-            <div className="absolute bottom-[4.5rem] md:bottom-24 w-[160px]" style={{ left: at(START_POS) - 80 }}>
-              <div className="flex flex-col items-center">
-                <span className="mb-1 rounded-full bg-ink px-3 py-1 text-xs md:text-sm font-semibold text-cream shadow-md">
-                  {t("journey.start")}
-                </span>
-                <span className="h-10 md:h-12 w-1 bg-ink/40" />
+            {/* start and finish painted across the road */}
+            <Painted road={road} station={START_POS} height={10} className="bg-white/90" style={{ width: roadHalf * 2, marginLeft: -roadHalf }} />
+            <Painted road={road} station={STOPS} height={28} style={{ width: roadHalf * 2, marginLeft: -roadHalf, background: checker(14) }} />
+
+            {/* the start sign */}
+            <Standing road={road} depth={startDepth} x={isAr ? -sideX : sideX} width={200} height={160} hidden={passed >= -1}>
+              <div className="flex flex-col items-center" style={{ transform: `scale(${buildScale})`, transformOrigin: "50% 100%" }}>
+                <span className="rounded-full bg-ink px-3 py-1 text-xs font-semibold text-cream shadow-md">{t("journey.start")}</span>
+                <span className="h-10 w-1 bg-ink/40" />
               </div>
-            </div>
+            </Standing>
 
-            {JOURNEY.map((s, i) => {
-              const done = built(i);
-              const here = i === current && active;
-              return (
-                <div key={s.key}>
-                  {/* the building for this part of the company, on the pavement behind the track */}
-                  <div
-                    className="absolute bottom-[4.5rem] md:bottom-24 w-[220px] flex justify-center"
-                    style={{ left: at(i - buildingBack) - 110 }}
-                  >
-                    <Building station={s} label={s.dept[lang]} built={done} active={here} party={finished} rtl={isAr} />
-                  </div>
+            {JOURNEY.map((s, i) => (
+              <StationOnRoad
+                key={s.key}
+                road={road}
+                station={s}
+                index={i}
+                label={s.dept[lang]}
+                done={built(i)}
+                here={i === current && active}
+                party={finished}
+                hidden={i <= passed || i > current + 6}
+                cleared={i <= cleared}
+                x={(i % 2 === 0 ? -1 : 1) * (isAr ? -1 : 1) * sideX}
+                buildScale={buildScale}
+                hurdleW={hurdleW}
+                rtl={isAr}
+              />
+            ))}
 
-                  {/* the hurdle before it: two legs and a striped bar, green once he's over it */}
-                  {i > 0 && (
-                    <div className="absolute bottom-3 md:bottom-4 w-10 md:w-12" style={{ left: at(i - HURDLE_BEFORE) - (mobile ? 20 : 24) }}>
-                      <div
-                        className={`h-2.5 md:h-3 w-full rounded-sm shadow-sm transition-colors duration-300 ${i <= cleared ? "bg-gain" : ""}`}
-                        style={
-                          i <= cleared
-                            ? undefined
-                            : { backgroundImage: "repeating-linear-gradient(-45deg, hsl(var(--leak)) 0 7px, #fff 7px 12px)" }
-                        }
-                      />
-                      <div className="flex justify-between px-1">
-                        <span className="h-9 md:h-11 w-1 bg-ink/70 rounded-b-sm" />
-                        <span className="h-9 md:h-11 w-1 bg-ink/70 rounded-b-sm" />
-                      </div>
-                      {i <= cleared && (
-                        <span className="absolute -top-5 left-1/2 -translate-x-1/2 flex h-4 w-4 items-center justify-center rounded-full bg-gain text-white">
-                          <Check className="h-3 w-3" strokeWidth={3} />
-                        </span>
-                      )}
-                    </div>
-                  )}
-
-                  {/* sparks while he builds here */}
-                  {here && (
-                    <div className="absolute bottom-24 md:bottom-32 w-0" style={{ left: at(i - buildingBack) }}>
-                      {[
-                        [-18, -20], [14, -24], [-6, -30], [22, -12], [-24, -8], [6, -26],
-                      ].map(([x, y], k) => (
-                        <span
-                          key={k}
-                          className={`absolute h-1.5 w-1.5 rounded-full ${k % 2 ? "bg-primary" : "bg-white"}`}
-                          style={{
-                            ["--spark-x" as string]: `${x}px`,
-                            ["--spark-y" as string]: `${y}px`,
-                            animation: `journey-spark 0.5s ease-out ${k * 0.05}s infinite`,
-                          }}
-                        />
-                      ))}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-
-            {/* finish banner over the painted line */}
-            <div className="absolute bottom-[4.5rem] md:bottom-24 w-[220px]" style={{ left: at(STOPS) - 110 }}>
-              <div className="flex flex-col items-center">
+            {/* the finish gate */}
+            <Standing road={road} depth={finishDepth} x={0} width={roadHalf * 2 + 80} height={260} hidden={passed >= STOPS}>
+              <div className="flex flex-col items-center" style={{ transform: `scale(${buildScale})`, transformOrigin: "50% 100%" }}>
                 <div
-                  className={`flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-xs md:text-sm font-semibold shadow-md ${
+                  className={`flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-sm font-semibold shadow-md ${
                     finished ? "bg-primary text-primary-foreground" : "bg-ink text-cream"
                   }`}
                 >
                   <Flag className="h-4 w-4" />
                   {t("journey.finish.label")}
                 </div>
-                <div className="h-10 md:h-12 w-1" style={{ background: checker(6) }} />
+                <div className="flex items-end" style={{ width: (roadHalf * 2) / buildScale + 20 }}>
+                  <span className="h-24 w-1.5" style={{ background: checker(6) }} />
+                  <span className="mb-20 h-1.5 flex-1 bg-ink/70" />
+                  <span className="h-24 w-1.5" style={{ background: checker(6) }} />
+                </div>
               </div>
-            </div>
+            </Standing>
           </motion.div>
 
-          {/* runner stays in place; the world moves under him */}
-          <div className="absolute bottom-1 md:bottom-2 w-[130px]" style={side(start - 65)}>
-            {/* dust behind him while he runs */}
-            <motion.div className="absolute bottom-1 h-4 w-10" style={{ opacity: run, ...side(26) }}>
-              {[0, 1, 2].map((k) => (
-                <span
-                  key={k}
-                  className="absolute bottom-0 h-3 w-3 rounded-full bg-ink/15"
-                  style={{
-                    ["--puff-x" as string]: `${back * (22 + k * 7)}px`,
-                    animation: `journey-puff 0.5s ease-out ${k * 0.16}s infinite`,
-                  }}
-                />
-              ))}
-            </motion.div>
+          {/* the runner, running at the viewer, stays in place while the road comes to him */}
+          <div className="absolute bottom-0 left-1/2 w-[160px] -ml-[80px]">
             <motion.div
-              className="mx-auto h-2.5 w-16 md:w-20 rounded-[50%] bg-ink/25 blur-[1px]"
-              style={{ scaleX: shadowScale, opacity: shadowFade, y: 8 }}
+              className="absolute bottom-1 left-1/2 h-3 w-20 md:w-24 -ml-10 md:-ml-12 rounded-[50%] bg-ink/30 blur-[2px]"
+              style={{ scaleX: shadowScale, opacity: shadowFade }}
             />
             <motion.div className="absolute bottom-0 inset-x-0 flex justify-center" style={{ y: jump }}>
               {/* a little victory hop at the finish line */}
@@ -452,7 +504,7 @@ const JourneyTrack = () => {
                 animate={finished ? { y: [0, -22, 0] } : { y: 0 }}
                 transition={finished ? { duration: 0.5, repeat: Infinity, repeatDelay: 0.35 } : { duration: 0.2 }}
               >
-                <Runner stride={stride} run={run} air={air} lean={lean} className="h-[128px] w-[96px] md:h-[172px] md:w-[129px] rtl:-scale-x-100" />
+                <Runner stride={stride} run={run} air={air} className="h-[150px] w-[100px] md:h-[210px] md:w-[140px]" />
               </motion.div>
             </motion.div>
 
@@ -463,8 +515,7 @@ const JourneyTrack = () => {
                 initial={{ opacity: 0, y: 6, scale: 0.9 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.3, ease: EASE }}
-                className="absolute bottom-[8.6rem] md:bottom-[11.6rem] flex w-max max-w-[62vw] items-center gap-1.5 rounded-2xl bg-ink px-3 py-1.5 text-xs md:text-sm font-semibold text-cream shadow-lg"
-                style={side(40)}
+                className="absolute bottom-[9.6rem] md:bottom-[13.4rem] left-1/2 flex w-max max-w-[72vw] -translate-x-1/2 items-center gap-1.5 rounded-2xl bg-ink px-3 py-1.5 text-xs md:text-sm font-semibold text-cream shadow-lg"
               >
                 {bubble.icon ? (
                   <bubble.icon className={`h-3.5 w-3.5 shrink-0 text-primary ${active ? "animate-bounce" : ""}`} />
@@ -477,6 +528,25 @@ const JourneyTrack = () => {
                 )}
                 {bubble.text}
               </motion.div>
+            )}
+
+            {/* sparks while he builds */}
+            {active && (
+              <div className="absolute bottom-24 md:bottom-32 left-1/2">
+                {[
+                  [-30, -20], [26, -24], [-10, -34], [36, -10], [-38, -6], [8, -30],
+                ].map(([x, y], k) => (
+                  <span
+                    key={k}
+                    className={`absolute h-1.5 w-1.5 rounded-full ${k % 2 ? "bg-primary" : "bg-white"}`}
+                    style={{
+                      ["--spark-x" as string]: `${x}px`,
+                      ["--spark-y" as string]: `${y}px`,
+                      animation: `journey-spark 0.5s ease-out ${k * 0.05}s infinite`,
+                    }}
+                  />
+                ))}
+              </div>
             )}
 
             {/* confetti at the finish line */}
@@ -492,14 +562,11 @@ const JourneyTrack = () => {
               ))}
           </div>
 
-          {/* kerb in front of the track, for depth */}
-          <div className="absolute inset-x-0 bottom-0 h-2 md:h-2.5 bg-ink/[0.14] border-t border-white/40" />
-
           {/* finish banner */}
           <AnimatePresence>
             {finished && (
               <motion.div
-                className="absolute inset-x-0 -top-2 md:top-2 flex justify-center pointer-events-none"
+                className="absolute inset-x-0 top-2 flex justify-center pointer-events-none"
                 initial={{ opacity: 0, scale: 0.5, rotate: -6 }}
                 animate={{ opacity: 1, scale: 1, rotate: -2 }}
                 exit={{ opacity: 0 }}
@@ -531,7 +598,7 @@ const JourneyTrack = () => {
         </div>
 
         {/* What happens at this station */}
-        <div className="mx-auto w-full max-w-6xl px-5 md:px-8 mt-3 md:mt-5 flex-1 min-h-0">
+        <div className="mx-auto w-full max-w-6xl px-5 md:px-8 mt-3 md:mt-4 flex-1 min-h-0">
           <motion.div
             key={current}
             initial={{ opacity: 0, y: 14 }}
