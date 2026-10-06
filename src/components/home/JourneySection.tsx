@@ -33,14 +33,23 @@ const toTrackPosition = (p: number) => {
   return i + easeInOut(move);
 };
 
-const useViewportWidth = () => {
-  const [width, setWidth] = useState(() => (typeof window === "undefined" ? 1280 : window.innerWidth));
+// Viewport size in px. Heights are set in px (not vh/svh) so the pinned track works on
+// every browser; small height changes (a phone's address bar showing/hiding) are ignored.
+const useViewport = () => {
+  const [size, setSize] = useState(() =>
+    typeof window === "undefined" ? { w: 1280, h: 800 } : { w: window.innerWidth, h: window.innerHeight },
+  );
   useEffect(() => {
-    const update = () => setWidth(window.innerWidth);
+    const update = () =>
+      setSize((prev) => {
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        return w !== prev.w || Math.abs(h - prev.h) > 120 ? { w, h } : prev;
+      });
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
   }, []);
-  return width;
+  return size;
 };
 
 const StationCopy = ({ station }: { station: JourneyStation }) => {
@@ -68,7 +77,7 @@ const StationCopy = ({ station }: { station: JourneyStation }) => {
 const JourneyTrack = () => {
   const { t, lang, isAr } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
-  const vw = useViewportWidth();
+  const { w: vw, h: vh } = useViewport();
   const mobile = vw < 768;
   const step = mobile ? 280 : 420; // px between stations
   const start = mobile ? 84 : Math.min(vw * 0.22, 320); // runner's distance from the inline-start edge
@@ -80,6 +89,9 @@ const JourneyTrack = () => {
 
   // How far the visitor has scrolled through the section (0 → 1), read straight from the page.
   const progress = useMotionValue(0);
+  // Open the site with ?debug=track to see the scroll numbers (for troubleshooting on a real device).
+  const debugRef = useRef<HTMLPreElement>(null);
+  const debug = typeof window !== "undefined" && window.location.search.includes("debug=track");
   useEffect(() => {
     let frame = 0;
     const update = () => {
@@ -89,15 +101,28 @@ const JourneyTrack = () => {
       const rect = el.getBoundingClientRect();
       const total = rect.height - window.innerHeight;
       progress.set(total > 0 ? Math.min(Math.max(-rect.top / total, 0), 1) : 0);
+      if (debugRef.current) {
+        const sticky = el.firstElementChild?.getBoundingClientRect();
+        debugRef.current.textContent = [
+          `progress ${progress.get().toFixed(3)}`,
+          `section top ${Math.round(rect.top)} / height ${Math.round(rect.height)}`,
+          `sticky top ${Math.round(sticky?.top ?? 0)} / height ${Math.round(sticky?.height ?? 0)}`,
+          `window ${window.innerWidth}x${window.innerHeight} scrollY ${Math.round(window.scrollY)}`,
+          `scroller ${document.scrollingElement?.tagName} ${Math.round(document.scrollingElement?.scrollTop ?? 0)}`,
+          navigator.userAgent,
+        ].join("\n");
+      }
     };
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(update);
     };
     update();
     window.addEventListener("scroll", onScroll, { passive: true });
+    document.addEventListener("scroll", onScroll, { passive: true, capture: true });
     window.addEventListener("resize", onScroll);
     return () => {
       window.removeEventListener("scroll", onScroll);
+      document.removeEventListener("scroll", onScroll, { capture: true });
       window.removeEventListener("resize", onScroll);
       if (frame) cancelAnimationFrame(frame);
     };
@@ -133,9 +158,16 @@ const JourneyTrack = () => {
       id="journey"
       ref={sectionRef}
       className="relative bg-cream text-ink rounded-t-[2rem] md:rounded-t-[2.5rem]"
-      style={{ height: `calc(${(STOPS + 0.4) * SEGMENT_VH}vh + 100svh)` }}
+      style={{ height: Math.round(((STOPS + 0.4) * SEGMENT_VH * vh) / 100 + vh) }}
     >
-      <div className="sticky top-0 h-[100svh] overflow-hidden flex flex-col pt-20 md:pt-24 pb-24 md:pb-8">
+      <div className="sticky top-0 overflow-hidden flex flex-col pt-20 md:pt-24 pb-24 md:pb-8" style={{ height: vh }}>
+        {debug && (
+          <pre
+            ref={debugRef}
+            dir="ltr"
+            className="fixed bottom-24 left-2 z-[100] max-w-[95vw] whitespace-pre-wrap rounded bg-black/85 p-2 text-[10px] leading-tight text-white"
+          />
+        )}
         {/* Header + station counter */}
         <div className="mx-auto w-full max-w-6xl px-5 md:px-8 flex items-end justify-between gap-4">
           <div className="min-w-0">
