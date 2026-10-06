@@ -55,13 +55,13 @@ const Building = ({ station, label, built, active, party, rtl }: BuildingProps) 
           style={{ transform: `${rtl ? "translateX(-100%)" : "translateX(100%)"} skewY(${rtl ? 45 : -45}deg)` }}
         />
         {/* ground shadow */}
-        <div className="absolute -bottom-1 left-1/2 h-3 w-[130%] -translate-x-1/2 rounded-[50%] bg-ink/15 blur-[3px]" />
+        <div className="absolute -bottom-1 left-1/2 h-3 w-[130%] -translate-x-1/2 rounded-[50%] bg-ink/15" />
 
         {/* front face */}
         <div
           className={`relative h-[104px] w-[108px] md:h-[144px] md:w-[150px] border transition-all duration-700 ${
             built ? "bg-ink border-ink" : "bg-ink/[0.07] border-ink/10 border-dashed"
-          } ${active ? "shadow-[0_0_56px_hsl(var(--primary)/0.5)]" : built ? "shadow-lg" : ""}`}
+          } ${active ? "shadow-[0_0_40px_hsl(var(--primary)/0.5)]" : ""}`}
         >
           {/* windows */}
           <div className="grid grid-cols-5 gap-1.5 md:gap-2 px-2.5 pt-2.5 md:px-3.5 md:pt-3.5">
