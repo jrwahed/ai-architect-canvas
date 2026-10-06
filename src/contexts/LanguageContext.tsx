@@ -380,6 +380,7 @@ const translations: Record<string, Record<Lang, string>> = {
   "journey.label": { en: "Your company's journey with me", ar: "رحلة شركتك معايا" },
   "journey.title": { en: "From the first lead… to one system", ar: "من أول عميل… لحد نظام واحد" },
   "journey.station": { en: "Station", ar: "المحطة" },
+  "journey.intro": { en: "Scroll down with me. I'll pass through every part of your company and tell you what I'd fix there, and what you get.", ar: "انزل معايا. هعدّي على كل قسم في شركتك، وأقولك هصلّح فيه إيه، وهتكسب إيه." },
   "journey.collected": { en: "Parts of the system built so far", ar: "أجزاء النظام اللي اتبنت لحد دلوقتي" },
   "journey.problem": { en: "The problem", ar: "المشكلة" },
   "journey.action": { en: "What I do", ar: "هعمل إيه" },

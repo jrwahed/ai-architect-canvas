@@ -29,16 +29,11 @@ export interface JourneyStation {
   gain: L;
   /** Service page slug in src/data/services.ts, when there is one. */
   slug?: string;
-  /** The little screen that lights up on the station's building once it is built. */
-  widget: StationWidgetKind;
 }
-
-export type StationWidgetKind = "check" | "bars" | "rows" | "flow" | "chat" | "kanban" | "doc" | "line" | "pulse";
 
 export const JOURNEY: JourneyStation[] = [
   {
     key: "diagnosis",
-    widget: "check",
     icon: Compass,
     slug: "strategy",
     dept: { en: "Diagnosis", ar: "التشخيص" },
@@ -57,7 +52,6 @@ export const JOURNEY: JourneyStation[] = [
   },
   {
     key: "ads",
-    widget: "bars",
     icon: Megaphone,
     dept: { en: "Marketing & ads", ar: "التسويق والإعلانات" },
     problem: {
@@ -75,7 +69,6 @@ export const JOURNEY: JourneyStation[] = [
   },
   {
     key: "leads",
-    widget: "rows",
     icon: Target,
     slug: "lead-system",
     dept: { en: "Lead capture", ar: "جلب العملاء" },
@@ -94,7 +87,6 @@ export const JOURNEY: JourneyStation[] = [
   },
   {
     key: "outreach",
-    widget: "flow",
     icon: Send,
     slug: "ai-outreach",
     dept: { en: "Reaching new customers", ar: "الوصول لعملاء جدد" },
@@ -113,7 +105,6 @@ export const JOURNEY: JourneyStation[] = [
   },
   {
     key: "service",
-    widget: "chat",
     icon: MessageCircle,
     slug: "whatsapp-agent",
     dept: { en: "Customer service", ar: "خدمة العملاء" },
@@ -132,7 +123,6 @@ export const JOURNEY: JourneyStation[] = [
   },
   {
     key: "sales",
-    widget: "kanban",
     icon: Contact,
     slug: "crm-setup",
     dept: { en: "Sales", ar: "المبيعات" },
@@ -151,7 +141,6 @@ export const JOURNEY: JourneyStation[] = [
   },
   {
     key: "ops",
-    widget: "check",
     icon: Network,
     slug: "company-os",
     dept: { en: "Operations", ar: "التشغيل" },
@@ -170,7 +159,6 @@ export const JOURNEY: JourneyStation[] = [
   },
   {
     key: "automation",
-    widget: "flow",
     icon: Workflow,
     slug: "automation",
     dept: { en: "Repetitive work", ar: "الشغل المتكرر" },
@@ -189,7 +177,6 @@ export const JOURNEY: JourneyStation[] = [
   },
   {
     key: "knowledge",
-    widget: "chat",
     icon: MessagesSquare,
     slug: "company-assistant",
     dept: { en: "Company knowledge", ar: "معلومات الشركة" },
@@ -208,7 +195,6 @@ export const JOURNEY: JourneyStation[] = [
   },
   {
     key: "people",
-    widget: "rows",
     icon: UserSearch,
     slug: "ai-hiring",
     dept: { en: "People & hiring", ar: "الموارد البشرية" },
@@ -227,7 +213,6 @@ export const JOURNEY: JourneyStation[] = [
   },
   {
     key: "finance",
-    widget: "doc",
     icon: FileScan,
     slug: "documents",
     dept: { en: "Finance & documents", ar: "الحسابات والمستندات" },
@@ -246,7 +231,6 @@ export const JOURNEY: JourneyStation[] = [
   },
   {
     key: "numbers",
-    widget: "line",
     icon: LayoutDashboard,
     slug: "bi-dashboard",
     dept: { en: "Numbers & decisions", ar: "الأرقام والقرار" },
@@ -265,7 +249,6 @@ export const JOURNEY: JourneyStation[] = [
   },
   {
     key: "training",
-    widget: "check",
     icon: GraduationCap,
     slug: "ai-training",
     dept: { en: "Team training", ar: "تدريب الفريق" },
@@ -284,7 +267,6 @@ export const JOURNEY: JourneyStation[] = [
   },
   {
     key: "care",
-    widget: "pulse",
     icon: Wrench,
     slug: "care",
     dept: { en: "Ongoing care", ar: "المتابعة والتطوير" },

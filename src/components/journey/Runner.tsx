@@ -1,11 +1,10 @@
 import { MotionValue, useAnimationFrame } from "framer-motion";
 import { useRef } from "react";
 
-// Cartoon of Mohamed (curly dark hair, black sweater, orange shoes) seen from BEHIND, running away
-// from the viewer down the road. The pose comes from a classic 8-key run cycle (hip, knee, shoulder
-// and elbow angles, as seen from the side) projected onto the screen: a limb swung forward (away)
-// looks shorter and thinner, one kicked back toward the viewer looks bigger, and the sole of the
-// shoe shows when the foot is up behind him.
+// Cartoon of Mohamed (curly dark hair, black sweater, orange shoes) seen from the FRONT, running
+// toward the viewer. The pose comes from a classic 8-key run cycle (hip, knee, foot, shoulder and
+// elbow angles, as seen from the side) which is projected onto the screen: a limb swung toward the
+// viewer looks shorter and thicker, one swung away looks shorter and thinner.
 // `stride` is the distance covered (in cycles), `run` blends from standing (0) to running (1),
 // `air` blends to a tucked hurdle pose. Every joint is drawn from numbers each frame, so it renders
 // the same in every browser. Character colours are part of the drawing; shoes use the brand orange.
@@ -35,7 +34,7 @@ const HIP_Y = 104;
 const SHOULDER_Y = 66;
 const HIP_X = [49, 71]; // near (viewer's left) and far leg
 const SHOULDER_X = [36, 84];
-const DEPTH = -0.0075; // forward is away from the viewer, so parts swung forward shrink
+const DEPTH = 0.0075; // how much nearer parts grow per unit of depth
 const RAD = Math.PI / 180;
 
 const KEYS = THIGH.length;
@@ -108,9 +107,9 @@ const Runner = ({ stride, run, air, className }: RunnerProps) => {
       const ankleZ = kneeZ + L.shin * Math.sin(shinAngle);
       seg(r[`thigh${i}`], x, HIP_Y, x, kneeY, 15 * (1 + kneeZ * DEPTH * 0.5));
       seg(r[`shin${i}`], x, kneeY, x, ankleY, 12 * (1 + ankleZ * DEPTH * 0.5));
-      // the shoe: the sole shows when the foot is kicked up behind him (toward the viewer)
+      // the shoe: a sole seen from the front when the foot is up and back, a toe when it's forward
       const up = Math.max(0, -ankleZ) / 40;
-      dot(r[`foot${i}`], x, ankleY + 2, 9 * (1 + ankleZ * DEPTH * 0.6) + up * 2, 5 + up * 7);
+      dot(r[`foot${i}`], x, ankleY + 3 - up * 2, 9 * (1 + ankleZ * DEPTH * 0.6), 5 + up * 4);
     }
 
     // Arms swing opposite to the leg on the same side, with the elbow bent.
@@ -134,7 +133,7 @@ const Runner = ({ stride, run, air, className }: RunnerProps) => {
     const breathe = Math.sin(time / 650) * 1.2;
     const bob = mix(breathe, key(BOB, t) * 1.1, k) * (1 - a);
     const sway = Math.sin(t * Math.PI * 2) * 3 * k * (1 - a);
-    const grow = 1 + 0.02 * k; // a touch bigger while he runs
+    const grow = 1 + 0.03 * k; // a touch bigger while he runs at you
     r.body!.setAttribute("transform", `translate(60 ${n(172 + bob)}) rotate(${n(sway)}) scale(${n(grow)}) translate(-60 -172)`);
     r.head!.setAttribute("transform", `rotate(${n(-sway * 0.6)} 60 48)`);
   });
@@ -161,30 +160,39 @@ const Runner = ({ stride, run, air, className }: RunnerProps) => {
           stroke={OUTLINE}
           strokeWidth="1"
         />
-        <path d="M46 60 q14 -6 28 0" stroke={SWEATER_LIGHT} strokeWidth="2.2" fill="none" />
-        <path d="M60 64 v30" stroke={SWEATER_LIGHT} strokeWidth="1.5" opacity="0.5" />
+        <path d="M48 62 q12 8 24 0" stroke={SWEATER_LIGHT} strokeWidth="2.2" fill="none" />
         <path d="M44 100 h32" stroke={SWEATER_LIGHT} strokeWidth="2" opacity="0.6" />
         {/* neck */}
         <rect x="53" y="50" width="14" height="12" rx="4" fill={SKIN_SHADE} />
 
-        {/* head, seen from behind: ears, the back of the neck and a full head of curls */}
+        {/* head, facing the viewer */}
         <g ref={set("head")}>
           <ellipse cx="60" cy="34" rx="20" ry="21" fill={SKIN} stroke={OUTLINE} strokeWidth="1" />
+          {/* ears */}
           <ellipse cx="40" cy="36" rx="3.5" ry="5" fill={SKIN_SHADE} stroke={OUTLINE} strokeWidth="0.8" />
           <ellipse cx="80" cy="36" rx="3.5" ry="5" fill={SKIN_SHADE} stroke={OUTLINE} strokeWidth="0.8" />
-          <path d="M41 36 q-1 -28 19 -28 q20 0 19 28 q-4 10 -19 11 q-15 -1 -19 -11z" fill={HAIR} />
+          {/* hair: a cap with curls around the edge */}
+          <path d="M40 30 q0 -22 20 -22 q20 0 20 22 q-5 -6 -12 -3 q-8 -8 -16 0 q-7 -3 -12 3z" fill={HAIR} />
           {(
             [
-              [42, 30, 6.5], [44, 21, 6.5], [50, 14, 6.5], [58, 10, 6.5], [66, 10, 6.5], [73, 15, 6.5],
-              [78, 23, 6], [79, 31, 5.5], [44, 39, 5], [76, 40, 5], [52, 18, 5], [66, 17, 5],
-              [60, 24, 5.5], [50, 28, 5], [70, 28, 5], [56, 36, 5], [65, 37, 5], [60, 44, 4.5],
+              [41, 26, 6.5], [44, 18, 6.5], [50, 12, 6.5], [58, 9, 6.5], [66, 10, 6.5], [73, 15, 6.5],
+              [78, 23, 6], [80, 30, 5], [40, 33, 5], [52, 16, 4.5], [64, 15, 4.5], [72, 21, 4.5],
             ] as const
           ).map(([cx, cy, rr]) => (
             <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r={rr} fill={HAIR} />
           ))}
-          <circle cx="54" cy="15" r="3" fill={HAIR_LIGHT} />
-          <circle cx="67" cy="16" r="2.5" fill={HAIR_LIGHT} />
-          <circle cx="60" cy="27" r="2.5" fill={HAIR_LIGHT} />
+          <circle cx="54" cy="13" r="3" fill={HAIR_LIGHT} />
+          <circle cx="68" cy="14" r="2.5" fill={HAIR_LIGHT} />
+          {/* brows, eyes, nose, mouth */}
+          <path d="M48 30 q4 -3 9 -1" stroke={HAIR} strokeWidth="2.2" strokeLinecap="round" fill="none" />
+          <path d="M63 29 q5 -2 9 1" stroke={HAIR} strokeWidth="2.2" strokeLinecap="round" fill="none" />
+          <ellipse cx="53" cy="36" rx="3" ry="3.4" fill="#fff" />
+          <ellipse cx="67" cy="36" rx="3" ry="3.4" fill="#fff" />
+          <circle cx="53.5" cy="36.5" r="1.9" fill={HAIR} />
+          <circle cx="67.5" cy="36.5" r="1.9" fill={HAIR} />
+          <path d="M60 38 q-3 6 1 7" stroke={SKIN_SHADE} strokeWidth="1.8" fill="none" strokeLinecap="round" />
+          <path d="M53 47 q7 6 14 0" stroke="#9b4a3c" strokeWidth="2.2" fill="none" strokeLinecap="round" />
+          <path d="M55 48 q5 3 10 0" stroke="#fff" strokeWidth="1.6" fill="none" strokeLinecap="round" opacity="0.9" />
         </g>
 
         {/* arms, in front of the body */}
