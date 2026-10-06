@@ -1,7 +1,8 @@
-import { motion, MotionValue, useTransform } from "framer-motion";
+import { motion, MotionValue, useTime, useTransform } from "framer-motion";
 
 // Cartoon of Mohamed (curly dark hair, black sweater) running to the right.
-// `stride` is the distance covered, so the legs only move while the visitor scrolls.
+// `stride` is the distance covered, so the legs move only while he runs.
+// When `work` is 1 he stands and hammers, building the part of the system at that station.
 // Character colours are part of the drawing, not the theme; the shoes use the brand orange.
 const SKIN = "#E7B289";
 const SKIN_SHADE = "#CF956C";
@@ -16,16 +17,20 @@ const HAIR_CURLS: [number, number, number][] = [
 
 interface RunnerProps {
   stride: MotionValue<number>;
+  work: MotionValue<number>;
   className?: string;
 }
 
-const Runner = ({ stride, className }: RunnerProps) => {
+const Runner = ({ stride, work, className }: RunnerProps) => {
+  const time = useTime();
   const swing = useTransform(stride, (s) => Math.sin(s * Math.PI * 2));
   const legFront = useTransform(swing, (v) => v * 38);
   const legBack = useTransform(swing, (v) => -v * 38);
-  const armFront = useTransform(swing, (v) => -v * 45);
+  const armFront = useTransform(() =>
+    work.get() ? -78 + Math.sin(time.get() / 70) * 30 : -swing.get() * 45,
+  );
   const armBack = useTransform(swing, (v) => v * 45);
-  const bob = useTransform(swing, (v) => -Math.abs(v) * 3);
+  const bob = useTransform(() => (work.get() ? Math.sin(time.get() / 70) * 1.2 : -Math.abs(swing.get()) * 3));
 
   const leg = (rotate: MotionValue<number>, shade = false) => (
     <motion.g style={{ rotate, originX: 0.5, originY: 0 }}>
@@ -35,18 +40,14 @@ const Runner = ({ stride, className }: RunnerProps) => {
     </motion.g>
   );
 
-  const arm = (rotate: MotionValue<number>, shade = false) => (
-    <motion.g style={{ rotate, originX: 0.5, originY: 0 }}>
-      <rect x="54" y="62" width="12" height="30" rx="6" fill={SWEATER} opacity={shade ? 0.7 : 1} />
-      <circle cx="60" cy="93" r="5.5" fill={shade ? SKIN_SHADE : SKIN} />
-    </motion.g>
-  );
-
   return (
-    <svg viewBox="0 0 120 140" className={className} aria-hidden="true">
+    <svg viewBox="-10 -20 140 160" className={className} aria-hidden="true">
       <motion.g style={{ y: bob }}>
         {leg(legBack, true)}
-        {arm(armBack, true)}
+        <motion.g style={{ rotate: armBack, originX: 0.5, originY: 0 }}>
+          <rect x="54" y="62" width="12" height="30" rx="6" fill={SWEATER} opacity={0.7} />
+          <circle cx="60" cy="93" r="5.5" fill={SKIN_SHADE} />
+        </motion.g>
 
         {/* body */}
         <rect x="55" y="50" width="11" height="10" rx="3" fill={SKIN_SHADE} />
@@ -71,7 +72,15 @@ const Runner = ({ stride, className }: RunnerProps) => {
           <path d="M68 47 Q74 51 79 46" stroke="#9b4a3c" strokeWidth="2.2" fill="none" strokeLinecap="round" />
         </g>
 
-        {arm(armFront)}
+        {/* front arm, holding a hammer while he builds */}
+        <motion.g style={{ rotate: armFront, originX: 0.5, originY: 0 }}>
+          <rect x="54" y="62" width="12" height="30" rx="6" fill={SWEATER} />
+          <motion.g style={{ opacity: work }}>
+            <rect x="58" y="88" width="4.5" height="24" rx="2" fill="#8A5A3B" />
+            <rect x="51" y="106" width="18" height="9" rx="2.5" fill="#5B6270" />
+          </motion.g>
+          <circle cx="60" cy="93" r="5.5" fill={SKIN} />
+        </motion.g>
       </motion.g>
     </svg>
   );
