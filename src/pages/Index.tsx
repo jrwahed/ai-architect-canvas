@@ -4,7 +4,7 @@ import { MotionConfig } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import ToolsMarquee from "@/components/home/ToolsMarquee";
-import LeaksSection from "@/components/home/LeaksSection";
+import JourneySection from "@/components/home/JourneySection";
 import ServicesSection from "@/components/ServicesSection";
 import CaseStudiesSection from "@/components/CaseStudiesSection";
 import OfferSection from "@/components/home/OfferSection";
@@ -27,12 +27,12 @@ const Index = () => {
 
   return (
     <MotionConfig reducedMotion="user">
-      <div className="bg-background text-foreground min-h-screen overflow-x-hidden pb-20 md:pb-0">
+      <div className="bg-background text-foreground min-h-screen overflow-x-clip pb-20 md:pb-0">
         <Navbar />
         <main>
           <HeroSection />
           <ToolsMarquee />
-          <LeaksSection />
+          <JourneySection />
           <ServicesSection />
           <CaseStudiesSection />
           <OfferSection />
