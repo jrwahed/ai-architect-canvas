@@ -121,17 +121,19 @@ const Standing = ({
   hidden: boolean;
   children: ReactNode;
 }) => {
-  const top = useTransform(depth, (d) => road.planeDepth - d - height);
+  // Moving with a transform (not `top`) keeps the browser from re-laying out the scene every frame.
+  const y = useTransform(depth, (d) => -d);
   return (
     <motion.div
       className="absolute flex items-end justify-center"
       style={{
-        top,
+        top: road.planeDepth - height,
         left: `calc(50% + ${x - width / 2}px)`,
         width,
         height,
         transformOrigin: "50% 100%",
-        transform: "rotateX(-90deg)",
+        y,
+        rotateX: -90,
         visibility: hidden ? "hidden" : "visible",
       }}
     >
@@ -140,11 +142,29 @@ const Standing = ({
   );
 };
 
+const MARKS = 14; // marks across the road
+const MARK_GAP = 170; // depth between them
+
+// One mark across the road. The marks cycle: when one passes the camera it reappears at the far end.
+const RoadMark = ({ road, index, roadHalf }: { road: Road; index: number; roadHalf: number }) => {
+  const span = MARKS * MARK_GAP;
+  const y = useTransform(road.pos, (v) => {
+    const d = (((index * MARK_GAP - v * road.stepDepth) % span) + span) % span;
+    return -d;
+  });
+  return (
+    <motion.div
+      className="absolute left-1/2 h-2 bg-white/25"
+      style={{ top: road.planeDepth - 4, width: roadHalf * 2 - 10, marginLeft: -roadHalf + 5, y }}
+    />
+  );
+};
+
 // A line painted flat across the road at a station.
 const Painted = ({ road, station, height, className, style }: { road: Road; station: number; height: number; className?: string; style?: React.CSSProperties }) => {
   const depth = useDepth(road, station);
-  const top = useTransform(depth, (d) => road.planeDepth - d - height / 2);
-  return <motion.div className={`absolute left-1/2 ${className ?? ""}`} style={{ top, height, ...style }} />;
+  const y = useTransform(depth, (d) => -d);
+  return <motion.div className={`absolute left-1/2 ${className ?? ""}`} style={{ top: road.planeDepth - height / 2, y, height, ...style }} />;
 };
 
 // One station's building (beside the road) and the hurdle before it (across the road).
@@ -157,6 +177,7 @@ const StationOnRoad = ({
   here,
   party,
   hidden,
+  hurdleHidden,
   cleared,
   x,
   buildScale,
@@ -171,6 +192,7 @@ const StationOnRoad = ({
   here: boolean;
   party: boolean;
   hidden: boolean;
+  hurdleHidden: boolean;
   cleared: boolean;
   x: number;
   buildScale: number;
@@ -187,7 +209,7 @@ const StationOnRoad = ({
         </div>
       </Standing>
       {index > 0 && (
-        <Standing road={road} depth={hurdleDepth} x={0} width={hurdleW} height={70} hidden={hidden}>
+        <Standing road={road} depth={hurdleDepth} x={0} width={hurdleW} height={70} hidden={hurdleHidden}>
           <div className="relative w-full">
             <div
               className={`h-4 w-full rounded-sm shadow-sm transition-colors duration-300 ${cleared ? "bg-gain" : ""}`}
@@ -274,7 +296,6 @@ const JourneyTrack = () => {
   const stride = useTransform(pos, (v) => v * 2.6);
   const road: Road = { pos, stepDepth, runnerDepth, planeDepth };
 
-  const roadShift = useTransform(pos, (v) => `0px ${(v * stepDepth) % 160}px`);
   const skylineX = useTransform(pos, (v) => (v - START_POS) * -6);
   const jump = useTransform(pos, (v) => {
     const k = Math.round(v + HURDLE_BEFORE);
@@ -292,6 +313,7 @@ const JourneyTrack = () => {
   const [current, setCurrent] = useState(0); // the station he is at or heading to
   const [reachedCount, setReachedCount] = useState(0); // stations he has reached (built)
   const [passed, setPassed] = useState(-2); // last station whose building went past the camera
+  const [hurdlePassed, setHurdlePassed] = useState(-2); // last hurdle that went past the camera
   const [cleared, setCleared] = useState(0); // hurdles behind him
   const [moving, setMoving] = useState(false);
   const [started, setStarted] = useState(false);
@@ -299,6 +321,7 @@ const JourneyTrack = () => {
     setCurrent(clamp(Math.round(v), 0, STOPS));
     setReachedCount(clamp(Math.floor(v + 0.12) + 1, 0, STOPS + 1));
     setPassed(Math.floor(v - (runnerDepth - 40) / stepDepth));
+    setHurdlePassed(Math.floor(v + HURDLE_BEFORE - (runnerDepth - 40) / stepDepth));
     setCleared(Math.floor(v + HURDLE_BEFORE - 0.08));
     setStarted(v > START_POS + 0.05);
   });
@@ -337,7 +360,6 @@ const JourneyTrack = () => {
   const checker = (size: number) =>
     `repeating-conic-gradient(hsl(var(--ink)) 0 25%, hsl(var(--cream)) 0 50%) 0 0 / ${size}px ${size}px`;
   const laneLines = `repeating-linear-gradient(to right, transparent 0 ${roadHalf / 2 - 2}px, rgba(255,255,255,0.8) ${roadHalf / 2 - 2}px ${roadHalf / 2 + 2}px)`;
-  const crossMarks = "repeating-linear-gradient(to top, transparent 0 150px, rgba(255,255,255,0.22) 150px 160px)";
   const roadEdges = `linear-gradient(to right, hsl(var(--ink) / 0.12) 0, hsl(var(--ink) / 0.12) calc(50% - ${roadHalf}px), rgba(255,255,255,0.9) calc(50% - ${roadHalf}px), rgba(255,255,255,0.9) calc(50% - ${roadHalf - 5}px), hsl(var(--track)) calc(50% - ${roadHalf - 5}px), hsl(var(--track)) calc(50% + ${roadHalf - 5}px), rgba(255,255,255,0.9) calc(50% + ${roadHalf - 5}px), rgba(255,255,255,0.9) calc(50% + ${roadHalf}px), hsl(var(--ink) / 0.12) calc(50% + ${roadHalf}px))`;
 
   return (
@@ -431,10 +453,13 @@ const JourneyTrack = () => {
               transform: "rotateX(90deg)",
               transformStyle: "preserve-3d",
               backgroundColor: "hsl(var(--cream-2))",
-              backgroundImage: `${crossMarks}, ${laneLines}, ${roadEdges}`,
-              backgroundPosition: roadShift,
+              backgroundImage: `${laneLines}, ${roadEdges}`,
             }}
           >
+            {/* marks across the road that flow toward the viewer */}
+            {Array.from({ length: MARKS }).map((_, k) => (
+              <RoadMark key={k} road={road} index={k} roadHalf={roadHalf} />
+            ))}
             {/* haze toward the horizon */}
             <div
               className="absolute inset-x-0 top-0 h-[55%]"
@@ -463,7 +488,8 @@ const JourneyTrack = () => {
                 done={built(i)}
                 here={i === current && active}
                 party={finished}
-                hidden={i <= passed || i > current + 6}
+                hidden={i <= passed || i > current + 4}
+                hurdleHidden={i <= hurdlePassed || i > current + 4}
                 cleared={i <= cleared}
                 x={(i % 2 === 0 ? -1 : 1) * (isAr ? -1 : 1) * sideX}
                 buildScale={buildScale}
