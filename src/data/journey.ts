@@ -1,10 +1,10 @@
 import {
   Compass,
+  Send,
   Megaphone,
   Target,
-  Send,
-  MessageCircle,
   Contact,
+  MessageCircle,
   Network,
   Workflow,
   MessagesSquare,
@@ -16,16 +16,23 @@ import {
   LucideIcon,
 } from "lucide-react";
 
+// The home page story ("how does every part of your company get smart?"), one station per part.
+// The owner wants it shown in Arabic whatever the site language, so only `ar` is rendered on the
+// home page; `en` is kept for the reduced-motion list and future use.
+// Numbers are only the measured ones from the agency operating system (September 2026); no client
+// names, no estimates.
 type L = { en: string; ar: string };
 
-// One stop on the home page "track": a part of the company, the problem there,
-// what I do about it, and what the company gets. Ordered along a customer's journey.
 export interface JourneyStation {
   key: string;
   icon: LucideIcon;
   dept: L;
-  problem: L;
-  action: L;
+  /** The chapter: what I do in this part of the company, told in the first person. */
+  story: L;
+  /** The steps of a framework, shown as a chain of chips. */
+  steps?: L[];
+  /** A real system I built that proves it. */
+  proof?: L;
   gain: L;
   /** Service page slug in src/data/services.ts, when there is one. */
   slug?: string;
@@ -36,251 +43,197 @@ export const JOURNEY: JourneyStation[] = [
     key: "diagnosis",
     icon: Compass,
     slug: "strategy",
-    dept: { en: "Diagnosis", ar: "التشخيص" },
-    problem: {
-      en: "Everything runs, but nobody knows where the time and money leak.",
-      ar: "الشغل ماشي، بس محدش عارف الوقت والفلوس بيضيعوا فين.",
-    },
-    action: {
-      en: "I sit with the team, watch how the work really runs, and pick the 3 things to fix first.",
-      ar: "بقعد مع الفريق، وبشوف الشغل ماشي إزاي على الطبيعة، وبحدد أهم ٣ حاجات نبدأ بيها.",
+    dept: { en: "Diagnosis", ar: "التشخيص: قبل أي حاجة، بقعد وأتفرج" },
+    story: {
+      en: "The first week I don't build anything. I watch how the work really runs, and pick the 3 things wasting the most time and money.",
+      ar: "أول أسبوع مش ببني. بشوف الشغل ماشي إزاي على الطبيعة، وبطلّع أهم ٣ حاجات بتضيّع وقت وفلوس.",
     },
     gain: {
-      en: "A clear map of what to build and in what order. If you don't need a system, I'll tell you.",
-      ar: "خريطة واضحة: نبني إيه وبأنهي ترتيب. ولو مش محتاج نظام هقولك.",
-    },
-  },
-  {
-    key: "ads",
-    icon: Megaphone,
-    dept: { en: "Marketing & ads", ar: "التسويق والإعلانات" },
-    problem: {
-      en: "Ad money goes out, and nobody knows which campaign brought a sale.",
-      ar: "فلوس الإعلانات بتتصرف، ومحدش عارف أنهي حملة جابت بيع.",
-    },
-    action: {
-      en: "I run the ads myself and connect every campaign to the system from the first click.",
-      ar: "بشغّل الإعلانات بنفسي، وبربط كل حملة بالنظام من أول ضغطة.",
-    },
-    gain: {
-      en: "You know where every lead came from, and the budget goes to what sells.",
-      ar: "تعرف كل عميل جه منين، والفلوس تروح للحملة اللي بتبيع.",
-    },
-  },
-  {
-    key: "leads",
-    icon: Target,
-    slug: "lead-system",
-    dept: { en: "Lead capture", ar: "جلب العملاء" },
-    problem: {
-      en: "Leads come from Facebook, WhatsApp and the website, and many slip away.",
-      ar: "العملاء جايين من فيسبوك والواتساب والموقع، وكتير منهم بيضيع.",
-    },
-    action: {
-      en: "I build one place that catches every lead automatically and hands it to someone on the team.",
-      ar: "ببني مكان واحد بيستقبل كل العملاء أوتوماتيك، وبيوزّعهم على الفريق.",
-    },
-    gain: {
-      en: "No lead gets lost, and every lead has an owner.",
-      ar: "ولا عميل بيضيع، وكل عميل ليه مسؤول.",
+      en: "A clear map of where to start. If you don't need a system, I'll tell you.",
+      ar: "خريطة واضحة نبدأ منين. ولو مش محتاج نظام، هقولك.",
     },
   },
   {
     key: "outreach",
     icon: Send,
     slug: "ai-outreach",
-    dept: { en: "Reaching new customers", ar: "الوصول لعملاء جدد" },
-    problem: {
-      en: "The team waits for customers to show up on their own.",
-      ar: "الفريق مستني العميل ييجي لوحده.",
+    dept: { en: "Getting customers: the framework (human + AI)", ar: "جلب العملاء: الفريم ورك (بني آدم + AI)" },
+    story: {
+      en: "We don't wait for customers to show up. We go to them with a 7-step system. AI does the collecting, the analysis and the writing; you review every message before it goes out.",
+      ar: "مش بنستنى العميل ييجي. بنروح له بنظام من ٧ خطوات. الـAI بيعمل الجمع والتحليل والكتابة، وإنت بتراجع كل رسالة قبل ما تتبعت.",
     },
-    action: {
-      en: "I build lists of the right prospects. AI drafts a message for each one, and you approve it before it goes out.",
-      ar: "بجهّز قوايم بالعملاء المناسبين، والـAI بيكتب لكل واحد رسالة على مقاسه، وإنت بتراجع قبل ما تتبعت.",
+    steps: [
+      { en: "Pick the sectors", ar: "تحديد القطاعات" },
+      { en: "Extract companies", ar: "استخراج الشركات" },
+      { en: "Smart analysis", ar: "تحليل ذكي لمين مناسب" },
+      { en: "Pick the decision-maker", ar: "اختيار صاحب القرار" },
+      { en: "A personal message", ar: "رسالة مخصصة بصوتك" },
+      { en: "Follow-up", ar: "متابعة" },
+      { en: "Call", ar: "مكالمة" },
+    ],
+    proof: {
+      en: "AI Outreach: I built it and run it for myself, with no team and no ad budget.",
+      ar: "AI Outreach: بنيته وشغّلته لنفسي من غير فريق ولا ميزانية إعلانات.",
     },
-    gain: {
-      en: "A steady way to reach new customers without hiring more people.",
-      ar: "باب مفتوح لعملاء جداد، من غير ما تزوّد موظفين.",
-    },
+    gain: { en: "A door open to new customers every week.", ar: "باب مفتوح لعملاء جداد كل أسبوع." },
   },
   {
-    key: "service",
-    icon: MessageCircle,
-    slug: "whatsapp-agent",
-    dept: { en: "Customer service", ar: "خدمة العملاء" },
-    problem: {
-      en: "Customers message at night or in the rush, and nobody answers.",
-      ar: "العميل بيسأل بالليل أو وقت الزحمة، ومحدش بيرد.",
+    key: "ads",
+    icon: Megaphone,
+    dept: { en: "Ads: from the ad to the sale", ar: "الإعلانات: من الإعلان للبيع" },
+    story: {
+      en: "I run the ads myself and connect every campaign to the system from the first click, so you know where every customer came from.",
+      ar: "بشغّل الإعلانات بنفسي، وبربط كل حملة بالنظام من أول ضغطة، فتعرف كل عميل جه منين.",
     },
-    action: {
-      en: "I build a WhatsApp agent that answers only from your own information, and hands over to a person when it should.",
-      ar: "ببني وكيل واتساب بيرد من معلوماتك إنت بس، وبيحوّل للموظف لما الموضوع يحتاج بني آدم.",
+    gain: { en: "The budget goes to the campaign that actually sells.", ar: "الفلوس تروح للحملة اللي بتبيع فعلًا." },
+  },
+  {
+    key: "leads",
+    icon: Target,
+    slug: "lead-system",
+    dept: { en: "Receiving leads: no lead gets lost", ar: "استقبال الليدز: ولا عميل بيضيع" },
+    story: {
+      en: "Every lead, from Facebook, WhatsApp, the website or messages, is captured instantly in one place, sorted by how ready it is to buy, sent to the right salesperson, and moved to someone else automatically if nobody replies.",
+      ar: "كل عميل، من فيسبوك أو واتساب أو الموقع أو الرسايل، بيتسجّل فورًا في مكان واحد، وبيتصنّف حسب جاهزيته للشراء، وبيروح للسيلز المناسب، ولو محدش رد عليه بيتحوّل لحد تاني أوتوماتيك.",
     },
-    gain: {
-      en: "Every customer gets an answer on time, and the team handles what really needs them.",
-      ar: "كل عميل بياخد رد في وقته، والفريق بيمسك اللي محتاجه فعلًا.",
+    proof: {
+      en: "Sky Leads, for a real estate company, instead of a spreadsheet where a lead could wait for days.",
+      ar: "Sky Leads لشركة عقارات، بدل شيت كان العميل بيستنى فيه أيام.",
     },
+    gain: { en: "Every lead has an owner and a follow-up.", ar: "كل عميل ليه مسؤول ومتابعة." },
   },
   {
     key: "sales",
     icon: Contact,
     slug: "crm-setup",
-    dept: { en: "Sales", ar: "المبيعات" },
-    problem: {
-      en: "Nobody knows who talked to whom, and follow-ups get forgotten.",
-      ar: "محدش عارف مين كلّم مين، والمتابعة بتتنسي.",
+    dept: { en: "Sales: where every deal stands", ar: "المبيعات: كل صفقة واقفة فين" },
+    story: {
+      en: "A CRM around how you already sell: clear stages, follow-up reminders, and a report that tells the manager where the deals stand and who owns the next step.",
+      ar: "CRM على مقاس طريقة بيعكم: مراحل واضحة، وتذكير بالمتابعة، وتقرير للمدير بيقوله الصفقات واقفة فين ومين عليه الخطوة الجاية.",
     },
-    action: {
-      en: "I set up a CRM around how you already sell, with clear stages and follow-up reminders.",
-      ar: "بركّب CRM على مقاس طريقة بيعكم، بمراحل واضحة وتذكير بالمتابعة.",
+    gain: { en: "Follow-ups that don't get forgotten.", ar: "متابعة مابتتنسيش." },
+  },
+  {
+    key: "service",
+    icon: MessageCircle,
+    slug: "whatsapp-agent",
+    dept: { en: "Customer service: an answer on time, from your own information", ar: "خدمة العملاء: رد في وقته، ومن معلوماتك إنت بس" },
+    story: {
+      en: "A WhatsApp agent answers the repeated questions from the company's files. The important questions have approved replies, written once and sent word for word with no AI, and it hands over when a person is needed.",
+      ar: "وكيل واتساب بيرد على الأسئلة المتكررة من ملفات الشركة، والأسئلة المهمة ليها ردود معتمدة بتتكتب مرة وبتتبعت حرف بحرف من غير AI، ولما الموضوع يحتاج بني آدم بيحوّل.",
     },
-    gain: {
-      en: "You see where every deal stands and who owns the next step.",
-      ar: "تشوف كل صفقة واقفة فين، ومين عليه الخطوة الجاية.",
+    proof: {
+      en: "In the agency operating system: 35 clients with a knowledge base and 76 approved replies.",
+      ar: "في نظام الوكالة: ٣٥ عميل ليهم قاعدة معرفة، و٧٦ رد معتمد.",
     },
+    gain: { en: "The customer gets the right answer on time.", ar: "العميل بياخد رد صح في وقته." },
   },
   {
     key: "ops",
     icon: Network,
     slug: "company-os",
-    dept: { en: "Operations", ar: "التشغيل" },
-    problem: {
-      en: "Every team has its own sheet and WhatsApp group, and the manager keeps asking \"where are we?\"",
-      ar: "كل قسم ليه شيت وجروب واتساب، والمدير بيفضل يسأل: وصلنا لفين؟",
+    dept: { en: "Operations: the manager knows without a meeting", ar: "التشغيل: المدير يعرف من غير اجتماع" },
+    story: {
+      en: "An operating system: every task goes through review stages, every employee writes a daily report, and anything late escalates on its own.",
+      ar: "نظام تشغيل: كل مهمة بتعدّي على مراحل مراجعة، وكل موظف بيكتب تقرير يومي، ولو حاجة اتأخرت بتتصعّد لوحدها.",
     },
-    action: {
-      en: "I build an operating system: tasks with review stages, a daily report, and an alert when something is late.",
-      ar: "ببني نظام تشغيل: مهام بمراحل مراجعة، وتقرير يومي، وتنبيه لو حاجة اتأخرت.",
+    proof: {
+      en: "A full operating system for a marketing agency in Egypt, built by me alone and used every day: 21 employees, 65 clients, 48 screens and 13 automations (September 2026).",
+      ar: "نظام تشغيل كامل لوكالة تسويق في مصر، بنيته لوحدي، وشغال كل يوم: ٢١ موظف، و٦٥ عميل، و٤٨ شاشة، و١٣ مهمة أوتوماتيك (أرقام سبتمبر ٢٠٢٦).",
     },
-    gain: {
-      en: "The manager knows who did what, without a meeting.",
-      ar: "المدير يعرف مين عمل إيه من غير اجتماع.",
-    },
+    gain: { en: "You know who did what without asking.", ar: "تعرف مين عمل إيه من غير ما تسأل." },
   },
   {
     key: "automation",
     icon: Workflow,
     slug: "automation",
-    dept: { en: "Repetitive work", ar: "الشغل المتكرر" },
-    problem: {
-      en: "The same work every day, by hand: moving data, writing reports, sending the same messages.",
-      ar: "نفس الشغل كل يوم بالإيد: نقل داتا، وتقارير، ونفس الرسايل.",
+    dept: { en: "Repetitive work: it runs on its own", ar: "الشغل المتكرر: يمشي لوحده" },
+    story: {
+      en: "I connect your tools to each other: data moves by itself, reports write themselves, and content has a fixed cycle.",
+      ar: "بربط أدواتك ببعض: الداتا تتنقل لوحدها، والتقارير تتكتب لوحدها، والمحتوى ليه دورة ثابتة.",
     },
-    action: {
-      en: "I connect the tools you already use, so the repetitive work runs on its own.",
-      ar: "بربط الأدوات اللي عندك ببعض، والشغل المتكرر يمشي لوحده.",
+    proof: {
+      en: "A content machine for a marketing team: a fixed brand voice, a weekly production cycle, and 3 AI helpers for strategy, copy and design.",
+      ar: "ماكينة محتوى لفريق تسويق: صوت ثابت للبراند، ودورة إنتاج أسبوعية، و٣ مساعدين AI للاستراتيجية والكتابة والتصميم.",
     },
-    gain: {
-      en: "The team's time goes to work that needs thinking.",
-      ar: "وقت الفريق يروح للشغل اللي محتاج تفكير.",
-    },
+    gain: { en: "The team's time goes to work that needs thinking.", ar: "وقت الفريق للشغل اللي محتاج تفكير." },
   },
   {
     key: "knowledge",
     icon: MessagesSquare,
     slug: "company-assistant",
-    dept: { en: "Company knowledge", ar: "معلومات الشركة" },
-    problem: {
-      en: "The same questions get asked every day, and the answers live in one person's head.",
-      ar: "نفس الأسئلة بتتسأل كل يوم، والإجابة في دماغ شخص واحد.",
+    dept: { en: "Company knowledge: the answer isn't in one person's head", ar: "معلومات الشركة: الإجابة مش في دماغ شخص واحد" },
+    story: {
+      en: "An internal assistant that answers the team only from the company's files, and ready forms for every repeated request.",
+      ar: "مساعد داخلي بيجاوب الفريق من ملفات الشركة بس، ونماذج جاهزة لكل طلب متكرر.",
     },
-    action: {
-      en: "I build an assistant that answers only from the company's own files, and says so when it doesn't know.",
-      ar: "ببني مساعد بيجاوب من ملفات الشركة بس، ولو مش عارف بيقول مش عارف.",
+    proof: {
+      en: "In the agency operating system: 13 forms, and every client's files organised on Drive and linked to the system.",
+      ar: "في نظام الوكالة: ١٣ نموذج، وملفات كل عميل متنظمة على درايف ومربوطة بالنظام.",
     },
-    gain: {
-      en: "Anyone on the team finds the answer on their own.",
-      ar: "أي حد في الفريق يلاقي الإجابة لوحده.",
-    },
+    gain: { en: "Anyone finds the answer on their own.", ar: "أي حد يلاقي الإجابة لوحده." },
   },
   {
     key: "people",
     icon: UserSearch,
     slug: "ai-hiring",
-    dept: { en: "People & hiring", ar: "الموارد البشرية" },
-    problem: {
-      en: "A pile of CVs and no time, and team reviews are done by gut feeling.",
-      ar: "CVs كتير ومفيش وقت، وتقييم الفريق بالإحساس.",
+    dept: { en: "People: by criteria, not by mood", ar: "الموارد البشرية: بمعايير، مش بالمزاج" },
+    story: {
+      en: "Hiring with a skills matrix that AI screens against. Performance is scored with a fixed formula everyone understands, not by AI.",
+      ar: "التوظيف بمصفوفة مهارات والـAI بيفرز عليها. والأداء بيتحسب بمعادلة ثابتة الكل فاهمها، مش بالـAI.",
     },
-    action: {
-      en: "I sort applicants against clear criteria, and score performance with a fixed formula, not by mood.",
-      ar: "بفرز المتقدمين بمعايير واضحة، وبقيّم الأداء بمعادلة ثابتة مش بالمزاج.",
+    proof: {
+      en: "A hiring system with one interview template and automatic scheduling, and a performance formula with fixed weights in the agency operating system.",
+      ar: "نظام توظيف بنموذج مقابلة موحد وترتيب مقابلات أوتوماتيك. ومعادلة أداء بأوزان ثابتة في نظام الوكالة.",
     },
-    gain: {
-      en: "Faster hiring, and fair reviews everyone understands.",
-      ar: "توظيف أسرع، وتقييم عادل الكل فاهمه.",
-    },
+    gain: { en: "Faster hiring, and fair reviews.", ar: "توظيف أسرع، وتقييم عادل." },
   },
   {
     key: "finance",
     icon: FileScan,
     slug: "documents",
-    dept: { en: "Finance & documents", ar: "الحسابات والمستندات" },
-    problem: {
-      en: "Invoices and documents are typed in by hand, and the same mistakes keep coming back.",
-      ar: "الفواتير والمستندات بتتكتب بالإيد، ونفس الأخطاء بتتكرر.",
-    },
-    action: {
+    dept: { en: "Finance & documents: no manual entry", ar: "الحسابات والمستندات: من غير إدخال بالإيد" },
+    story: {
       en: "AI reads the invoice or document and puts the data where it belongs, and you review it.",
-      ar: "الـAI بيقرا الفاتورة أو المستند، وبيدخّل البيانات في مكانها، وإنت بتراجع.",
+      ar: "الـAI بيقرا الفاتورة أو المستند ويحط البيانات في مكانها، وإنت بتراجع.",
     },
-    gain: {
-      en: "Tidy books without manual typing.",
-      ar: "حسابات مترتبة من غير كتابة بالإيد.",
+    proof: {
+      en: "A financial dashboard for management: the data is pulled and sorted automatically and shows up live.",
+      ar: "داشبورد مالي للإدارة: الداتا بتتطلّع وتتصنّف أوتوماتيك وبتظهر لحظة بلحظة.",
     },
+    gain: { en: "Tidy books.", ar: "حسابات مترتبة." },
   },
   {
     key: "numbers",
     icon: LayoutDashboard,
     slug: "bi-dashboard",
-    dept: { en: "Numbers & decisions", ar: "الأرقام والقرار" },
-    problem: {
-      en: "The numbers are scattered, so decisions are made by guessing.",
-      ar: "الأرقام متفرقة، والقرار بيتاخد بالتخمين.",
+    dept: { en: "Numbers & decisions: one dashboard", ar: "الأرقام والقرار: داشبورد واحد" },
+    story: {
+      en: "Ads, sales, operations and finance numbers in one place.",
+      ar: "أرقام الإعلانات والمبيعات والتشغيل والحسابات في مكان واحد.",
     },
-    action: {
-      en: "I bring ads, sales, operations and finance numbers together in one dashboard.",
-      ar: "بجمع أرقام الإعلانات والمبيعات والتشغيل والحسابات في داشبورد واحد.",
-    },
-    gain: {
-      en: "You know which campaign, rep and client actually make money.",
-      ar: "تعرف أنهي حملة وموظف وعميل بيكسّب فعلًا.",
-    },
+    gain: { en: "You know which campaign, rep and client actually make money.", ar: "تعرف أنهي حملة وموظف وعميل بيكسّب فعلًا." },
   },
   {
     key: "training",
     icon: GraduationCap,
     slug: "ai-training",
     dept: { en: "Team training", ar: "تدريب الفريق" },
-    problem: {
-      en: "The system is ready, but the team doesn't know how to use it.",
-      ar: "النظام جاهز، بس الفريق مش عارف يستخدمه.",
-    },
-    action: {
+    story: {
       en: "I train the team on the system and on AI using their real work, with a written guide.",
       ar: "بدرّب الفريق على النظام والـAI على شغلهم الحقيقي، ومعاهم دليل مكتوب.",
     },
-    gain: {
-      en: "A team that runs the system on its own, without coming back to me.",
-      ar: "فريق بيشغّل النظام لوحده من غير ما يرجعلي.",
-    },
+    gain: { en: "A team that runs the system on its own.", ar: "فريق بيشغّل النظام لوحده." },
   },
   {
     key: "care",
     icon: Wrench,
     slug: "care",
-    dept: { en: "Ongoing care", ar: "المتابعة والتطوير" },
-    problem: {
-      en: "Any system left alone slowly stops being used.",
-      ar: "أي نظام بيتساب من غير متابعة بيقف شوية بشوية.",
+    dept: { en: "Follow-up & improvement", ar: "المتابعة والتطوير" },
+    story: {
+      en: "After handover I keep watching the numbers, and improve every month if you want.",
+      ar: "بعد التسليم بفضل متابع الأرقام، وبطوّر كل شهر لو حابب.",
     },
-    action: {
-      en: "I keep watching the numbers after handover, and adjust and improve every month if you want.",
-      ar: "بتابع الأرقام بعد التسليم، وبظبط وبطوّر كل شهر لو حابب.",
-    },
-    gain: {
-      en: "A system that grows with your company.",
-      ar: "نظام بيكبر مع شركتك.",
-    },
+    gain: { en: "A system that grows with your company.", ar: "نظام بيكبر مع شركتك." },
   },
 ];
