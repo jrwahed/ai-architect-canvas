@@ -205,3 +205,33 @@ a[href*="gptengineer.app"] {
   overflow: hidden !important;
   position: absolute !important;
 }
+
+/* ─── Journey track (home page) ─── */
+@keyframes journey-puff {
+  0% { transform: translate(0, 0) scale(0.4); opacity: 0.7; }
+  100% { transform: translate(var(--puff-x, -26px), -14px) scale(1.4); opacity: 0; }
+}
+@keyframes journey-spark {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--spark-x), var(--spark-y)) scale(0.2); opacity: 0; }
+}
+@keyframes journey-float {
+  0%, 100% { transform: translateY(0) rotate(var(--tilt, 0deg)); }
+  50% { transform: translateY(-7px) rotate(calc(var(--tilt, 0deg) * -1)); }
+}
+@keyframes journey-flow {
+  from { background-position: 0 0; }
+  to { background-position: 40px 0; }
+}
+@keyframes journey-scan {
+  0%, 100% { top: 8%; }
+  50% { top: 82%; }
+}
+@keyframes journey-dot {
+  0% { left: 4%; }
+  100% { left: 88%; }
+}
+@keyframes journey-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
