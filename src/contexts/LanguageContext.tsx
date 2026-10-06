@@ -12,6 +12,9 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | null>(null);
 
+// A string in a given language, whatever the site is set to (the home page story is always Arabic).
+export const tr = (key: string, lang: Lang): string => translations[key]?.[lang] ?? key;
+
 export const useLanguage = () => {
   const ctx = useContext(LanguageContext);
   if (!ctx) throw new Error("useLanguage must be used within LanguageProvider");
@@ -378,12 +381,12 @@ const translations: Record<string, Record<Lang, string>> = {
   "proof.3v": { en: "48", ar: "٤٨" },
   "proof.3l": { en: "Screens in that one system", ar: "شاشة في النظام ده لوحده" },
   "journey.label": { en: "Your company's journey with me", ar: "رحلة شركتك معايا" },
-  "journey.title": { en: "From the first lead… to one system", ar: "من أول عميل… لحد نظام واحد" },
+  "journey.title": { en: "How does every part of your company get smart?", ar: "كل قسم في شركتك… يبقى ذكي إزاي؟" },
   "journey.station": { en: "Station", ar: "المحطة" },
-  "journey.intro": { en: "Scroll down with me. I'll pass through every part of your company and tell you what I'd fix there, and what you get.", ar: "انزل معايا. هعدّي على كل قسم في شركتك، وأقولك هصلّح فيه إيه، وهتكسب إيه." },
+  "journey.intro": { en: "I'm Mohamed Waheed: 5+ years in business development and marketing, and I build the systems companies run on myself. Scroll down with me: I'll pass through every part of your company, tell you how it gets smart, and show you a real system I built at every station.", ar: "أنا محمد وحيد. ٥+ سنين تطوير أعمال وتسويق، وببني بنفسي الأنظمة اللي الشركات بتشتغل عليها. انزل معايا، هعدّي على كل قسم عندك، وأقولك هيبقى ذكي إزاي، وأوريك نظام حقيقي بنيته في كل محطة." },
   "journey.collected": { en: "Parts of the system built so far", ar: "أجزاء النظام اللي اتبنت لحد دلوقتي" },
-  "journey.problem": { en: "The problem", ar: "المشكلة" },
-  "journey.action": { en: "What I do", ar: "هعمل إيه" },
+  "journey.proof": { en: "A real system", ar: "نظام حقيقي" },
+  "journey.steps": { en: "The steps", ar: "الخطوات" },
   "journey.gain": { en: "What you get", ar: "هتكسب إيه" },
   "journey.more": { en: "Service details", ar: "تفاصيل الخدمة" },
   "journey.going": { en: "Heading to", ar: "رايح على" },
@@ -397,7 +400,7 @@ const translations: Record<string, Record<Lang, string>> = {
   "journey.lane.you": { en: "You", ar: "إنت" },
   "journey.finish.label": { en: "Finish line", ar: "خط النهاية" },
   "journey.finish.title": { en: "All of it, in one system", ar: "كل ده… في نظام واحد" },
-  "journey.finish.sub": { en: "You don't need every station at once. The free diagnosis shows which one comes first.", ar: "مش لازم تبدأ بكل المحطات مرة واحدة. التشخيص المجاني بيحدد تبدأ بأنهي محطة." },
+  "journey.finish.sub": { en: "You don't need every station at once. The free diagnosis tells you which one to start with.", ar: "مش لازم تبدأ بكل المحطات مرة واحدة. التشخيص المجاني بيقولك تبدأ بأنهي واحدة." },
   "services.ask": { en: "Ask about this system", ar: "اسأل عن النظام ده" },
   "services.askMsg": { en: "Hi Mohamed, I'd like to know more about:", ar: "أهلًا محمد، عايز أعرف أكتر عن:" },
   "work.label": { en: "Work", ar: "الأعمال" },
