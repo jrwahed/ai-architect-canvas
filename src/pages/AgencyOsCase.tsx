@@ -380,21 +380,21 @@ const AgencyOsCase = () => {
                   to="/work/agency-os/inside"
                   className="group block rounded-3xl border border-primary/25 bg-primary/[0.07] p-7 transition-colors hover:border-primary/50 md:p-10"
                 >
-                  <p className="font-mono text-xs uppercase tracking-[0.3em] text-primary">
-                    {isAr ? "جوّه النظام" : "Inside the system"}
+                  <p className="font-mono text-xs uppercase tracking-wider text-primary">
+                    {isAr ? "قصتي مع النظام" : "How I built it"}
                   </p>
                   <h3 className="mt-4 max-w-3xl font-headline text-2xl font-semibold leading-[1.25] text-foreground md:text-4xl">
                     {isAr
-                      ? "عايز تشوفه شاشة شاشة؟ خد رحلة بوست واحد من الخطة للنشر."
-                      : "Want to see it screen by screen? Follow one post from plan to publish."}
+                      ? "النظام ده مابقاش كده من أول يوم. شوف اللي كان، واللي بقى، وليه غيّرته."
+                      : "This system did not start out this way. See what it was, what it became, and why I changed it."}
                   </h3>
                   <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
                     {isAr
                       ? "أربعتاشر محطة بلقطات حقيقية من النظام وهو شغّال — والأسماء والصور متخفية."
-                      : "Fourteen stations with real screens from the running system, with every name and face hidden."}
+                      : "Fourteen chapters with real screens from the running system, with every name and face hidden."}
                   </p>
                   <span className="mt-6 inline-flex items-center gap-2 font-semibold text-primary">
-                    {isAr ? "ادخل الرحلة" : "Take the walkthrough"}
+                    {isAr ? "اقرا القصة" : "Read the story"}
                     <Back size={18} className="rotate-180 transition-transform group-hover:-translate-x-1 rtl:group-hover:translate-x-1" />
                   </span>
                 </Link>

@@ -1,14 +1,22 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, useMotionValue, useReducedMotion, useSpring, useTransform, useVelocity } from "framer-motion";
-import { ArrowDown, ArrowLeft, ArrowUpRight, Check, EyeOff, Flag, Hammer, Lock } from "lucide-react";
+import { ArrowDown, ArrowLeft, ArrowUpRight, Check, EyeOff, Flag, Hammer, Lock, RefreshCw } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MobileCTABar from "@/components/home/MobileCTABar";
 import Reveal from "@/components/home/Reveal";
 import CursorFollower from "@/components/motion/CursorFollower";
 import Runner from "@/components/journey/Runner";
-import { FLOW, FLOW_BLOCKERS, FLOW_INTRO, FLOW_PERMISSIONS, FLOW_TAKEAWAYS, FlowStation } from "@/data/postFlow";
+import {
+  FLOW,
+  FLOW_BLOCKERS,
+  FLOW_INTRO,
+  FLOW_LESSONS_TITLE,
+  FLOW_PERMISSIONS,
+  FLOW_TAKEAWAYS,
+  FlowStation,
+} from "@/data/postFlow";
 import { WHATSAPP_URL } from "@/lib/contact";
 
 const STOPS = FLOW.length;
@@ -76,10 +84,29 @@ const StationCopy = ({ station }: { station: FlowStation }) => (
       </ol>
     )}
 
+    {station.turn && (
+      <div className="mt-5 grid gap-3 md:grid-cols-2">
+        <div className="rounded-xl border border-leak/25 bg-leak/[0.06] px-4 py-3">
+          <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-leak">
+            <RefreshCw className="h-3.5 w-3.5" />
+            كان
+          </p>
+          <p className="mt-1.5 text-[15px] leading-relaxed text-ink/80 md:text-base">{station.turn.was}</p>
+        </div>
+        <div className="rounded-xl border border-gain/30 bg-gain/[0.08] px-4 py-3">
+          <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-ink/60">
+            <Check className="h-3.5 w-3.5 text-gain" strokeWidth={3} />
+            بقى
+          </p>
+          <p className="mt-1.5 text-[15px] leading-relaxed text-ink md:text-base">{station.turn.now}</p>
+        </div>
+      </div>
+    )}
+
     <div className="mt-4 rounded-xl border-r-[3px] border-primary bg-primary/[0.07] px-4 py-3">
       <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-ink/60">
         <Lock className="h-3.5 w-3.5 text-primary" />
-        القاعدة اللي النظام بيفرضها
+        القاعدة اللي قفلتها
       </p>
       <p className="mt-1.5 text-[15px] leading-relaxed text-ink md:text-lg">{station.rule}</p>
     </div>
@@ -326,11 +353,11 @@ const FlowTrack = () => {
             <Flag className="h-4 w-4" />
             خط النهاية
           </span>
-          <h3 className="mt-4 font-headline text-3xl font-semibold leading-[1.25] md:text-5xl">
-            البوست اتنشر، والملف راح لفولدره لوحده.
+          <h3 className="mt-4 font-headline text-2xl font-semibold leading-[1.3] md:text-4xl">
+            البوست بينزل، والملف بيروح لفولدره لوحده.
           </h3>
           <p className="mt-3 text-base leading-relaxed text-ink-muted md:text-xl">
-            ومحدش احتاج يسأل «وصلت لفين؟» ولا يعمل اجتماع يعرف مين عمل إيه.
+            ومحدش احتاج يسأل «وصلت لفين؟» ولا يعمل اجتماع يعرف مين عمل إيه. ده اللي كنت بنيه من الأول.
           </p>
         </div>
       </div>
@@ -381,11 +408,14 @@ const AgencyOsFlow = () => {
                 {FLOW_INTRO.label}
               </p>
             </div>
-            <h1 className="mt-5 max-w-4xl font-headline text-4xl font-semibold leading-[1.35] text-foreground md:text-6xl">
+            <h1 className="mt-5 max-w-4xl font-headline text-3xl font-semibold leading-[1.35] text-foreground md:text-5xl">
               {FLOW_INTRO.title}
             </h1>
             <p className="mt-6 font-headline text-2xl font-semibold text-primary md:text-3xl">{FLOW_INTRO.lead}</p>
             <p className="mt-4 max-w-3xl text-base leading-relaxed text-muted-foreground md:text-xl">{FLOW_INTRO.sub}</p>
+            <p className="mt-5 inline-block rounded-full border border-white/10 bg-surface-container/60 px-4 py-2 font-headline text-sm text-foreground/80 md:text-base">
+              {FLOW_INTRO.scale}
+            </p>
 
             {/* the four steps of the whole thing, before the detail */}
             <div className="mt-10 flex flex-wrap items-stretch gap-3 md:gap-4">
@@ -429,11 +459,11 @@ const AgencyOsFlow = () => {
                 <span className="h-1.5 w-1.5 rounded-full bg-primary" />
                 القواعد
               </p>
-              <h2 className="mt-5 max-w-3xl font-headline text-3xl font-semibold leading-[1.2] text-foreground md:text-5xl">
-                التلات حاجات اللي بتوقف زرار «تم»
+              <h2 className="mt-5 max-w-3xl font-headline text-3xl font-semibold leading-[1.3] text-foreground md:text-5xl">
+                تلات حاجات بس بتوقف المهمة
               </h2>
               <p className="mt-4 max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg">
-                والشاشة بتكتبلك الناقص فيهم بالاسم في سطر تحت الزرار — قبل ما تدوس.
+                مهما اتعقّد الشغل، اللي بيمنع زرار «تم» تلاتة لا رابع ليهم. وكاتب لكل واحدة فيهم سطر تحت الزرار بيقول الناقص بالاسم — قبل ما تدوس.
               </p>
             </Reveal>
             <div className="mt-10 grid gap-4 md:mt-12 md:grid-cols-3 md:gap-6">
@@ -454,11 +484,11 @@ const AgencyOsFlow = () => {
         <section className="pb-20 md:pb-28">
           <div className="mx-auto max-w-6xl px-5 md:px-8">
             <Reveal>
-              <h2 className="max-w-3xl font-headline text-3xl font-semibold leading-[1.2] text-foreground md:text-5xl">
+              <h2 className="max-w-4xl font-headline text-2xl font-semibold leading-[1.3] text-foreground md:text-4xl">
                 «يعدّل المهمة» غير «يشتغل فيها» غير «يحرّكها»
               </h2>
               <p className="mt-4 max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg">
-                تلاتة مختلفين، وعليهم مبني كل نظام الصلاحيات. الكاتب مش هيقدر يغيّر تاريخ تسليم ولا يشيل حد من الطاقم — وده مقصود.
+تلاتة مختلفين، وده أكتر حاجة كانت بتلخبط الفريق. فصلتهم عن بعض في الصلاحيات: الكاتب مش هيقدر يغيّر تاريخ تسليم ولا يشيل حد من الطاقم — وده مقصود، وشغله وحركة مرحلته مفتوحين زي ما هما.
               </p>
             </Reveal>
             <div className="mt-10 grid gap-4 md:mt-12 md:grid-cols-3 md:gap-6">
@@ -494,8 +524,8 @@ const AgencyOsFlow = () => {
           <div className="pointer-events-none absolute -bottom-48 left-1/4 h-[30rem] w-[30rem] rounded-full bg-primary/10 blur-[120px]" />
           <div className="relative mx-auto max-w-6xl px-5 md:px-8">
             <Reveal>
-              <h2 className="max-w-3xl font-headline text-3xl font-semibold leading-[1.2] text-foreground md:text-5xl">
-                أربع حاجات لو مافتكرتش غيرهم
+              <h2 className="max-w-3xl font-headline text-3xl font-semibold leading-[1.3] text-foreground md:text-5xl">
+                {FLOW_LESSONS_TITLE}
               </h2>
             </Reveal>
             <ul className="mt-8 grid gap-3 md:mt-10 md:grid-cols-2 md:gap-4">

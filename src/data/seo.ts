@@ -35,9 +35,9 @@ const STATIC_PAGES: PageMeta[] = [
   },
   {
     path: "/work/agency-os/inside",
-    title: `جوّه النظام: رحلة بوست من الخطة للنشر | Inside the Agency OS — ${NAME}`,
+    title: `قصتي مع النظام: بنيته لوحدي والشغل علّمني | Building the Agency OS — ${NAME}`,
     description:
-      "جولة بالصور جوّه نظام تشغيل وكالة تسويق: المزيج، والخطة، والبورد، والمراجعة، والنشر، والتقرير اليومي — وكل قاعدة النظام بيفرضها. A screen-by-screen walkthrough of the agency operating system.",
+      "قصة بناء نظام تشغيل وكالة تسويق بالصور: اللي كان، واللي بقى، وليه اتغيّر في كل محطة — من المزيج والخطة للمراجعة والنشر والتقرير اليومي. How I built an agency operating system, and what the daily work made me change.",
   },
   {
     path: "/flowos",
