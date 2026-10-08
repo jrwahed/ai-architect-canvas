@@ -22,6 +22,7 @@ import BrowserFrame from "@/components/BrowserFrame";
 import MobileCTABar from "@/components/home/MobileCTABar";
 import SectionHeader from "@/components/home/SectionHeader";
 import Reveal from "@/components/home/Reveal";
+import SystemStory, { SystemStoryLessons } from "@/components/work/SystemStory";
 import CursorFollower from "@/components/motion/CursorFollower";
 import TiltCard from "@/components/motion/TiltCard";
 import CountUp from "@/components/motion/CountUp";
@@ -284,7 +285,8 @@ const AgencyOsCase = () => {
 
   return (
     <MotionConfig reducedMotion="user">
-      <div className="bg-background text-foreground min-h-screen overflow-x-hidden pb-20 md:pb-0">
+      {/* clip, not hidden: `overflow-x-hidden` on an ancestor kills the story runner's `sticky` */}
+      <div className="bg-background text-foreground min-h-screen overflow-x-clip pb-20 md:pb-0">
         <Navbar />
         <main>
           {/* Hero */}
@@ -317,15 +319,6 @@ const AgencyOsCase = () => {
                     </span>
                   ))}
                 </div>
-                {/* The walkthrough is the deepest thing on the site, and its card sits
-                    halfway down a long page, so it also gets a way in from the top. */}
-                <Link
-                  to="/work/agency-os/inside"
-                  className="group mt-7 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3.5 font-semibold text-primary-foreground transition-transform hover:scale-[1.03]"
-                >
-                  {isAr ? "اقرا قصة بنائه بالصور" : "Read how I built it, with the screens"}
-                  <Back size={18} className="rotate-180 transition-transform group-hover:-translate-x-1 rtl:group-hover:translate-x-1" />
-                </Link>
               </Reveal>
 
               <HeroScreen stats={c.stats} />
@@ -381,35 +374,8 @@ const AgencyOsCase = () => {
             </div>
           </section>
 
-          {/* Into the deep dive: the same system, screen by screen */}
-          <section className="pb-20 md:pb-28">
-            <div className="mx-auto max-w-6xl px-5 md:px-8">
-              <Reveal>
-                <Link
-                  to="/work/agency-os/inside"
-                  className="group block rounded-3xl border border-primary/25 bg-primary/[0.07] p-7 transition-colors hover:border-primary/50 md:p-10"
-                >
-                  <p className="font-mono text-xs uppercase tracking-wider text-primary">
-                    {isAr ? "قصتي مع النظام" : "How I built it"}
-                  </p>
-                  <h3 className="mt-4 max-w-3xl font-headline text-2xl font-semibold leading-[1.25] text-foreground md:text-4xl">
-                    {isAr
-                      ? "النظام ده مابقاش كده من أول يوم. شوف اللي كان، واللي بقى، وليه غيّرته."
-                      : "This system did not start out this way. See what it was, what it became, and why I changed it."}
-                  </h3>
-                  <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
-                    {isAr
-                      ? "أربعتاشر محطة بلقطات حقيقية من النظام وهو شغّال — والأسماء والصور متخفية."
-                      : "Fourteen chapters with real screens from the running system, with every name and face hidden."}
-                  </p>
-                  <span className="mt-6 inline-flex items-center gap-2 font-semibold text-primary">
-                    {isAr ? "اقرا القصة" : "Read the story"}
-                    <Back size={18} className="rotate-180 transition-transform group-hover:-translate-x-1 rtl:group-hover:translate-x-1" />
-                  </span>
-                </Link>
-              </Reveal>
-            </div>
-          </section>
+          {/* How it got this way, told as a story you scroll through */}
+          <SystemStory />
 
           {/* Task lifecycle + performance formula */}
           <section className="bg-surface-container-low border-y border-border py-20 md:py-28">
@@ -510,8 +476,13 @@ const AgencyOsCase = () => {
             </div>
           </section>
 
-          {/* Stack + CTA */}
+          {/* What the system taught him */}
           <section className="py-20 md:py-28">
+            <SystemStoryLessons />
+          </section>
+
+          {/* Stack + CTA */}
+          <section className="pb-20 md:pb-28">
             <p className="text-center font-mono text-xs uppercase tracking-wider text-muted-foreground">{c.stackLabel}</p>
             <Marquee className="mt-5 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
               {SHIFT_OS_STACK.map((tech) => (
