@@ -1,12 +1,12 @@
+// Mohamed's story with the system he built, shown inline on the case study page: he asked for
+// it to be read by scrolling, not reached through a button. The track is the same device as the
+// home page's journey section, which tells a different story about him and is left untouched.
+//
+// Always Arabic, whatever the site language, the same call he made for the home page story.
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
 import { motion, useMotionValue, useReducedMotion, useSpring, useTransform, useVelocity } from "framer-motion";
-import { ArrowDown, ArrowLeft, ArrowUpRight, Check, EyeOff, Flag, Hammer, Lock, RefreshCw } from "lucide-react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import MobileCTABar from "@/components/home/MobileCTABar";
+import { ArrowDown, Check, EyeOff, Flag, Hammer, Lock, RefreshCw } from "lucide-react";
 import Reveal from "@/components/home/Reveal";
-import CursorFollower from "@/components/motion/CursorFollower";
 import Runner from "@/components/journey/Runner";
 import {
   FLOW,
@@ -17,7 +17,6 @@ import {
   FLOW_TAKEAWAYS,
   FlowStation,
 } from "@/data/postFlow";
-import { WHATSAPP_URL } from "@/lib/contact";
 
 const STOPS = FLOW.length;
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -25,7 +24,7 @@ const clamp = (v: number, lo: number, hi: number) => Math.min(Math.max(v, lo), h
 const num = (n: number) => n.toLocaleString("ar-EG");
 
 // The lane always sits at the start edge so the chapter beside it gets the full width —
-// these screens only read when they are big. The page is right-to-left whatever the site
+// these screens only read when they are big. The story is right-to-left whatever the site
 // language, so these are plain RTL classes rather than Tailwind direction variants.
 const ON_LANE = "right-0";
 const BESIDE_LANE = "pr-[3.75rem] md:pr-[15rem]";
@@ -381,201 +380,133 @@ const FlowList = () => (
   </ol>
 );
 
-const AgencyOsFlow = () => {
+/* ─── The story section, dropped straight into the case study page ─── */
+const SystemStory = () => {
   const reduce = useReducedMotion();
 
   return (
-    <div className="min-h-screen overflow-x-clip bg-background">
-      <CursorFollower />
-      <Navbar />
-
-      <main dir="rtl" lang="ar">
-        {/* ── Hero ── */}
-        <section className="relative overflow-hidden pb-16 pt-28 md:pb-24 md:pt-36">
-          <div className="pointer-events-none absolute -top-40 right-1/4 h-[32rem] w-[32rem] rounded-full bg-primary/15 blur-[120px]" />
-          <div className="relative mx-auto max-w-6xl px-5 md:px-8">
-            <Link
-              to="/work/agency-os"
-              className="inline-flex items-center gap-1.5 rounded-full border border-white/15 px-3.5 py-1.5 text-sm text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
-            >
-              <ArrowLeft className="h-4 w-4 -scale-x-100" />
-              دراسة الحالة · نظام تشغيل داخلي
-            </Link>
-
-            <div className="mt-8">
-              <p className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3.5 py-1 font-mono text-xs uppercase tracking-wider text-foreground/75">
-                <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-                {FLOW_INTRO.label}
-              </p>
-            </div>
-            <h1 className="mt-5 max-w-4xl font-headline text-3xl font-semibold leading-[1.35] text-foreground md:text-5xl">
-              {FLOW_INTRO.title}
-            </h1>
-            <p className="mt-6 font-headline text-2xl font-semibold text-primary md:text-3xl">{FLOW_INTRO.lead}</p>
-            <p className="mt-4 max-w-3xl text-base leading-relaxed text-muted-foreground md:text-xl">{FLOW_INTRO.sub}</p>
-            <p className="mt-5 inline-block rounded-full border border-white/10 bg-surface-container/60 px-4 py-2 font-headline text-sm text-foreground/80 md:text-base">
-              {FLOW_INTRO.scale}
+    <div dir="rtl" lang="ar">
+      {/* Where the story starts */}
+      <section className="pb-4 pt-6 md:pb-6 md:pt-10">
+        <div className="mx-auto max-w-6xl px-5 md:px-8">
+          <Reveal>
+            <p className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3.5 py-1 font-mono text-xs uppercase tracking-wider text-foreground/75">
+              <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+              {FLOW_INTRO.label}
             </p>
-
-            {/* the four steps of the whole thing, before the detail */}
-            <div className="mt-10 flex flex-wrap items-stretch gap-3 md:gap-4">
-              {FLOW_INTRO.chain.map((c, i) => (
-                <div key={c.t} className="flex items-stretch gap-3 md:gap-4">
-                  <div
-                    className={`min-w-[8.5rem] rounded-2xl border px-4 py-3.5 md:min-w-[11rem] md:px-5 md:py-4 ${
-                      i === FLOW_INTRO.chain.length - 1 ? "border-gain/40 bg-gain/10" : "border-white/10 bg-surface-container/70"
-                    }`}
-                  >
-                    <p className="font-headline text-base font-semibold text-foreground md:text-lg">{c.t}</p>
-                    <p className="mt-1 text-xs leading-relaxed text-muted-foreground md:text-sm">{c.d}</p>
-                  </div>
-                  {i < FLOW_INTRO.chain.length - 1 && (
-                    <span className="self-center text-xl text-primary/70">←</span>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            <p className="mt-8 flex max-w-2xl items-start gap-2 rounded-xl border border-white/10 bg-surface-container/50 px-4 py-3 text-sm leading-relaxed text-muted-foreground">
+            <h2 className="mt-5 max-w-4xl font-headline text-3xl font-semibold leading-[1.35] text-foreground md:text-5xl">
+              {FLOW_INTRO.title}
+            </h2>
+            <p className="mt-5 font-headline text-xl font-semibold text-primary md:text-2xl">{FLOW_INTRO.lead}</p>
+            <p className="mt-4 max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg">{FLOW_INTRO.sub}</p>
+            <p className="mt-6 flex max-w-2xl items-start gap-2 rounded-xl border border-white/10 bg-surface-container/50 px-4 py-3 text-sm leading-relaxed text-muted-foreground">
               <EyeOff className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
               {FLOW_INTRO.privacy}
             </p>
             <p className="mt-3 text-xs text-muted-foreground/70" dir="ltr" lang="en">
               {FLOW_INTRO.englishNote}
             </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* The track itself */}
+      <section className="mt-12 rounded-t-[2rem] bg-cream pb-24 pt-16 text-ink md:mt-16 md:rounded-t-[2.5rem] md:pb-32 md:pt-24">
+        <div className="mx-auto max-w-6xl px-5 md:px-8">{reduce ? <FlowList /> : <FlowTrack />}</div>
+      </section>
+
+      {/* ── What holds a task where it is ── */}
+      <section className="py-20 md:py-28">
+        <div className="mx-auto max-w-6xl px-5 md:px-8">
+          <Reveal>
+            <p className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3.5 py-1 font-mono text-xs uppercase tracking-wider text-foreground/75">
+              <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+              القواعد
+            </p>
+            <h2 className="mt-5 max-w-3xl font-headline text-3xl font-semibold leading-[1.3] text-foreground md:text-5xl">
+              تلات حاجات بس بتوقف المهمة
+            </h2>
+            <p className="mt-4 max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg">
+              مهما اتعقّد الشغل، اللي بيمنع زرار «تم» تلاتة لا رابع ليهم. وكاتب لكل واحدة فيهم سطر تحت الزرار بيقول الناقص بالاسم — قبل ما تدوس.
+            </p>
+          </Reveal>
+          <div className="mt-10 grid gap-4 md:mt-12 md:grid-cols-3 md:gap-6">
+            {FLOW_BLOCKERS.map((b) => (
+              <Reveal key={b.n}>
+                <article className="h-full rounded-2xl border border-leak/25 bg-leak/[0.06] p-6 md:rounded-3xl md:p-7">
+                  <p className="font-headline text-sm font-semibold text-leak">{b.n}</p>
+                  <h3 className="mt-2 font-headline text-xl font-semibold text-foreground md:text-2xl">{b.title}</h3>
+                  <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground md:text-base">{b.body}</p>
+                </article>
+              </Reveal>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* ── The story ── */}
-        <section className="rounded-t-[2rem] bg-cream pb-24 pt-16 text-ink md:rounded-t-[2.5rem] md:pb-32 md:pt-24">
-          <div className="mx-auto max-w-6xl px-5 md:px-8">{reduce ? <FlowList /> : <FlowTrack />}</div>
-        </section>
-
-        {/* ── What holds a task where it is ── */}
-        <section className="py-20 md:py-28">
-          <div className="mx-auto max-w-6xl px-5 md:px-8">
-            <Reveal>
-              <p className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3.5 py-1 font-mono text-xs uppercase tracking-wider text-foreground/75">
-                <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-                القواعد
-              </p>
-              <h2 className="mt-5 max-w-3xl font-headline text-3xl font-semibold leading-[1.3] text-foreground md:text-5xl">
-                تلات حاجات بس بتوقف المهمة
-              </h2>
-              <p className="mt-4 max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg">
-                مهما اتعقّد الشغل، اللي بيمنع زرار «تم» تلاتة لا رابع ليهم. وكاتب لكل واحدة فيهم سطر تحت الزرار بيقول الناقص بالاسم — قبل ما تدوس.
-              </p>
-            </Reveal>
-            <div className="mt-10 grid gap-4 md:mt-12 md:grid-cols-3 md:gap-6">
-              {FLOW_BLOCKERS.map((b) => (
-                <Reveal key={b.n}>
-                  <article className="h-full rounded-2xl border border-leak/25 bg-leak/[0.06] p-6 md:rounded-3xl md:p-7">
-                    <p className="font-headline text-sm font-semibold text-leak">{b.n}</p>
-                    <h3 className="mt-2 font-headline text-xl font-semibold text-foreground md:text-2xl">{b.title}</h3>
-                    <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground md:text-base">{b.body}</p>
+      {/* ── Three things people mix up ── */}
+      <section className="pb-20 md:pb-28">
+        <div className="mx-auto max-w-6xl px-5 md:px-8">
+          <Reveal>
+            <h2 className="max-w-4xl font-headline text-2xl font-semibold leading-[1.3] text-foreground md:text-4xl">
+              «يعدّل المهمة» غير «يشتغل فيها» غير «يحرّكها»
+            </h2>
+            <p className="mt-4 max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg">
+تلاتة مختلفين، وده أكتر حاجة كانت بتلخبط الفريق. فصلتهم عن بعض في الصلاحيات: الكاتب مش هيقدر يغيّر تاريخ تسليم ولا يشيل حد من الطاقم — وده مقصود، وشغله وحركة مرحلته مفتوحين زي ما هما.
+            </p>
+          </Reveal>
+          <div className="mt-10 grid gap-4 md:mt-12 md:grid-cols-3 md:gap-6">
+            {FLOW_PERMISSIONS.map((p) => {
+              const tone =
+                p.tone === "leak"
+                  ? "border-leak/25 bg-leak/[0.06] text-leak"
+                  : p.tone === "gain"
+                    ? "border-gain/25 bg-gain/[0.06] text-gain"
+                    : "border-primary/30 bg-primary/[0.08] text-primary";
+              return (
+                <Reveal key={p.key}>
+                  <article className={`h-full rounded-2xl border p-6 md:rounded-3xl md:p-7 ${tone.split(" ").slice(0, 2).join(" ")}`}>
+                    <h3 className="font-headline text-2xl font-semibold text-foreground md:text-3xl">{p.title}</h3>
+                    <p className={`mt-2 text-sm ${tone.split(" ")[2]}`}>{p.what}</p>
+                    <ul className="mt-5 flex flex-wrap gap-2">
+                      {p.who.map((w) => (
+                        <li key={w} className="rounded-full border border-white/10 bg-surface-container/70 px-3 py-1.5 text-sm text-muted-foreground">
+                          {w}
+                        </li>
+                      ))}
+                    </ul>
                   </article>
                 </Reveal>
-              ))}
-            </div>
+              );
+            })}
           </div>
-        </section>
-
-        {/* ── Three things people mix up ── */}
-        <section className="pb-20 md:pb-28">
-          <div className="mx-auto max-w-6xl px-5 md:px-8">
-            <Reveal>
-              <h2 className="max-w-4xl font-headline text-2xl font-semibold leading-[1.3] text-foreground md:text-4xl">
-                «يعدّل المهمة» غير «يشتغل فيها» غير «يحرّكها»
-              </h2>
-              <p className="mt-4 max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg">
-تلاتة مختلفين، وده أكتر حاجة كانت بتلخبط الفريق. فصلتهم عن بعض في الصلاحيات: الكاتب مش هيقدر يغيّر تاريخ تسليم ولا يشيل حد من الطاقم — وده مقصود، وشغله وحركة مرحلته مفتوحين زي ما هما.
-              </p>
-            </Reveal>
-            <div className="mt-10 grid gap-4 md:mt-12 md:grid-cols-3 md:gap-6">
-              {FLOW_PERMISSIONS.map((p) => {
-                const tone =
-                  p.tone === "leak"
-                    ? "border-leak/25 bg-leak/[0.06] text-leak"
-                    : p.tone === "gain"
-                      ? "border-gain/25 bg-gain/[0.06] text-gain"
-                      : "border-primary/30 bg-primary/[0.08] text-primary";
-                return (
-                  <Reveal key={p.key}>
-                    <article className={`h-full rounded-2xl border p-6 md:rounded-3xl md:p-7 ${tone.split(" ").slice(0, 2).join(" ")}`}>
-                      <h3 className="font-headline text-2xl font-semibold text-foreground md:text-3xl">{p.title}</h3>
-                      <p className={`mt-2 text-sm ${tone.split(" ")[2]}`}>{p.what}</p>
-                      <ul className="mt-5 flex flex-wrap gap-2">
-                        {p.who.map((w) => (
-                          <li key={w} className="rounded-full border border-white/10 bg-surface-container/70 px-3 py-1.5 text-sm text-muted-foreground">
-                            {w}
-                          </li>
-                        ))}
-                      </ul>
-                    </article>
-                  </Reveal>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        {/* ── Close ── */}
-        <section className="relative overflow-hidden pb-24 md:pb-32">
-          <div className="pointer-events-none absolute -bottom-48 left-1/4 h-[30rem] w-[30rem] rounded-full bg-primary/10 blur-[120px]" />
-          <div className="relative mx-auto max-w-6xl px-5 md:px-8">
-            <Reveal>
-              <h2 className="max-w-3xl font-headline text-3xl font-semibold leading-[1.3] text-foreground md:text-5xl">
-                {FLOW_LESSONS_TITLE}
-              </h2>
-            </Reveal>
-            <ul className="mt-8 grid gap-3 md:mt-10 md:grid-cols-2 md:gap-4">
-              {FLOW_TAKEAWAYS.map((t, i) => (
-                <Reveal key={t}>
-                  <li className="flex h-full items-start gap-3 rounded-2xl border border-white/10 bg-surface-container/60 p-5 md:p-6">
-                    <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/15 font-headline text-sm font-semibold text-primary">
-                      {num(i + 1)}
-                    </span>
-                    <span className="text-[15px] leading-relaxed text-muted-foreground md:text-base">{t}</span>
-                  </li>
-                </Reveal>
-              ))}
-            </ul>
-
-            <Reveal>
-              <div className="mt-12 rounded-3xl border border-primary/25 bg-primary/[0.07] p-7 md:mt-16 md:p-10">
-                <h3 className="font-headline text-2xl font-semibold leading-[1.25] text-foreground md:text-4xl">
-                  عايز شغل شركتك يمشي كده؟
-                </h3>
-                <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
-                  أول خطوة تشخيص مجاني: نتكلم ربع ساعة، أقولك إيه اللي بيضيع فين، ولو مش محتاج نظام هقولك.
-                </p>
-                <div className="mt-7 flex flex-wrap gap-3">
-                  <a
-                    href={WHATSAPP_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 font-semibold text-primary-foreground transition-transform hover:scale-[1.03]"
-                  >
-                    احجز تشخيص مجاني
-                  </a>
-                  <Link
-                    to="/work/agency-os"
-                    className="inline-flex items-center gap-1.5 rounded-full border border-white/15 px-7 py-3.5 font-semibold text-foreground transition-colors hover:border-primary/50"
-                  >
-                    ارجع لدراسة الحالة
-                    <ArrowUpRight className="h-4 w-4 -scale-x-100" />
-                  </Link>
-                </div>
-              </div>
-            </Reveal>
-          </div>
-        </section>
-      </main>
-
-      <Footer />
-      <MobileCTABar />
+        </div>
+      </section>
     </div>
   );
 };
 
-export default AgencyOsFlow;
+/* ─── What the system taught him. Sits at the end of the case study. ─── */
+export const SystemStoryLessons = () => (
+  <div dir="rtl" lang="ar" className="mx-auto max-w-6xl px-5 md:px-8">
+    <Reveal>
+      <h2 className="max-w-3xl font-headline text-3xl font-semibold leading-[1.3] text-foreground md:text-5xl">
+        {FLOW_LESSONS_TITLE}
+      </h2>
+    </Reveal>
+    <ul className="mt-8 grid gap-3 md:mt-10 md:grid-cols-2 md:gap-4">
+      {FLOW_TAKEAWAYS.map((t, i) => (
+        <Reveal key={t}>
+          <li className="flex h-full items-start gap-3 rounded-2xl border border-white/10 bg-surface-container/60 p-5 md:p-6">
+            <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/15 font-headline text-sm font-semibold text-primary">
+              {num(i + 1)}
+            </span>
+            <span className="text-[15px] leading-relaxed text-muted-foreground md:text-base">{t}</span>
+          </li>
+        </Reveal>
+      ))}
+    </ul>
+  </div>
+);
+
+export default SystemStory;
