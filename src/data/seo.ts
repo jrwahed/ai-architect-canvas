@@ -34,6 +34,12 @@ const STATIC_PAGES: PageMeta[] = [
       "دراسة حالة: نظام واحد بيدير الشغل اليومي لوكالة تسويق: التقارير، والمهام والمراجعة، والأداء، وملفات العملاء، والـHR. Case study: one system that runs a marketing agency's day-to-day work.",
   },
   {
+    path: "/work/agency-os/inside",
+    title: `قصتي مع النظام: بنيته لوحدي والشغل علّمني | Building the Agency OS — ${NAME}`,
+    description:
+      "قصة بناء نظام تشغيل وكالة تسويق بالصور: اللي كان، واللي بقى، وليه اتغيّر في كل محطة — من المزيج والخطة للمراجعة والنشر والتقرير اليومي. How I built an agency operating system, and what the daily work made me change.",
+  },
+  {
     path: "/flowos",
     title: `FlowOS | CRM وأتمتة بالـAI لفرق المبيعات — ${NAME}`,
     description:
