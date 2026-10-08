@@ -317,6 +317,15 @@ const AgencyOsCase = () => {
                     </span>
                   ))}
                 </div>
+                {/* The walkthrough is the deepest thing on the site, and its card sits
+                    halfway down a long page, so it also gets a way in from the top. */}
+                <Link
+                  to="/work/agency-os/inside"
+                  className="group mt-7 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3.5 font-semibold text-primary-foreground transition-transform hover:scale-[1.03]"
+                >
+                  {isAr ? "اقرا قصة بنائه بالصور" : "Read how I built it, with the screens"}
+                  <Back size={18} className="rotate-180 transition-transform group-hover:-translate-x-1 rtl:group-hover:translate-x-1" />
+                </Link>
               </Reveal>
 
               <HeroScreen stats={c.stats} />
