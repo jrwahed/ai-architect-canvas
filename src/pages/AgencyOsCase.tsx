@@ -372,6 +372,36 @@ const AgencyOsCase = () => {
             </div>
           </section>
 
+          {/* Into the deep dive: the same system, screen by screen */}
+          <section className="pb-20 md:pb-28">
+            <div className="mx-auto max-w-6xl px-5 md:px-8">
+              <Reveal>
+                <Link
+                  to="/work/agency-os/inside"
+                  className="group block rounded-3xl border border-primary/25 bg-primary/[0.07] p-7 transition-colors hover:border-primary/50 md:p-10"
+                >
+                  <p className="font-mono text-xs uppercase tracking-[0.3em] text-primary">
+                    {isAr ? "جوّه النظام" : "Inside the system"}
+                  </p>
+                  <h3 className="mt-4 max-w-3xl font-headline text-2xl font-semibold leading-[1.25] text-foreground md:text-4xl">
+                    {isAr
+                      ? "عايز تشوفه شاشة شاشة؟ خد رحلة بوست واحد من الخطة للنشر."
+                      : "Want to see it screen by screen? Follow one post from plan to publish."}
+                  </h3>
+                  <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
+                    {isAr
+                      ? "أربعتاشر محطة بلقطات حقيقية من النظام وهو شغّال — والأسماء والصور متخفية."
+                      : "Fourteen stations with real screens from the running system, with every name and face hidden."}
+                  </p>
+                  <span className="mt-6 inline-flex items-center gap-2 font-semibold text-primary">
+                    {isAr ? "ادخل الرحلة" : "Take the walkthrough"}
+                    <Back size={18} className="rotate-180 transition-transform group-hover:-translate-x-1 rtl:group-hover:translate-x-1" />
+                  </span>
+                </Link>
+              </Reveal>
+            </div>
+          </section>
+
           {/* Task lifecycle + performance formula */}
           <section className="bg-surface-container-low border-y border-border py-20 md:py-28">
             <div className="mx-auto max-w-6xl px-5 md:px-8">
