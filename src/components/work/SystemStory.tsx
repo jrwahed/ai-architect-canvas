@@ -353,10 +353,10 @@ const FlowTrack = () => {
             خط النهاية
           </span>
           <h3 className="mt-4 font-headline text-2xl font-semibold leading-[1.3] md:text-4xl">
-            البوست بينزل، والملف بيروح لفولدره لوحده.
+            البوست بينزل لوحده، والنظام لسه بيكبر.
           </h3>
           <p className="mt-3 text-base leading-relaxed text-ink-muted md:text-xl">
-            ومحدش احتاج يسأل «وصلت لفين؟» ولا يعمل اجتماع يعرف مين عمل إيه. ده اللي كنت بنيه من الأول.
+            محدش احتاج يسأل «وصلت لفين؟» ولا يعمل اجتماع يعرف مين عمل إيه. وكل شهر الشغل بيوريني حتة تانية أقفلها.
           </p>
         </div>
       </div>
